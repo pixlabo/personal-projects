@@ -1153,55 +1153,111 @@ export default function CatEcommerceLanding() {
       </section>
 
       {/* =========================================================================
-          SECTION 3: DISCOVER EXCELLENCE SHOWCASE (Matches User's New Reference Image)
-          - Top row: Circular monogram logo + filter tabs (Competition, Training, Friendly match)
-                     + Huge bold headline ("Discover Excellence in Courts, Fields, and Beyond")
+          SECTION 3: DISCOVER EXCELLENCE SHOWCASE (Framer Motion Enhanced)
+          - Top row: Animated monogram logo + gliding layoutId pill filter tabs
+                     + Masked bottom-to-top headline reveal ("Discover Excellence in Warmth, Agility, and Beyond")
           - Bottom row:
-            - Left: Sage green container card with inner cat image card, tennis net foreground,
-                    headline, subtext, "Book a Court ↗" CTA, slide counter, and [←] [→] navigation
-            - Right: Action card with overlapping (+) button, asterisk (*), and descriptive text
+            - Left: Sage container card with inner image card, floating breathing cat cutout,
+                    AnimatePresence text transitions, slide counter, and spring arrow controls
+            - Right: Action card with pulsating overlapping (+) button, spring popover, and asterisk
       ========================================================================= */}
       <section
         id="excellence-section"
-        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-14 sm:py-20 lg:py-24 relative"
+        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-14 sm:py-20 lg:py-24 relative overflow-hidden"
       >
         {/* Top Header Row: Logo & Tabs on Left, Headline on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-10 sm:mb-16">
           
-          {/* Top Left: Circular Logo + Pill Filter Tabs */}
+          {/* Top Left: Circular Logo + Pill Filter Tabs with Smooth Layout Gliding */}
           <div className="lg:col-span-5 flex items-center gap-4 flex-wrap">
-            {/* Circular Black Monogram Logo */}
-            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-lg shadow-slate-900/10 flex-shrink-0 group hover:scale-105 transition-transform cursor-pointer">
-              <PawIcon className="w-6 h-6 sm:w-7 sm:h-7 group-hover:rotate-12 transition-transform" color="#ffffff" />
-            </div>
+            {/* Circular Black Monogram Logo with spring entrance & rotation */}
+            <motion.div
+              initial={{ scale: 0, rotate: -45, opacity: 0 }}
+              whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+              whileHover={{ scale: 1.1, rotate: 12 }}
+              whileTap={{ scale: 0.94 }}
+              className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-lg shadow-slate-900/15 flex-shrink-0 cursor-pointer group"
+            >
+              <PawIcon className="w-6 h-6 sm:w-7 sm:h-7 group-hover:rotate-12 transition-transform duration-300" color="#ffffff" />
+            </motion.div>
 
-            {/* Pill Tabs: Competition, Training (active black), Friendly match */}
-            <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+            {/* Pill Tabs with Framer Motion layoutId Gliding Pill Background */}
+            <motion.div
+              initial={{ opacity: 0, y: -16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center gap-2 sm:gap-2.5 flex-wrap p-1 rounded-full bg-slate-100/80 border border-slate-200/80"
+            >
               {EXCELLENCE_ITEMS.map((item, idx) => {
                 const isActive = activeExcellenceIndex === idx;
                 return (
-                  <button
+                  <motion.button
                     key={item.id}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.96 }}
                     onClick={() => setActiveExcellenceIndex(idx)}
-                    className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-tight transition-all cursor-pointer ${
-                      isActive
-                        ? 'bg-slate-950 text-white shadow-md shadow-slate-900/15'
-                        : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-400 hover:text-slate-950'
-                    }`}
+                    className="relative px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-tight transition-colors cursor-pointer"
                   >
-                    {item.category}
-                  </button>
+                    {/* Gliding animated background pill */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeExcellenceTab"
+                        className="absolute inset-0 rounded-full bg-slate-950 shadow-md shadow-slate-950/20"
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                    <span
+                      className={`relative z-10 transition-colors duration-200 ${
+                        isActive ? 'text-white' : 'text-slate-600 hover:text-slate-950'
+                      }`}
+                    >
+                      {item.category}
+                    </span>
+                  </motion.button>
                 );
               })}
-            </div>
+            </motion.div>
           </div>
 
-          {/* Top Right: Huge Display Headline */}
+          {/* Top Right: Huge Display Headline with Masked Bottom-to-Top Slide-Up Reveal */}
           <div className="lg:col-span-7">
             <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl text-slate-950 tracking-tight leading-[1.06]">
-              Discover Excellence <br className="hidden sm:block" />
-              in Warmth, Agility, <br className="hidden sm:block" />
-              and Beyond
+              <span className="overflow-hidden block py-0.5">
+                <motion.span
+                  initial={{ y: '120%', opacity: 0, rotate: 1.5 }}
+                  whileInView={{ y: '0%', opacity: 1, rotate: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                  className="block"
+                >
+                  Discover Excellence
+                </motion.span>
+              </span>
+              <span className="overflow-hidden block py-0.5">
+                <motion.span
+                  initial={{ y: '120%', opacity: 0, rotate: 1.5 }}
+                  whileInView={{ y: '0%', opacity: 1, rotate: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.95, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  className="block text-[#ff4071]"
+                >
+                  in Warmth, Agility,
+                </motion.span>
+              </span>
+              <span className="overflow-hidden block py-0.5">
+                <motion.span
+                  initial={{ y: '120%', opacity: 0, rotate: 1.5 }}
+                  whileInView={{ y: '0%', opacity: 1, rotate: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 1.05, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+                  className="block"
+                >
+                  and Beyond
+                </motion.span>
+              </span>
             </h2>
           </div>
         </div>
@@ -1209,8 +1265,14 @@ export default function CatEcommerceLanding() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
           
-          {/* ==================== LEFT GREEN CONTAINER CARD (lg:col-span-7) ==================== */}
-          <div className="lg:col-span-7">
+          {/* ==================== LEFT SAGE/BURGUNDY CONTAINER CARD (lg:col-span-7) ==================== */}
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.97 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7"
+          >
             <motion.div
               layout
               className="w-full h-full min-h-[440px] sm:min-h-[480px] rounded-[2.5rem] sm:rounded-[3rem] p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden flex flex-col justify-between transition-colors duration-700"
@@ -1220,132 +1282,206 @@ export default function CatEcommerceLanding() {
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 sm:gap-8 items-center flex-1">
                 
                 {/* Inner Left: Vertical Image Card with Cat & Tennis Net Foreground */}
-                <div className="sm:col-span-5 h-[270px] sm:h-[330px] rounded-2xl sm:rounded-3xl overflow-hidden relative shadow-lg group bg-black/15 flex items-end justify-center">
+                <motion.div
+                  initial={{ opacity: 0, x: -25, scale: 0.95 }}
+                  whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.65, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="sm:col-span-5 h-[270px] sm:h-[330px] rounded-2xl sm:rounded-3xl overflow-hidden relative shadow-lg group bg-black/15 flex items-end justify-center"
+                >
                   {/* Dark gradient base */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent z-20 pointer-events-none" />
                   
                   {/* Stylized Tennis Court Net Mesh Foreground from reference */}
                   <div className="absolute bottom-0 inset-x-0 h-16 bg-[linear-gradient(to_right,#ffffff20_1px,transparent_1px),linear-gradient(to_bottom,#ffffff20_1px,transparent_1px)] bg-[size:10px_10px] border-t-2 border-white/40 z-20 pointer-events-none" />
 
-                  {/* Cat Cutout Image */}
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={EXCELLENCE_ITEMS[activeExcellenceIndex].id}
-                      src={EXCELLENCE_ITEMS[activeExcellenceIndex].image}
-                      alt={EXCELLENCE_ITEMS[activeExcellenceIndex].catName}
-                      initial={{ opacity: 0, scale: 0.95, y: 15 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95, y: -15 }}
-                      transition={{ duration: 0.35 }}
-                      className="w-auto h-[90%] object-contain object-bottom drop-shadow-xl z-10 group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </AnimatePresence>
-
-                  {/* Badge in top left of inner card */}
-                  <div className="absolute top-3 left-3 z-20 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] font-bold uppercase tracking-wider">
-                    {EXCELLENCE_ITEMS[activeExcellenceIndex].badgeText}
+                  {/* Cat Cutout Image with Floating Breathing Micro-Motion & AnimatePresence */}
+                  <div className="w-full h-full flex items-end justify-center">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={EXCELLENCE_ITEMS[activeExcellenceIndex].id}
+                        initial={{ opacity: 0, scale: 0.92, y: 25, filter: 'blur(4px)' }}
+                        animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
+                        exit={{ opacity: 0, scale: 0.92, y: -20, filter: 'blur(4px)' }}
+                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                        className="w-full h-full flex items-end justify-center"
+                      >
+                        {/* Continuous buoyant float motion */}
+                        <motion.img
+                          animate={{ y: [0, -6, 0] }}
+                          transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
+                          src={EXCELLENCE_ITEMS[activeExcellenceIndex].image}
+                          alt={EXCELLENCE_ITEMS[activeExcellenceIndex].catName}
+                          className="w-auto h-[90%] object-contain object-bottom drop-shadow-xl z-10 group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </motion.div>
+                    </AnimatePresence>
                   </div>
-                </div>
 
-                {/* Inner Right: Headline + Subtext */}
+                  {/* Badge in top left of inner card with subtle spring entrance */}
+                  <motion.div
+                    key={`badge-${EXCELLENCE_ITEMS[activeExcellenceIndex].id}`}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35 }}
+                    className="absolute top-3 left-3 z-20 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] font-bold uppercase tracking-wider"
+                  >
+                    {EXCELLENCE_ITEMS[activeExcellenceIndex].badgeText}
+                  </motion.div>
+                </motion.div>
+
+                {/* Inner Right: Headline + Subtext with AnimatePresence */}
                 <div className="sm:col-span-7 flex flex-col justify-center text-white py-2">
-                  <h3 className="font-display font-black text-xl sm:text-2xl lg:text-[1.72rem] leading-tight tracking-tight mb-4 text-white">
-                    {EXCELLENCE_ITEMS[activeExcellenceIndex].heading}
-                  </h3>
-                  <p className="text-white/85 text-xs sm:text-sm leading-relaxed font-normal">
-                    {EXCELLENCE_ITEMS[activeExcellenceIndex].subtext}
-                  </p>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={EXCELLENCE_ITEMS[activeExcellenceIndex].id}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -12 }}
+                      transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <h3 className="font-display font-black text-xl sm:text-2xl lg:text-[1.72rem] leading-tight tracking-tight mb-4 text-white">
+                        {EXCELLENCE_ITEMS[activeExcellenceIndex].heading}
+                      </h3>
+                      <p className="text-white/85 text-xs sm:text-sm leading-relaxed font-normal">
+                        {EXCELLENCE_ITEMS[activeExcellenceIndex].subtext}
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
 
               </div>
 
-              {/* Bottom Controls Row: Book a Court ↗ + Slide Counter + Prev/Next Arrows */}
+              {/* Bottom Controls Row: CTA + Slide Counter + Prev/Next Arrows */}
               <div className="flex items-center justify-between pt-6 sm:pt-8 mt-4 border-t border-white/15 flex-wrap gap-4">
                 
-                {/* Pill CTA Button: Book a Court ↗ */}
+                {/* Pill CTA Button: Shop Summit Fit ↗ */}
                 <motion.button
-                  whileHover={{ scale: 1.04 }}
+                  whileHover={{ scale: 1.04, y: -2 }}
                   whileTap={{ scale: 0.96 }}
-                  className="inline-flex items-center gap-3 px-5 sm:px-6 py-3 rounded-full bg-slate-950 hover:bg-slate-900 text-white text-xs sm:text-sm font-bold tracking-tight shadow-lg shadow-black/20 cursor-pointer group transition-all"
+                  onClick={() => {
+                    const el = document.getElementById('categories-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="inline-flex items-center gap-3 px-5 sm:px-6 py-3 rounded-full bg-slate-950 hover:bg-white hover:text-slate-950 text-white text-xs sm:text-sm font-bold tracking-tight shadow-lg shadow-black/20 cursor-pointer group transition-colors duration-300"
                 >
                   <span>{EXCELLENCE_ITEMS[activeExcellenceIndex].ctaText}</span>
-                  <span className="w-6 h-6 rounded-full bg-white text-slate-950 flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
+                  <span className="w-6 h-6 rounded-full bg-white text-slate-950 flex items-center justify-center group-hover:rotate-45 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300">
                     <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
                   </span>
                 </motion.button>
 
-                {/* Counter & Arrows */}
+                {/* Counter & Arrows with Spring Interactions */}
                 <div className="flex items-center gap-4">
-                  {/* Slide Counter: e.g. 1 / 3 */}
+                  {/* Slide Counter: e.g. 02 / 03 */}
                   <span className="text-white font-mono font-bold text-sm tracking-wider opacity-90">
-                    {activeExcellenceIndex + 1} / {EXCELLENCE_ITEMS.length}
+                    0{activeExcellenceIndex + 1} / 0{EXCELLENCE_ITEMS.length}
                   </span>
 
-                  {/* Arrow Buttons [←] [→] (Outlined circles from reference) */}
+                  {/* Arrow Buttons [←] [→] */}
                   <div className="flex items-center gap-2">
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.15, backgroundColor: 'rgba(255,255,255,0.2)' }}
+                      whileTap={{ scale: 0.92 }}
                       onClick={handlePrevExcellence}
-                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/40 hover:border-white hover:bg-white/15 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/40 hover:border-white text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm group"
                       title="Previous"
                     >
-                      <ArrowLeft className="w-4 h-4 stroke-[2]" />
-                    </button>
-                    <button
+                      <ArrowLeft className="w-4 h-4 stroke-[2] group-hover:-translate-x-0.5 transition-transform" />
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.15, backgroundColor: 'rgba(255,255,255,0.2)' }}
+                      whileTap={{ scale: 0.92 }}
                       onClick={handleNextExcellence}
-                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/40 hover:border-white hover:bg-white/15 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/40 hover:border-white text-white flex items-center justify-center transition-colors cursor-pointer shadow-sm group"
                       title="Next"
                     >
-                      <ArrowRight className="w-4 h-4 stroke-[2]" />
-                    </button>
+                      <ArrowRight className="w-4 h-4 stroke-[2] group-hover:translate-x-0.5 transition-transform" />
+                    </motion.button>
                   </div>
                 </div>
 
               </div>
 
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* ==================== RIGHT COLUMN: ACTION CARD WITH (+) & DESCRIPTION ==================== */}
-          <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-row items-center sm:items-start gap-6 lg:gap-8 justify-center">
+          <motion.div
+            initial={{ opacity: 0, x: 40, scale: 0.96 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-row items-center sm:items-start gap-6 lg:gap-8 justify-center"
+          >
             
             {/* Vertical Rounded Card with Overlapping (+) Button */}
-            <div className="w-full sm:w-[260px] lg:w-[280px] h-[360px] sm:h-[420px] rounded-[2.5rem] overflow-hidden relative shadow-xl bg-slate-100 flex-shrink-0 group">
+            <motion.div
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.3 }}
+              className="w-full sm:w-[260px] lg:w-[280px] h-[360px] sm:h-[420px] rounded-[2.5rem] overflow-hidden relative shadow-xl bg-slate-100 flex-shrink-0 group"
+            >
               {/* Background gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10 pointer-events-none" />
               
-              {/* Overlapping (+) Circle Button on Left Edge (Exact as in reference) */}
-              <button
+              {/* Overlapping (+) Circle Button with Continuous Pulsing Ping Aura */}
+              <motion.button
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => setShowSpecBadge(!showSpecBadge)}
-                className="absolute -left-5 sm:-left-6 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-950 hover:bg-slate-800 text-white flex items-center justify-center shadow-2xl z-30 cursor-pointer hover:scale-110 active:scale-95 transition-all"
+                className="absolute -left-5 sm:-left-6 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-950 hover:bg-slate-800 text-white flex items-center justify-center shadow-2xl z-30 cursor-pointer transition-colors"
                 title="Toggle Tech Specs"
               >
-                <Plus className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 ${showSpecBadge ? 'rotate-45 text-[#ff4071]' : ''}`} />
-              </button>
+                {/* Subtle pulse aura */}
+                <motion.span
+                  animate={{ scale: [1, 1.35, 1], opacity: [0.6, 0, 0.6] }}
+                  transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute inset-0 rounded-full bg-slate-950 pointer-events-none"
+                />
+                <Plus className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 relative z-10 ${showSpecBadge ? 'rotate-45 text-[#ff4071]' : ''}`} />
+              </motion.button>
 
-              {/* Cat Image */}
-              <img
-                src={EXCELLENCE_ITEMS[activeExcellenceIndex].rightImage}
-                alt={EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
-                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-              />
+              {/* Cat Image with AnimatePresence on active category change */}
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
+                  initial={{ opacity: 0, scale: 1.06 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.06 }}
+                  transition={{ duration: 0.4 }}
+                  src={EXCELLENCE_ITEMS[activeExcellenceIndex].rightImage}
+                  alt={EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
+                  className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700"
+                />
+              </AnimatePresence>
 
               {/* Bottom Title on Card */}
               <div className="absolute bottom-5 left-6 right-6 z-20 text-white">
                 <span className="text-[10px] font-extrabold uppercase tracking-widest text-pink-400 block mb-1">
                   Active Edition
                 </span>
-                <h4 className="font-display font-black text-lg text-white leading-tight">
-                  {EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
-                </h4>
+                <AnimatePresence mode="wait">
+                  <motion.h4
+                    key={EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="font-display font-black text-lg text-white leading-tight"
+                  >
+                    {EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
+                  </motion.h4>
+                </AnimatePresence>
               </div>
 
-              {/* Floating Tech Spec Popover when (+) is clicked */}
+              {/* Floating Tech Spec Popover with Spring Entrance */}
               <AnimatePresence>
                 {showSpecBadge && (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                    initial={{ opacity: 0, scale: 0.88, y: 15 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                    exit={{ opacity: 0, scale: 0.88, y: 10 }}
+                    transition={{ type: 'spring', stiffness: 320, damping: 22 }}
                     className="absolute inset-x-4 top-4 z-40 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-2xl border border-slate-200 text-left"
                   >
                     <div className="text-[10px] font-black uppercase text-[#ff4071] tracking-wider mb-1">
@@ -1362,19 +1498,32 @@ export default function CatEcommerceLanding() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
 
-            {/* Asterisk (*) and Explanatory Paragraph */}
+            {/* Asterisk (*) with Interactive Micro-Rotation and Explanatory Paragraph */}
             <div className="flex-1 flex flex-col justify-center pt-2 sm:pt-8 text-left">
-              <div className="text-4xl font-serif font-black text-slate-900 mb-3 leading-none select-none">
+              <motion.div
+                whileHover={{ rotate: 90, scale: 1.2 }}
+                transition={{ duration: 0.3 }}
+                className="text-4xl font-serif font-black text-slate-900 mb-3 leading-none select-none cursor-pointer w-fit"
+              >
                 *
-              </div>
-              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-normal">
-                {EXCELLENCE_ITEMS[activeExcellenceIndex].rightDesc}
-              </p>
+              </motion.div>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={activeExcellenceIndex}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35 }}
+                  className="text-slate-600 text-xs sm:text-sm leading-relaxed font-normal"
+                >
+                  {EXCELLENCE_ITEMS[activeExcellenceIndex].rightDesc}
+                </motion.p>
+              </AnimatePresence>
             </div>
 
-          </div>
+          </motion.div>
 
         </div>
       </section>
