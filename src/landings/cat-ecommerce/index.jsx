@@ -1701,8 +1701,8 @@ export default function CatEcommerceLanding() {
                   </div>
                 )}
 
-                {/* Dark gradient for crisp bottom typography */}
-                <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/70 via-black/25 to-transparent pointer-events-none z-10" />
+                {/* Dark gradient for crisp bottom typography & seamless jacket grounding */}
+                <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/85 via-black/45 to-transparent pointer-events-none z-18" />
 
                 {/* Card Top Row: Tags & Icons */}
                 <div className="relative z-20 flex items-center justify-between">
@@ -1724,19 +1724,23 @@ export default function CatEcommerceLanding() {
                   </span>
                 </div>
 
-                {/* Center Cat Cutout Image with Floating Breathing Micro-Motion */}
-                <div className="absolute inset-x-0 bottom-12 top-10 flex items-end justify-center pointer-events-none z-15 overflow-hidden">
+                {/* Center Cat Cutout Image - Grounded to the Bottom with Seamless Edge Mask */}
+                <div className="absolute inset-x-0 bottom-0 top-6 flex items-end justify-center pointer-events-none z-15 overflow-hidden">
                   <motion.img
-                    animate={{ y: [0, idx % 2 === 0 ? -6 : -8, 0] }}
+                    animate={{ y: [0, -3, 0] }}
                     transition={{
-                      duration: 3.2 + idx * 0.3,
+                      duration: 3.4 + idx * 0.3,
                       repeat: Infinity,
                       ease: 'easeInOut',
                       delay: idx * 0.25,
                     }}
                     src={facility.image}
                     alt={facility.catName}
-                    className="w-auto h-[80%] sm:h-[85%] object-contain object-bottom drop-shadow-[0_20px_25px_rgba(0,0,0,0.35)] group-hover:scale-108 transition-transform duration-500"
+                    style={{
+                      maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0.8) 92%, rgba(0,0,0,0) 100%)',
+                      WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0.8) 92%, rgba(0,0,0,0) 100%)',
+                    }}
+                    className="w-full h-auto max-h-[88%] sm:max-h-[92%] object-contain object-bottom drop-shadow-[0_20px_25px_rgba(0,0,0,0.4)] group-hover:scale-106 transition-transform duration-500"
                   />
                 </div>
 
