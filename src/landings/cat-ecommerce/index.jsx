@@ -361,6 +361,41 @@ export default function CatEcommerceLanding() {
     }
   };
 
+  // Hero section visibility & automatic 1.5-second cat rotation
+  const heroRef = useRef(null);
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroVisible(entry.isIntersecting);
+      },
+      { threshold: 0.25 }
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Automatic cat variant rotation every 2.5 seconds when on hero section
+  useEffect(() => {
+    if (!isHeroVisible) return;
+
+    const interval = setInterval(() => {
+      setDirection(1);
+      setActiveVariant((prev) => {
+        const currentIdx = VARIANTS.findIndex((v) => v.id === prev.id);
+        const nextIdx = (currentIdx + 1) % VARIANTS.length;
+        return VARIANTS[nextIdx];
+      });
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, [isHeroVisible]);
+
   // Switch cat helper with directional tracking
   const handleSelectVariant = (variant) => {
     const currentIdx = VARIANTS.findIndex((v) => v.id === activeVariant.id);
@@ -368,58 +403,6 @@ export default function CatEcommerceLanding() {
     setDirection(newIdx > currentIdx ? 1 : -1);
     setActiveVariant(variant);
   };
-
-  // Scroll wheel interceptor:
-  // When at the top (scrollY < 20), cycling cats 1 -> 2 -> 3.
-  // When at Cat 3, scrolling down allows smooth natural page scrolling to Section 2!
-  useEffect(() => {
-    let timeoutId = null;
-
-    const handleWheel = (e) => {
-      // If user has scrolled down into Section 2, let regular page scroll work naturally
-      if (window.scrollY > 20) return;
-
-      if (e.deltaY > 15) {
-        // Scrolling DOWN
-        const currentIdx = VARIANTS.findIndex((v) => v.id === activeVariant.id);
-        if (currentIdx < VARIANTS.length - 1) {
-          // Keep hero locked on screen and advance to next cat
-          e.preventDefault();
-          if (isScrollingRef.current) return;
-          isScrollingRef.current = true;
-          setDirection(1);
-          setActiveVariant(VARIANTS[currentIdx + 1]);
-
-          clearTimeout(timeoutId);
-          timeoutId = setTimeout(() => {
-            isScrollingRef.current = false;
-          }, 400);
-        }
-        // If already on last cat (Brown cat), do NOT preventDefault! Let page scroll down to Section 2!
-      } else if (e.deltaY < -15) {
-        // Scrolling UP
-        const currentIdx = VARIANTS.findIndex((v) => v.id === activeVariant.id);
-        if (window.scrollY <= 10 && currentIdx > 0) {
-          e.preventDefault();
-          if (isScrollingRef.current) return;
-          isScrollingRef.current = true;
-          setDirection(-1);
-          setActiveVariant(VARIANTS[currentIdx - 1]);
-
-          clearTimeout(timeoutId);
-          timeoutId = setTimeout(() => {
-            isScrollingRef.current = false;
-          }, 400);
-        }
-      }
-    };
-
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-      clearTimeout(timeoutId);
-    };
-  }, [activeVariant]);
 
   const handleAddToCart = () => {
     setCartCount((prev) => prev + 1);
@@ -447,7 +430,7 @@ export default function CatEcommerceLanding() {
       {/* =========================================================================
           SECTION 1: HERO SHOWCASE (Full Framer Motion Animations & Text Slide-Up)
       ========================================================================= */}
-      <section className="w-full min-h-screen flex flex-col justify-between px-4 sm:px-8 lg:px-12 py-3 sm:py-4 relative">
+      <section ref={heroRef} className="w-full min-h-screen flex flex-col justify-between px-4 sm:px-8 lg:px-12 py-3 sm:py-4 relative">
         
         {/* Top Navigation Bar with Framer Motion Entrance */}
         <motion.header
