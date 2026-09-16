@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { ShoppingBag, Menu, ArrowUpRight, ArrowDown } from 'lucide-react';
+import { ShoppingBag, Menu, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight } from 'lucide-react';
 
 // Import hero cat assets
 import pinkCatImg from '../../assets/cat-ecommerce/herosection cat.png';
@@ -135,12 +135,69 @@ const CATEGORIES = [
   },
 ];
 
+// Section: Velocity Pet Performance Club (Matching user's reference design)
+const CLUB_ITEMS = [
+  {
+    id: 'pink',
+    tag: 'Outdoor area',
+    secondaryTag: 'Indoor',
+    title: 'Versatile space for a wide range of activities',
+    previewTitle: 'Futsal court',
+    editionName: 'Blush Sakura Edition',
+    catName: 'Sakura Ski Cat',
+    image: pinkCatImg,
+    jacketColor: '#ff4071',
+    // Background gradient precisely matching herosection cat.png's pink puffer jacket:
+    cardBgGradient: 'linear-gradient(155deg, #ffaec6 0%, #ff4071 46%, #b91c47 100%)',
+    description: 'Explore the ideal space to play, train, and reach new heights. Where passion meets feline winter endurance.',
+  },
+  {
+    id: 'green',
+    tag: 'Alpine Slope',
+    secondaryTag: 'Indoor arena',
+    title: 'Versatile space for high-altitude snow agility',
+    previewTitle: 'Alpine track',
+    editionName: 'Alpine Forest Edition',
+    catName: 'Alpine Forest Cat',
+    image: greenCatImg,
+    jacketColor: '#059669',
+    // Background gradient matching green cat jacket:
+    cardBgGradient: 'linear-gradient(155deg, #86efac 0%, #059669 46%, #064e3b 100%)',
+    description: 'Engineered with ripstop insulation and thermal flex lining. Built for sub-zero agility and high-fashion winter expeditions.',
+  },
+  {
+    id: 'brown',
+    tag: 'Lodge Terrace',
+    secondaryTag: 'Chalet lounge',
+    title: 'Versatile space for mountain trail & chalet living',
+    previewTitle: 'Terrace court',
+    editionName: 'Solar Amber Edition',
+    catName: 'Solar Amber Cat',
+    image: brownCatImg,
+    jacketColor: '#92400e',
+    // Background gradient matching brown cat jacket:
+    cardBgGradient: 'linear-gradient(155deg, #fcd34d 0%, #b45309 46%, #78350f 100%)',
+    description: 'Iconic retro chevron bomber with thermal down fill. Unmatched warmth crafted for cold mornings and alpine summits.',
+  },
+];
+
 export default function CatEcommerceLanding() {
   const [activeVariant, setActiveVariant] = useState(VARIANTS[0]);
   const [direction, setDirection] = useState(1);
   const [cartCount, setCartCount] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
   const isScrollingRef = useRef(false);
+
+  // Velocity Club Carousel state
+  const [activeClubIndex, setActiveClubIndex] = useState(0);
+
+  const handleNextClub = () => {
+    setActiveClubIndex((prev) => (prev + 1) % CLUB_ITEMS.length);
+  };
+
+  const handlePrevClub = () => {
+    setActiveClubIndex((prev) => (prev - 1 + CLUB_ITEMS.length) % CLUB_ITEMS.length);
+  };
 
   // Switch cat helper with directional tracking
   const handleSelectVariant = (variant) => {
@@ -443,10 +500,13 @@ export default function CatEcommerceLanding() {
         {/* Floating Quick Scroll Prompt to Section 2 */}
         <div className="w-full flex justify-center pt-2 pb-1 z-20">
           <button
-            onClick={scrollToCategories}
+            onClick={() => {
+              const el = document.getElementById('velocity-club-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
             className="flex items-center gap-2 text-[11px] font-bold tracking-wider uppercase text-slate-500 hover:text-[#ff4071] transition-colors cursor-pointer group bg-slate-50 hover:bg-pink-50 px-4 py-1.5 rounded-full border border-slate-200 hover:border-pink-200"
           >
-            <span>Explore Collection Categories</span>
+            <span>Explore Velocity Club</span>
             <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform text-[#ff4071]" />
           </button>
         </div>
@@ -454,73 +514,193 @@ export default function CatEcommerceLanding() {
       </section>
 
       {/* =========================================================================
-          SECTION 2: COLLECTION CATEGORIES (Inspired by User's Reference Image)
-          - Large rounded vibrant container
-          - Top-left bold white title
-          - 4 Staggered white cards pinned with realistic metallic paperclips
-          - Cute 3D clay pet wear items & counter badges
+          SECTION 2: VELOCITY PET CLUB SHOWCASE (Matches User's Reference Layout)
+          - Left Column: "Sports center" badge, bold typography, "Get in touch ↗" CTA
+          - Middle Column: Large card with cat (herosection cat.png), jacket-matching bg, court lines, "Outdoor area", arrow button
+          - Right Column: Secondary card ("Indoor", "Futsal court"), paragraph, prev/next circular arrows
       ========================================================================= */}
       <section
-        id="categories-section"
-        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-12 lg:py-20"
+        id="velocity-club-section"
+        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-14 sm:py-20 lg:py-24 relative"
       >
-        {/* Main Blue Rounded Banner Container (Exact style as reference image) */}
-        <div className="w-full rounded-[2.5rem] sm:rounded-[3.5rem] bg-[#1d6bf3] p-6 sm:p-10 lg:p-14 shadow-2xl shadow-blue-500/25 relative overflow-hidden">
+        {/* Ambient subtle glow matching active cat's jacket */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full blur-[140px] opacity-15 pointer-events-none transition-colors duration-700"
+          style={{ backgroundColor: CLUB_ITEMS[activeClubIndex].jacketColor }}
+        />
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch relative z-10">
           
-          {/* Subtle Background Paw Print Watermarks */}
-          <div className="absolute inset-0 opacity-10 flex items-center justify-between p-12 pointer-events-none">
-            <PawIcon className="w-64 h-64 rotate-[-20deg]" color="#ffffff" />
-            <PawIcon className="w-72 h-72 rotate-[25deg]" color="#ffffff" />
-          </div>
+          {/* ==================== LEFT COLUMN ==================== */}
+          <div className="lg:col-span-4 flex flex-col justify-between py-2 sm:py-4">
+            <div>
+              {/* Badge: Sports center */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200/90 bg-white/90 backdrop-blur-sm text-slate-800 text-xs font-semibold tracking-wide shadow-xs">
+                <span
+                  className="w-2 h-2 rounded-full transition-colors duration-500"
+                  style={{ backgroundColor: CLUB_ITEMS[activeClubIndex].jacketColor }}
+                />
+                <span>Sports center</span>
+              </div>
 
-          {/* Section Header: Title in Top-Left */}
-          <div className="relative z-10 mb-8 sm:mb-12">
-            <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-white leading-[0.95]">
-              COLLECTION <br />
-              CATEGORIES
-            </h2>
-          </div>
+              {/* Main Headline (Exact typography and spirit of reference) */}
+              <h2 className="font-display font-black text-3xl sm:text-4xl xl:text-[2.65rem] text-slate-950 tracking-tight leading-[1.12] mt-8 mb-6">
+                Welcome to Velocity Club, where we inspire athletes and fitness enthusiasts to reach new heights.
+              </h2>
+            </div>
 
-          {/* The 4 Staggered White Cards with Metallic Paperclips */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-7 items-start relative z-10 pt-4 pb-4">
-            {CATEGORIES.map((cat, idx) => (
-              <motion.div
-                key={cat.id}
-                whileHover={{ y: -8, transition: { duration: 0.25 } }}
-                className={`w-full bg-white rounded-[2rem] sm:rounded-[2.4rem] p-5 sm:p-6 shadow-xl relative flex flex-col justify-between min-h-[310px] sm:min-h-[330px] lg:min-h-[350px] cursor-pointer group border border-white/80 ${cat.staggerClass}`}
+            {/* Bottom CTA Button: Get in touch ↗ */}
+            <div className="pt-6 lg:pt-0">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center gap-3.5 px-6 py-3.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white text-sm font-bold tracking-tight shadow-md shadow-slate-950/15 cursor-pointer group transition-all"
               >
-                {/* Metallic Paperclip (Allpin) Pinned to Card Top Edge */}
-                <div className={`absolute -top-5 right-6 z-20 pointer-events-none transform ${cat.clipAngle}`}>
-                  <Paperclip className="w-7 h-11 sm:w-8 sm:h-12" />
-                </div>
+                <span>Get in touch</span>
+                <span className="w-6 h-6 rounded-full bg-white text-slate-950 flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
+                  <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                </span>
+              </motion.button>
+            </div>
+          </div>
 
-                {/* Card Top: Category Title */}
-                <div className="pr-8">
-                  <h3 className="font-display font-black text-base sm:text-lg text-slate-900 leading-tight uppercase group-hover:text-[#1d6bf3] transition-colors">
-                    {cat.title}
-                  </h3>
-                </div>
+          {/* ==================== MIDDLE COLUMN: MAIN CAT CARD ==================== */}
+          <div className="lg:col-span-5">
+            <motion.div
+              layout
+              className="w-full h-[460px] sm:h-[500px] lg:h-[530px] rounded-[2.8rem] sm:rounded-[3.2rem] relative overflow-hidden shadow-2xl shadow-pink-900/10 flex flex-col justify-between p-7 group cursor-pointer transition-all duration-700"
+              style={{ background: CLUB_ITEMS[activeClubIndex].cardBgGradient }}
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Subtle Sports Court Lines & Ambient Radial Glow in background */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                {/* Court line circular arc */}
+                <div className="absolute -top-14 -right-14 w-80 h-80 rounded-full border-[3px] border-white/20 pointer-events-none" />
+                <div className="absolute bottom-12 -left-24 w-96 h-96 rounded-full border-[2px] border-white/15 pointer-events-none" />
+                {/* Diagonal court line */}
+                <div className="absolute top-0 right-1/3 w-[2px] h-full bg-white/15 rotate-12 pointer-events-none" />
+                {/* Radial spotlight glow behind cat */}
+                <div className="absolute inset-0 bg-radial from-white/25 via-transparent to-black/35 pointer-events-none" />
+              </div>
 
-                {/* Card Center: 3D Cute Petwear Clay Figurine Asset */}
-                <div className="w-full flex-1 flex items-center justify-center my-3 relative overflow-hidden rounded-2xl group-hover:scale-105 transition-transform duration-300">
-                  <img
-                    src={cat.image}
-                    alt={cat.title}
-                    className="w-full h-36 sm:h-40 object-contain drop-shadow-sm rounded-2xl"
+              {/* Top Tag: Outdoor area */}
+              <div className="relative z-20 flex items-center justify-between">
+                <span className="px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/35 text-white text-xs font-medium tracking-wide shadow-xs">
+                  {CLUB_ITEMS[activeClubIndex].tag}
+                </span>
+              </div>
+
+              {/* Central Cat Cutout (herosection cat.png in ski goggles & puffer jacket) */}
+              <div className="absolute inset-x-0 bottom-0 top-10 flex items-end justify-center pointer-events-none z-10 overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={CLUB_ITEMS[activeClubIndex].id}
+                    src={CLUB_ITEMS[activeClubIndex].image}
+                    alt={CLUB_ITEMS[activeClubIndex].catName}
+                    initial={{ opacity: 0, y: 35, scale: 0.94 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -25, scale: 0.94 }}
+                    transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-auto h-[86%] sm:h-[90%] object-contain object-bottom drop-shadow-[0_25px_35px_rgba(0,0,0,0.38)] group-hover:scale-105 transition-transform duration-500"
                   />
+                </AnimatePresence>
+              </div>
+
+              {/* Bottom Overlay & Text: Versatile space for a wide range of activities */}
+              <div className="relative z-20 flex items-end justify-between gap-4 mt-auto pt-8">
+                <div className="max-w-[76%]">
+                  <p className="text-white font-medium text-base sm:text-lg leading-snug tracking-tight drop-shadow-md">
+                    {CLUB_ITEMS[activeClubIndex].title}
+                  </p>
                 </div>
 
-                {/* Card Bottom: Count Badge & Explore Icon */}
-                <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
-                  <span className="bg-slate-950 text-white text-[11px] font-mono font-extrabold px-3 py-1 rounded-full shadow-sm tracking-wide">
-                    {cat.count}
-                  </span>
-                  <span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-hover:bg-[#1d6bf3] group-hover:text-white transition-all shadow-sm">
-                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </span>
-                </div>
-              </motion.div>
-            ))}
+                {/* Bottom-right Circle Button: ↗ */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNextClub();
+                  }}
+                  className="w-12 h-12 rounded-full bg-slate-950 hover:bg-slate-800 text-white flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 transition-all cursor-pointer flex-shrink-0"
+                  title="Next style"
+                >
+                  <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
+                </button>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* ==================== RIGHT COLUMN: SECONDARY CARD + CONTROLS ==================== */}
+          <div className="lg:col-span-3 flex flex-col justify-between gap-6 py-2 sm:py-4">
+            {/* Top Card: Indoor / Futsal Court */}
+            <motion.div
+              layout
+              onClick={handleNextClub}
+              className="w-full h-[230px] sm:h-[250px] rounded-[2.2rem] sm:rounded-[2.6rem] relative overflow-hidden shadow-xl shadow-slate-900/5 p-6 flex flex-col justify-between group cursor-pointer transition-all duration-700"
+              style={{
+                background: CLUB_ITEMS[(activeClubIndex + 1) % CLUB_ITEMS.length].cardBgGradient,
+              }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Court Lines in Background */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-6 -right-10 w-44 h-44 rounded-full border-[3px] border-white/25 pointer-events-none" />
+                <div className="absolute top-1/2 left-0 w-full h-[2px] bg-white/20 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
+              </div>
+
+              {/* Top Tag: Indoor */}
+              <div className="relative z-20">
+                <span className="px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/35 text-white text-[11px] font-medium tracking-wide shadow-xs">
+                  {CLUB_ITEMS[(activeClubIndex + 1) % CLUB_ITEMS.length].secondaryTag}
+                </span>
+              </div>
+
+              {/* Cat preview cutout on right side */}
+              <div className="absolute right-2 bottom-0 top-6 w-1/2 flex items-end justify-center pointer-events-none z-10 opacity-90 group-hover:scale-110 transition-transform duration-500">
+                <img
+                  src={CLUB_ITEMS[(activeClubIndex + 1) % CLUB_ITEMS.length].image}
+                  alt={CLUB_ITEMS[(activeClubIndex + 1) % CLUB_ITEMS.length].editionName}
+                  className="h-[88%] w-auto object-contain object-bottom drop-shadow-md"
+                />
+              </div>
+
+              {/* Bottom Title: Futsal court */}
+              <div className="relative z-20">
+                <h3 className="text-white font-bold text-lg tracking-tight drop-shadow-md">
+                  {CLUB_ITEMS[(activeClubIndex + 1) % CLUB_ITEMS.length].previewTitle}
+                </h3>
+                <span className="text-white/80 text-xs font-medium">
+                  {CLUB_ITEMS[(activeClubIndex + 1) % CLUB_ITEMS.length].editionName}
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Bottom Description & Navigation Arrow Buttons */}
+            <div className="flex flex-col gap-5">
+              <p className="text-slate-600 text-xs sm:text-[13px] leading-relaxed font-normal">
+                {CLUB_ITEMS[activeClubIndex].description}
+              </p>
+
+              {/* Navigation Arrow Controls: Left (white) & Right (black) */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handlePrevClub}
+                  className="w-12 h-12 rounded-full border border-slate-200 bg-white hover:bg-slate-50 active:scale-95 text-slate-800 flex items-center justify-center transition-all shadow-xs hover:border-slate-300 cursor-pointer"
+                  title="Previous"
+                >
+                  <ArrowLeft className="w-4 h-4 stroke-[2.2]" />
+                </button>
+                <button
+                  onClick={handleNextClub}
+                  className="w-12 h-12 rounded-full bg-slate-950 hover:bg-slate-800 active:scale-95 text-white flex items-center justify-center transition-all shadow-md cursor-pointer"
+                  title="Next"
+                >
+                  <ArrowRight className="w-4 h-4 stroke-[2.2]" />
+                </button>
+              </div>
+            </div>
           </div>
 
         </div>
