@@ -235,13 +235,13 @@ const FACILITIES_ITEMS = [
   {
     id: 'alpine-parkas',
     tag: 'Alpine Parkas',
+    subTag: 'Alpine Down',
     title: 'Weatherproof Down Parkas Built for Deep Snow',
     category: 'Winter Parkas',
     image: pinkCatImg,
     catName: 'Sakura Ski Cat',
     bgGradient: 'linear-gradient(155deg, #ea580c 0%, #c2410c 50%, #7c2d12 100%)',
     overlayType: 'slats',
-    cardStyle: 'standard',
   },
   {
     id: 'snowsuit-edition',
@@ -253,29 +253,28 @@ const FACILITIES_ITEMS = [
     catName: 'Alpine Forest Cat',
     bgGradient: 'linear-gradient(180deg, #38bdf8 0%, #7dd3fc 35%, #15803d 40%, #166534 100%)',
     overlayType: 'turf',
-    cardStyle: 'interactive-pill',
   },
   {
     id: 'thermal-knitwear',
     tag: 'Thermal Knits',
+    subTag: 'Merino Knits',
     title: 'Merino Wool Knits & Fleeces for Chilly Morning Walks',
     category: 'Knit Sweaters',
     image: brownCatImg,
     catName: 'Solar Amber Cat',
     bgGradient: 'linear-gradient(155deg, #c2410c 0%, #9a3412 50%, #431407 100%)',
     overlayType: 'track-lines',
-    cardStyle: 'standard',
   },
   {
     id: 'storm-shells',
     tag: 'Storm Shells',
+    subTag: 'Storm Shell',
     title: 'Ultralight Hydrophobic Ski Jackets & Protective Vests',
     category: 'Storm Jackets',
     image: greenCatImg,
     catName: 'Alpine Trail Cat',
     bgGradient: 'linear-gradient(180deg, #0284c7 0%, #0369a1 70%, #075985 100%)',
     overlayType: 'court-line',
-    cardStyle: 'standard',
   },
 ];
 
@@ -1744,37 +1743,38 @@ export default function CatEcommerceLanding() {
                   />
                 </div>
 
-                {/* Card Bottom Area */}
-                {facility.cardStyle === 'interactive-pill' ? (
-                  /* Card 2 Style: Frosted glass bottom box with "Play ground" + Arrow */
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="relative z-20 p-3.5 rounded-2xl bg-black/45 backdrop-blur-md border border-white/20 text-white flex items-center justify-between shadow-xl mt-auto"
-                  >
-                    <div className="max-w-[78%]">
-                      <span className="text-[10px] font-semibold tracking-wide text-white/90 border border-white/30 px-2 py-0.5 rounded-full inline-block mb-1">
-                        {facility.subTag}
-                      </span>
-                      <h3 className="font-display font-bold text-xs sm:text-[13px] leading-snug text-white">
-                        {facility.title}
-                      </h3>
-                    </div>
-                    <motion.button
-                      whileHover={{ scale: 1.15, rotate: 45 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="w-9 h-9 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-md cursor-pointer flex-shrink-0 border border-white/20"
-                    >
-                      <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-                    </motion.button>
-                  </motion.div>
-                ) : (
-                  /* Standard Cards (1, 3, 4): Bold white title with subtle drop shadow */
-                  <div className="relative z-20 mt-auto pt-4 group-hover:-translate-y-1 transition-transform duration-300">
-                    <h3 className="text-white font-display font-bold text-base sm:text-[1.05rem] leading-snug tracking-tight drop-shadow-md">
+                {/* Card Bottom Area: Default title in non-hover, sleek frosted glassmorphism box reveals on hover on ALL cards */}
+                <div className="relative z-20 mt-auto min-h-[76px] flex items-end">
+                  
+                  {/* Default State: Clean white title (smoothly fades out & drops down slightly on hover) */}
+                  <div className="w-full pt-4 transition-all duration-300 group-hover:opacity-0 group-hover:translate-y-2 pointer-events-none">
+                    <h3 className="text-white font-display font-bold text-base sm:text-[1.05rem] leading-snug tracking-tight drop-shadow-md line-clamp-2">
                       {facility.title}
                     </h3>
                   </div>
-                )}
+
+                  {/* Hover State: Frosted glassmorphism box with subTag pill and action button (smoothly reveals on hover on ALL cards) */}
+                  <div className="absolute inset-x-0 bottom-0 opacity-0 translate-y-3 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 ease-out z-25">
+                    <div className="p-3.5 rounded-2xl bg-black/55 backdrop-blur-md border border-white/25 text-white flex items-center justify-between shadow-2xl">
+                      <div className="max-w-[78%]">
+                        <span className="text-[10px] font-semibold tracking-wide text-white/90 border border-white/30 px-2.5 py-0.5 rounded-full inline-block mb-1 bg-white/10 backdrop-blur-xs">
+                          {facility.subTag || 'Alpine Spec'}
+                        </span>
+                        <h3 className="font-display font-bold text-xs sm:text-[12.5px] leading-snug text-white line-clamp-2">
+                          {facility.title}
+                        </h3>
+                      </div>
+                      <motion.button
+                        whileHover={{ scale: 1.15, rotate: 45, backgroundColor: '#ff4071', borderColor: '#ff4071' }}
+                        whileTap={{ scale: 0.9 }}
+                        className="w-9 h-9 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-md cursor-pointer flex-shrink-0 border border-white/25 transition-colors"
+                      >
+                        <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+                      </motion.button>
+                    </div>
+                  </div>
+
+                </div>
               </motion.div>
             ))}
           </motion.div>
