@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { ShoppingBag, Menu, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Plus, Search } from 'lucide-react';
+import { ShoppingBag, Menu, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Plus, Search, DollarSign, ChevronsRight, ChevronDown } from 'lucide-react';
 
 // Import hero cat assets
 import pinkCatImg from '../../assets/cat-ecommerce/herosection cat.png';
@@ -316,6 +316,30 @@ export default function CatEcommerceLanding() {
 
   const handlePrevFacility = () => {
     setFacilityIndex((prev) => (prev - 1 + FACILITIES_ITEMS.length) % FACILITIES_ITEMS.length);
+  };
+
+  // Footer Join Form State
+  const [footerEmail, setFooterEmail] = useState('');
+  const [footerName, setFooterName] = useState('');
+  const [footerType, setFooterType] = useState('');
+  const [footerSubmitted, setFooterSubmitted] = useState(false);
+
+  const handleFooterJoin = (e) => {
+    e?.preventDefault();
+    if (!footerEmail && !footerName) return;
+    setFooterSubmitted(true);
+    confetti({
+      particleCount: 50,
+      spread: 60,
+      origin: { y: 0.88 },
+      colors: ['#1f4333', '#ff4071', '#059669', '#ffffff'],
+    });
+    setTimeout(() => {
+      setFooterSubmitted(false);
+      setFooterEmail('');
+      setFooterName('');
+      setFooterType('');
+    }, 3500);
   };
 
   // Switch cat helper with directional tracking
@@ -1231,17 +1255,477 @@ export default function CatEcommerceLanding() {
       </section>
 
       {/* =========================================================================
-          MINIMAL CLEAN FOOTER
+          SECTION 5: FIND THE PERFECT PLAN (Refined to match Reference Image)
+          - Header:
+            - Left: Circular ($) badge + "Pricing" pill badge
+            - Center: "Find the Perfect Plan for Your Athletic (🐾) Journey"
+              (Clean modern geometric font, uncompressed)
+            - Sub-link: "See More Options >>"
+          - Cards:
+            - Left Card: Solid sage green with graceful white ribbon line loop,
+              "Best Seller" pill, 2 coach avatars + "Recommended by US Coaches",
+              "6 Season Package", "Individualized Training", "$50 /Session" pill,
+              "1 Year Expiry", "$600 / Total Cost", white circular ↗ button
+            - Right Card: Scenic outdoor turf / fairway photo with warm sunlight,
+              "Best Seller", coach avatars, "12 Season Package",
+              "Individualized Training", "$98 /Session", "1 Year Expiry",
+              "$1176 / Total Cost", white circular ↗ button
       ========================================================================= */}
-      <footer className="w-full border-t border-slate-100 py-6 px-6 sm:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-bold text-slate-500">
-        <div className="flex items-center gap-2">
-          <PawIcon className="w-5 h-5" color="#ff4071" />
-          <span className="font-display font-black text-slate-900 tracking-tight text-sm uppercase">CATCLOTHES</span>
-          <span className="text-slate-400">&bull;</span>
-          <span>New Winter Collection 2026</span>
+      <section
+        id="pricing-section"
+        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-16 sm:py-24 relative"
+      >
+        {/* Top Header Row */}
+        <div className="relative mb-12 sm:mb-16">
+          
+          {/* Top Left: Circular Dollar Icon + Pricing Pill Badge */}
+          <div className="sm:absolute sm:left-0 sm:top-0 flex flex-col items-start gap-2 mb-6 sm:mb-0">
+            <div className="w-10 h-10 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-xs">
+              <DollarSign className="w-5 h-5 stroke-[2.5]" />
+            </div>
+            <span className="px-3.5 py-1 rounded-full border border-slate-200/90 bg-white text-slate-800 text-xs font-semibold tracking-wide shadow-2xs">
+              Pricing
+            </span>
+          </div>
+
+          {/* Center: Bold Headline + Paw Badge + Sub-link (Matches Reference Mockup) */}
+          <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+            <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-[3.6rem] text-slate-950 tracking-tight leading-[1.06]">
+              Find the Perfect Plan for Your <br />
+              Athletic{' '}
+              <span className="inline-flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-full border-2 border-slate-950 mx-1.5 align-middle bg-white shadow-2xs">
+                <PawIcon className="w-5 h-5 sm:w-6 sm:h-6" color="#0f172a" />
+              </span>{' '}
+              Journey
+            </h2>
+
+            {/* See More Options >> Link */}
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="inline-flex items-center gap-2.5 mt-5 text-xs sm:text-sm font-semibold text-slate-800 hover:text-slate-950 transition-colors group cursor-pointer"
+            >
+              <span>See More Options</span>
+              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs">
+                <ChevronsRight className="w-3.5 h-3.5 stroke-[2.5]" />
+              </span>
+            </motion.button>
+          </div>
+
         </div>
-        <div className="text-slate-400 text-[11px]">
-          Luxury Weatherproof Petwear Studio &bull; All Rights Reserved
+
+        {/* 2 Big Pricing Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-stretch">
+          
+          {/* ==================== CARD 1: 6 SEASON PACKAGE (Sage Green + Wavy Ribbon) ==================== */}
+          <motion.div
+            whileHover={{ y: -6, transition: { duration: 0.25 } }}
+            className="w-full min-h-[460px] sm:min-h-[500px] rounded-[2.8rem] sm:rounded-[3.2rem] p-8 sm:p-10 lg:p-12 relative overflow-hidden flex flex-col justify-between shadow-xl transition-all"
+            style={{
+              backgroundColor: '#587e6b',
+            }}
+          >
+            {/* Graceful Abstract White Ribbon Line Loop (Matching User's Reference) */}
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              viewBox="0 0 700 500"
+              fill="none"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M-20 300 C150 300, 170 200, 320 230 C470 260, 520 330, 720 270"
+                stroke="rgba(255, 255, 255, 0.22)"
+                strokeWidth="56"
+                strokeLinecap="round"
+              />
+            </svg>
+
+            {/* Top Row: Best Seller Pill + Cat Avatars with Recommendation Text */}
+            <div className="relative z-20 flex items-start justify-between gap-4">
+              <span className="px-4 py-1.5 rounded-full bg-slate-950 text-white text-[11px] font-bold shadow-xs">
+                Best Seller
+              </span>
+
+              {/* Cat Coach Avatars & recommendation badge */}
+              <div className="flex flex-col items-end text-right">
+                <div className="flex items-center -space-x-2 mb-1.5">
+                  <img
+                    src={pinkCatImg}
+                    alt="Cat Coach 1"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-pink-100"
+                  />
+                  <img
+                    src={greenCatImg}
+                    alt="Cat Coach 2"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-emerald-100"
+                  />
+                </div>
+                <span className="text-white/90 text-[10.5px] leading-tight font-medium">
+                  Recommended by <br />
+                  <span className="font-bold">US Coaches</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Center: Package Title + Subheading + Price Pill */}
+            <div className="relative z-20 my-auto py-6 flex flex-col items-center text-center">
+              <h3 className="font-display font-black text-3xl sm:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-[1.05] mb-2 drop-shadow-sm">
+                6 Season <br />
+                Package
+              </h3>
+              <p className="text-white/90 text-sm sm:text-base font-medium mb-7 drop-shadow-2xs">
+                Individualized Training
+              </p>
+
+              {/* Price Pill: $50 /Session */}
+              <div className="inline-flex items-baseline gap-2 px-9 py-3.5 rounded-full bg-slate-950 text-white shadow-2xl shadow-black/25">
+                <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">$50</span>
+                <span className="text-white/70 text-xs sm:text-sm font-medium">/Session</span>
+              </div>
+            </div>
+
+            {/* Bottom Row: Expiry Pill + Total Cost + Circle Action Button */}
+            <div className="relative z-20 flex items-center justify-between pt-4 border-t border-white/20">
+              <span className="px-4 py-1.5 rounded-full border border-white/50 text-white text-xs font-medium tracking-wide">
+                1 Year Expiry
+              </span>
+
+              <div className="flex-1 mx-4 sm:mx-8 flex flex-col items-center">
+                <div className="w-full max-w-[220px] h-[1px] bg-white/25 mb-1.5" />
+                <span className="text-white text-xs sm:text-[13px] font-bold tracking-tight">
+                  $600 / Total Cost
+                </span>
+              </div>
+
+              {/* White Action Circle ↗ */}
+              <button className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-white text-slate-950 flex items-center justify-center shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer flex-shrink-0">
+                <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
+              </button>
+            </div>
+
+          </motion.div>
+
+          {/* ==================== CARD 2: 12 SEASON PACKAGE (Dark Forest Green + Cutout Cat Model) ==================== */}
+          <motion.div
+            whileHover={{ y: -6, transition: { duration: 0.25 } }}
+            className="w-full min-h-[460px] sm:min-h-[500px] rounded-[2.8rem] sm:rounded-[3.2rem] p-8 sm:p-10 lg:p-12 relative overflow-hidden flex flex-col justify-between shadow-xl transition-all group"
+            style={{
+              background: 'linear-gradient(155deg, #1f4333 0%, #132f23 50%, #0c2017 100%)',
+            }}
+          >
+            {/* Top Row: Best Seller Pill + Cat Avatars with Recommendation Text */}
+            <div className="relative z-20 flex items-start justify-between gap-4">
+              <span className="px-4 py-1.5 rounded-full bg-slate-950 text-white text-[11px] font-bold shadow-xs">
+                Best Seller
+              </span>
+
+              {/* Cat Coach Avatars & recommendation badge */}
+              <div className="flex flex-col items-end text-right">
+                <div className="flex items-center -space-x-2 mb-1.5">
+                  <img
+                    src={greenCatImg}
+                    alt="Cat Coach 2"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-emerald-100"
+                  />
+                  <img
+                    src={brownCatImg}
+                    alt="Cat Coach 3"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-amber-100"
+                  />
+                </div>
+                <span className="text-white/90 text-[10.5px] leading-tight font-medium">
+                  Recommended by <br />
+                  <span className="font-bold">US Coaches</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Prominent Feline Model Cutout on the Right (Solar Amber Cat in Ski Goggles & Puffer Coat) */}
+            <div className="absolute right-2 sm:right-5 lg:right-6 top-20 sm:top-24 bottom-14 z-15 w-44 sm:w-52 lg:w-56 flex items-end justify-center pointer-events-none">
+              <img
+                src={brownCatImg}
+                alt="Cat Model in Ski Goggles and Jacket"
+                className="w-full h-auto max-h-[290px] sm:max-h-[330px] object-contain object-bottom drop-shadow-[0_25px_35px_rgba(0,0,0,0.7)]"
+              />
+            </div>
+
+            {/* Center: Package Title + Subheading + Price Pill */}
+            <div className="relative z-20 my-auto py-6 flex flex-col items-center text-center">
+              <h3 className="font-display font-black text-3xl sm:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-[1.05] mb-2 drop-shadow-sm">
+                12 Season <br />
+                Package
+              </h3>
+              <p className="text-white/90 text-sm sm:text-base font-medium mb-7 drop-shadow-2xs">
+                Individualized Training
+              </p>
+
+              {/* Price Pill: $98 /Session */}
+              <div className="inline-flex items-baseline gap-2 px-9 py-3.5 rounded-full bg-slate-950 text-white shadow-2xl shadow-black/35">
+                <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">$98</span>
+                <span className="text-white/70 text-xs sm:text-sm font-medium">/Session</span>
+              </div>
+            </div>
+
+            {/* Bottom Row: Expiry Pill + Total Cost + Circle Action Button */}
+            <div className="relative z-20 flex items-center justify-between pt-4 border-t border-white/20">
+              <span className="px-4 py-1.5 rounded-full border border-white/50 text-white text-xs font-medium tracking-wide">
+                1 Year Expiry
+              </span>
+
+              <div className="flex-1 mx-4 sm:mx-8 flex flex-col items-center">
+                <div className="w-full max-w-[220px] h-[1px] bg-white/30 mb-1.5" />
+                <span className="text-white text-xs sm:text-[13px] font-bold tracking-tight drop-shadow-sm">
+                  $1176 / Total Cost
+                </span>
+              </div>
+
+              {/* White Action Circle ↗ */}
+              <button className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-white text-slate-950 flex items-center justify-center shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer flex-shrink-0">
+                <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
+              </button>
+            </div>
+
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 6: VELOCITY CLUB FOOTER (Matches User's Reference Layout)
+          - Large soft gray rounded card: bg-[#f4f4f4], rounded-[2.8rem] sm:rounded-[3.2rem]
+          - 5 Columns:
+            1. Brand & Slogan:
+               - Top: Velocity Club logo monogram + bold title
+               - Bottom: "Your Play, Your Way- / Modern Sports Facilities / for Every Passion"
+                 with dark green "#1f4333" pill badges for "Your Play," and "Sports Facilities"
+            2. Facilites:
+               - Tennis Courts, Basketball Courts, Football Field, Swimming Pool,
+                 Gym & Fitness Center, Multi-purpose Hall, Sauna & Relaxation Zone, Locker Rooms
+            3. About:
+               - Our Mission, Vision, Community
+            4. Social:
+               - Outline pill buttons: ( Instagram ), ( Facebook ), ( Linkedin ), ( Youtube )
+            5. Join us:
+               - Type your email... input pill
+               - Type your name here... input pill
+               - Training Type dropdown pill with chevron
+               - "START MOVING >>" pill button with right-aligned black circle
+          - Bottom Row:
+            - Left: Privacy Policy Terms
+            - Right: All rights reserved©2024
+      ========================================================================= */}
+      <footer className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 pb-12 sm:pb-16 pt-4">
+        <div className="w-full bg-[#f4f4f4] rounded-[2.5rem] sm:rounded-[3.2rem] lg:rounded-[3.6rem] p-8 sm:p-12 lg:p-16 relative overflow-hidden text-slate-900 shadow-sm border border-slate-200/50">
+          
+          {/* Main 5-Column Content Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+            
+            {/* Column 1: Brand & Slogan (Spans 4 columns on lg) */}
+            <div className="lg:col-span-4 flex flex-col justify-between h-full">
+              {/* Logo & Brand */}
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-slate-950 flex items-center justify-center bg-white shadow-2xs">
+                  <PawIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5" color="#0f172a" />
+                </div>
+                <span className="font-sans font-bold text-xl sm:text-2xl text-slate-950 tracking-tight">
+                  Velocity Club
+                </span>
+              </div>
+
+              {/* Slogan with Dark Green Pill Badges (Matches Reference Image) */}
+              <div className="mt-12 sm:mt-16 lg:mt-24 max-w-sm">
+                <h3 className="font-sans font-bold text-2xl sm:text-3xl lg:text-[2.1rem] text-slate-950 tracking-tight leading-[1.2]">
+                  <span className="inline-block bg-[#1f4333] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-xs">
+                    Your Play,
+                  </span>
+                  Your Way-
+                  <br />
+                  Modern{' '}
+                  <span className="inline-block bg-[#1f4333] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-xs">
+                    Sports Facilities
+                  </span>
+                  <br />
+                  for Every Passion
+                </h3>
+              </div>
+            </div>
+
+            {/* Column 2: Facilites (Spans 2 columns on lg) */}
+            <div className="lg:col-span-2">
+              <h4 className="font-sans font-bold text-slate-950 text-base sm:text-lg mb-5">
+                Facilites
+              </h4>
+              <ul className="space-y-3 sm:space-y-3.5 text-xs sm:text-[13px] text-slate-700 font-medium">
+                <li>
+                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
+                    Tennis Courts
+                  </a>
+                </li>
+                <li>
+                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
+                    Basketball Courts
+                  </a>
+                </li>
+                <li>
+                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
+                    Football Field
+                  </a>
+                </li>
+                <li>
+                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
+                    Swimming Pool
+                  </a>
+                </li>
+                <li>
+                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
+                    Gym & Fitness Center
+                  </a>
+                </li>
+                <li>
+                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
+                    Multi-purpose Hall
+                  </a>
+                </li>
+                <li>
+                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
+                    Sauna & Relaxation Zone
+                  </a>
+                </li>
+                <li>
+                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
+                    Locker Rooms
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 3: About (Spans 2 columns on lg) */}
+            <div className="lg:col-span-2">
+              <h4 className="font-sans font-bold text-slate-950 text-base sm:text-lg mb-5">
+                About
+              </h4>
+              <ul className="space-y-3 sm:space-y-3.5 text-xs sm:text-[13px] text-slate-700 font-medium">
+                <li>
+                  <a href="#velocity-club-section" className="hover:text-slate-950 transition-colors">
+                    Our Mission
+                  </a>
+                </li>
+                <li>
+                  <a href="#excellence-section" className="hover:text-slate-950 transition-colors">
+                    Vision
+                  </a>
+                </li>
+                <li>
+                  <a href="#pricing-section" className="hover:text-slate-950 transition-colors">
+                    Community
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 4: Social (Spans 1 column on lg) */}
+            <div className="lg:col-span-1 xl:col-span-1">
+              <h4 className="font-sans font-bold text-slate-950 text-base sm:text-lg mb-5">
+                Social
+              </h4>
+              <div className="flex flex-col gap-2.5 items-start">
+                <a
+                  href="#instagram"
+                  className="px-4 py-1.5 rounded-full border border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white text-xs font-medium tracking-wide transition-all shadow-2xs"
+                >
+                  Instagram
+                </a>
+                <a
+                  href="#facebook"
+                  className="px-4 py-1.5 rounded-full border border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white text-xs font-medium tracking-wide transition-all shadow-2xs"
+                >
+                  Facebook
+                </a>
+                <a
+                  href="#linkedin"
+                  className="px-4 py-1.5 rounded-full border border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white text-xs font-medium tracking-wide transition-all shadow-2xs"
+                >
+                  Linkedin
+                </a>
+                <a
+                  href="#youtube"
+                  className="px-4 py-1.5 rounded-full border border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white text-xs font-medium tracking-wide transition-all shadow-2xs"
+                >
+                  Youtube
+                </a>
+              </div>
+            </div>
+
+            {/* Column 5: Join us (Spans 3 columns on lg) */}
+            <div className="lg:col-span-3">
+              <h4 className="font-sans font-bold text-slate-950 text-base sm:text-lg mb-5">
+                Join us
+              </h4>
+              <form onSubmit={handleFooterJoin} className="flex flex-col gap-3">
+                {/* Email Input */}
+                <input
+                  type="email"
+                  placeholder="Type your email..."
+                  value={footerEmail}
+                  onChange={(e) => setFooterEmail(e.target.value)}
+                  className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-800 placeholder:text-slate-400 border border-slate-200/90 shadow-2xs focus:outline-none focus:border-slate-950 transition-colors"
+                />
+
+                {/* Name Input */}
+                <input
+                  type="text"
+                  placeholder="Type your name here..."
+                  value={footerName}
+                  onChange={(e) => setFooterName(e.target.value)}
+                  className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-800 placeholder:text-slate-400 border border-slate-200/90 shadow-2xs focus:outline-none focus:border-slate-950 transition-colors"
+                />
+
+                {/* Training Type Select */}
+                <div className="relative">
+                  <select
+                    value={footerType}
+                    onChange={(e) => setFooterType(e.target.value)}
+                    className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-500 appearance-none border border-slate-200/90 shadow-2xs focus:outline-none focus:border-slate-950 transition-colors cursor-pointer pr-10"
+                  >
+                    <option value="">Training Type</option>
+                    <option value="individual">Individual Practice</option>
+                    <option value="team">Team Session</option>
+                    <option value="personal">Personal Coaching</option>
+                    <option value="feline">Feline Agility</option>
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  className="w-full bg-white hover:bg-slate-50 border border-slate-950 rounded-full py-1 pl-5 pr-1 flex items-center justify-between text-xs sm:text-[12.5px] font-bold tracking-wider uppercase text-slate-950 cursor-pointer transition-all shadow-xs group mt-1"
+                >
+                  <span>{footerSubmitted ? 'STARTING...' : 'START MOVING'}</span>
+                  <span className="w-8 h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:scale-105 transition-transform flex-shrink-0">
+                    <ChevronsRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                  </span>
+                </button>
+              </form>
+            </div>
+
+          </div>
+
+          {/* Bottom Bar: Privacy Policy Terms & Copyright */}
+          <div className="mt-14 sm:mt-20 lg:mt-24 pt-6 border-t border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-[13px] text-slate-600 font-medium">
+            <div className="flex items-center gap-3">
+              <a href="#privacy" className="hover:text-slate-950 transition-colors">
+                Privacy Policy
+              </a>
+              <a href="#terms" className="hover:text-slate-950 transition-colors">
+                Terms
+              </a>
+            </div>
+            <div>
+              All rights reserved©2024
+            </div>
+          </div>
+
         </div>
       </footer>
 
