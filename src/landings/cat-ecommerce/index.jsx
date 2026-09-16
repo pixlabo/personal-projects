@@ -426,119 +426,250 @@ export default function CatEcommerceLanding() {
     <div className="w-full min-h-screen bg-white text-slate-900 font-sans select-none overflow-x-hidden">
 
       {/* =========================================================================
-          SECTION 1: HERO SHOWCASE (Matches design, 50/50 button, in-place switch)
+          SECTION 1: HERO SHOWCASE (Full Framer Motion Animations & Text Slide-Up)
       ========================================================================= */}
       <section className="w-full min-h-screen flex flex-col justify-between px-4 sm:px-8 lg:px-12 py-3 sm:py-4 relative">
         
-        {/* Top Navigation Bar */}
-        <header className="w-full px-2 sm:px-4 pt-2 pb-2 flex items-center justify-between relative z-30 flex-shrink-0">
+        {/* Top Navigation Bar with Framer Motion Entrance */}
+        <motion.header
+          initial={{ opacity: 0, y: -24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="w-full px-2 sm:px-4 pt-2 pb-2 flex items-center justify-between relative z-30 flex-shrink-0"
+        >
           {/* Brand Logo */}
-          <div
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 cursor-pointer group"
             onClick={() => handleSelectVariant(VARIANTS[0])}
           >
-            <div className="text-[#ff4071] group-hover:scale-110 transition-transform">
+            <div className="text-[#ff4071] group-hover:scale-110 group-hover:rotate-6 transition-transform">
               <PawIcon className="w-7 h-7" color="#ff4071" />
             </div>
             <span className="font-display font-black text-2xl sm:text-3xl tracking-tight text-slate-950 uppercase">
               CATCLOTHES
             </span>
-          </div>
+          </motion.div>
 
-          {/* Exact Desktop Navigation Links from design */}
-          <nav className="hidden xl:flex items-center gap-7 2xl:gap-10 text-[11px] font-extrabold tracking-wider uppercase text-slate-800">
-            <button className="hover:text-[#ff4071] transition-colors cursor-pointer uppercase">
-              JACKETS AND COATS
-            </button>
-            <button className="hover:text-[#ff4071] transition-colors cursor-pointer uppercase">
-              OVERALLS AND SUITS
-            </button>
-            <button className="hover:text-[#ff4071] transition-colors cursor-pointer uppercase">
-              T-SHIRTS AND SWEATERS
-            </button>
-            <button className="hover:text-[#ff4071] transition-colors cursor-pointer uppercase">
-              ACCESSORIES
-            </button>
-            <button className="hover:text-[#ff4071] transition-colors cursor-pointer uppercase">
-              SPECIAL OCCASION OUTFITS
-            </button>
-          </nav>
+          {/* Desktop Navigation Links with Staggered Entrance */}
+          <motion.nav
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.08, delayChildren: 0.15 },
+              },
+            }}
+            className="hidden xl:flex items-center gap-7 2xl:gap-10 text-[11px] font-extrabold tracking-wider uppercase text-slate-800"
+          >
+            {['JACKETS AND COATS', 'OVERALLS AND SUITS', 'T-SHIRTS AND SWEATERS', 'ACCESSORIES', 'SPECIAL OCCASION OUTFITS'].map((item) => (
+              <motion.button
+                key={item}
+                variants={{
+                  hidden: { opacity: 0, y: -12 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                }}
+                whileHover={{ y: -2, color: '#ff4071' }}
+                whileTap={{ scale: 0.96 }}
+                className="hover:text-[#ff4071] transition-colors cursor-pointer uppercase"
+              >
+                {item}
+              </motion.button>
+            ))}
+          </motion.nav>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-2.5">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center gap-2.5"
+          >
             {/* Cart Button */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
               onClick={handleAddToCart}
-              className="relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#ff4071] hover:bg-[#e11d48] text-white shadow-md shadow-pink-400/30 transition-all transform active:scale-95 cursor-pointer"
+              className="relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#ff4071] hover:bg-[#e11d48] text-white shadow-md shadow-pink-400/30 transition-all cursor-pointer"
               title="Shopping Bag"
             >
               <ShoppingBag className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-slate-900 text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm">
+              <motion.span
+                key={cartCount}
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-slate-900 text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm"
+              >
                 {cartCount}
-              </span>
-            </button>
+              </motion.span>
+            </motion.button>
 
             {/* Menu Button */}
-            <button
-              className="flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#ff4071] hover:bg-[#e11d48] text-white shadow-md shadow-pink-400/30 transition-all transform active:scale-95 cursor-pointer"
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
+              className="flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#ff4071] hover:bg-[#e11d48] text-white shadow-md shadow-pink-400/30 transition-all cursor-pointer"
               title="Menu"
             >
               <Menu className="w-5 h-5" />
-            </button>
-          </div>
-        </header>
+            </motion.button>
+          </motion.div>
+        </motion.header>
 
         {/* Main Hero Showcase Stage */}
         <div className="relative w-full flex-1 flex flex-col items-center justify-end pb-2 pt-1 min-h-0">
 
-          {/* Giant Headline (Behind the cat) */}
-          <div className="w-full text-center relative z-10 pointer-events-none mb-[-3vw] sm:mb-[-4vw] lg:mb-[-5vw] flex-shrink-0">
-            <h1 className="font-display font-black tracking-tighter text-[11vw] sm:text-[9.5vw] lg:text-[7.6vw] 2xl:text-[7.2rem] leading-[0.88] uppercase flex items-center justify-center gap-3 sm:gap-6 flex-wrap">
-              <span className="text-[#ff4071]">NEW</span>
-              <span className="text-[#0a1128]">WINTER COLLECTION</span>
-            </h1>
+          {/* Giant Headline (Behind the cat) - Bottom-to-Top Staggered Slide-Up Reveal */}
+          <div className="w-full text-center relative z-10 pointer-events-none mb-[-3vw] sm:mb-[-4vw] lg:mb-[-5vw] flex-shrink-0 overflow-hidden py-2">
+            <motion.h1
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: {
+                    staggerChildren: 0.14,
+                    delayChildren: 0.18,
+                  },
+                },
+              }}
+              className="font-display font-black tracking-tighter text-[11vw] sm:text-[9.5vw] lg:text-[7.6vw] 2xl:text-[7.2rem] leading-[0.88] uppercase flex items-center justify-center gap-3 sm:gap-6 flex-wrap"
+            >
+              {/* Word 1: NEW (Pink) - Slides up from below */}
+              <span className="overflow-hidden inline-block pb-1">
+                <motion.span
+                  variants={{
+                    hidden: { y: '120%', opacity: 0, rotate: 2 },
+                    visible: {
+                      y: '0%',
+                      opacity: 1,
+                      rotate: 0,
+                      transition: {
+                        duration: 0.9,
+                        ease: [0.16, 1, 0.3, 1],
+                      },
+                    },
+                  }}
+                  className="inline-block text-[#ff4071]"
+                >
+                  NEW
+                </motion.span>
+              </span>
+
+              {/* Word 2: WINTER (Dark Navy) - Slides up from below */}
+              <span className="overflow-hidden inline-block pb-1">
+                <motion.span
+                  variants={{
+                    hidden: { y: '120%', opacity: 0, rotate: 2 },
+                    visible: {
+                      y: '0%',
+                      opacity: 1,
+                      rotate: 0,
+                      transition: {
+                        duration: 1.0,
+                        ease: [0.16, 1, 0.3, 1],
+                      },
+                    },
+                  }}
+                  className="inline-block text-[#0a1128]"
+                >
+                  WINTER
+                </motion.span>
+              </span>
+
+              {/* Word 3: COLLECTION (Dark Navy) - Slides up from below */}
+              <span className="overflow-hidden inline-block pb-1">
+                <motion.span
+                  variants={{
+                    hidden: { y: '120%', opacity: 0, rotate: 2 },
+                    visible: {
+                      y: '0%',
+                      opacity: 1,
+                      rotate: 0,
+                      transition: {
+                        duration: 1.1,
+                        ease: [0.16, 1, 0.3, 1],
+                      },
+                    },
+                  }}
+                  className="inline-block text-[#0a1128]"
+                >
+                  COLLECTION
+                </motion.span>
+              </span>
+            </motion.h1>
           </div>
 
           {/* Center Arena (Cat + Bottom Pink Container Card) */}
           <div className="relative w-full max-w-[1600px] flex-1 flex items-end justify-center min-h-[380px] sm:min-h-[460px] lg:min-h-[520px]">
 
-            {/* Card Container Wrapper */}
-            <div className="relative w-full h-[280px] sm:h-[350px] lg:h-[400px]">
+            {/* Card Container Wrapper with Entrance Motion */}
+            <motion.div
+              initial={{ opacity: 0, y: 50, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.85, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="relative w-full h-[280px] sm:h-[350px] lg:h-[400px]"
+            >
               {/* Bottom Rounded Color Card Container */}
               <div
                 className="w-full h-full rounded-[2.5rem] sm:rounded-[3.2rem] transition-colors duration-500 shadow-sm relative overflow-hidden"
                 style={{ backgroundColor: activeVariant.cardBg }}
               >
                 {/* Subtle decorative paw prints watermark in background */}
-                <div className="absolute inset-0 opacity-15 flex items-center justify-between p-8 pointer-events-none">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 0.15, scale: 1 }}
+                  transition={{ duration: 1.2, delay: 0.6 }}
+                  className="absolute inset-0 flex items-center justify-between p-8 pointer-events-none"
+                >
                   <PawIcon className="w-24 h-24 rotate-[-15deg]" color={activeVariant.accentColor} />
                   <PawIcon className="w-32 h-32 rotate-[25deg]" color={activeVariant.accentColor} />
-                </div>
+                </motion.div>
               </div>
 
               {/* Circular Hot Pink "ADD TO CART" Button: Exactly 50% outside, 50% inside the card's top edge */}
               <div className="absolute top-0 -translate-y-1/2 right-8 sm:right-14 lg:right-24 z-30">
                 <motion.button
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.94 }}
+                  initial={{ scale: 0, opacity: 0, rotate: -15 }}
+                  animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                  transition={{
+                    delay: 0.65,
+                    type: 'spring',
+                    stiffness: 240,
+                    damping: 18,
+                  }}
+                  whileHover={{ scale: 1.1, rotate: 3 }}
+                  whileTap={{ scale: 0.93 }}
                   onClick={handleAddToCart}
                   className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full bg-[#ff4071] hover:bg-[#e11d48] text-white shadow-2xl shadow-pink-500/40 flex flex-col items-center justify-center p-2 group transition-colors border-[6px] sm:border-8 border-white cursor-pointer"
                 >
-                  <PawIcon className="w-7 h-7 sm:w-8 sm:h-8 mb-1 group-hover:-translate-y-1 transition-transform" color="#ffffff" />
+                  <PawIcon className="w-7 h-7 sm:w-8 sm:h-8 mb-1 group-hover:-translate-y-1.5 transition-transform" color="#ffffff" />
                   <span className="font-display font-black text-xs sm:text-sm tracking-wider uppercase leading-tight">
                     {isAdded ? 'ADDED!' : 'ADD TO CART'}
                   </span>
                 </motion.button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Bottom Right Vertical Thumbnail Variant Cards (Switches in-place with ZERO page scroll) */}
-            <div className="absolute right-6 sm:right-10 lg:right-12 bottom-4 sm:bottom-6 z-30 flex flex-col gap-3">
-              {VARIANTS.filter((v) => v.id !== activeVariant.id).map((variant) => (
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.75, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute right-6 sm:right-10 lg:right-12 bottom-4 sm:bottom-6 z-30 flex flex-col gap-3"
+            >
+              {VARIANTS.filter((v) => v.id !== activeVariant.id).map((variant, idx) => (
                 <motion.button
                   key={variant.id}
-                  whileHover={{ scale: 1.08, x: -3 }}
-                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0.7, y: 15 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ delay: 0.8 + idx * 0.1, duration: 0.5 }}
+                  whileHover={{ scale: 1.1, x: -4 }}
+                  whileTap={{ scale: 0.93 }}
                   onClick={() => handleSelectVariant(variant)}
                   className={`w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-2xl sm:rounded-3xl p-1.5 shadow-lg border-2 border-white overflow-hidden relative group transition-all cursor-pointer ${variant.thumbBg}`}
                   title={`Switch to ${variant.name}`}
@@ -551,7 +682,7 @@ export default function CatEcommerceLanding() {
                   <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors rounded-xl" />
                 </motion.button>
               ))}
-            </div>
+            </motion.div>
 
             {/* Central Cat Hero Cutout Image */}
             <div className="absolute bottom-0 z-20 flex flex-col items-center justify-end w-full max-w-[640px] sm:max-w-[700px] lg:max-w-[760px] pointer-events-none">
@@ -591,10 +722,11 @@ export default function CatEcommerceLanding() {
               {/* Badge 1: MAIN MATERIAL (Left) */}
               <motion.div
                 key={`mat-${activeVariant.id}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="absolute left-[3%] sm:left-[8%] bottom-[16%] sm:bottom-[18%] z-30 pointer-events-auto backdrop-blur-md bg-white/85 border border-white/70 shadow-lg shadow-pink-900/5 rounded-2xl p-2.5 sm:p-3.5 min-w-[130px] sm:min-w-[160px] text-left hover:scale-105 transition-transform"
+                initial={{ opacity: 0, x: -35, y: 15 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ scale: 1.07, y: -4 }}
+                className="absolute left-[3%] sm:left-[8%] bottom-[16%] sm:bottom-[18%] z-30 pointer-events-auto backdrop-blur-md bg-white/85 border border-white/70 shadow-lg shadow-pink-900/5 rounded-2xl p-2.5 sm:p-3.5 min-w-[130px] sm:min-w-[160px] text-left cursor-default transition-shadow hover:shadow-xl"
               >
                 <div className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#ff4071]">
                   MAIN MATERIAL
@@ -607,10 +739,11 @@ export default function CatEcommerceLanding() {
               {/* Badge 2: LINING (Center-Right near zipper) */}
               <motion.div
                 key={`lin-${activeVariant.id}`}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25 }}
-                className="absolute right-[22%] sm:right-[26%] bottom-[28%] sm:bottom-[30%] z-30 pointer-events-auto backdrop-blur-md bg-white/85 border border-white/70 shadow-lg shadow-pink-900/5 rounded-2xl p-2.5 sm:p-3 min-w-[110px] sm:min-w-[130px] text-left hover:scale-105 transition-transform"
+                transition={{ duration: 0.6, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ scale: 1.07, y: -4 }}
+                className="absolute right-[22%] sm:right-[26%] bottom-[28%] sm:bottom-[30%] z-30 pointer-events-auto backdrop-blur-md bg-white/85 border border-white/70 shadow-lg shadow-pink-900/5 rounded-2xl p-2.5 sm:p-3 min-w-[110px] sm:min-w-[130px] text-left cursor-default transition-shadow hover:shadow-xl"
               >
                 <div className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#ff4071]">
                   LINING
@@ -623,10 +756,11 @@ export default function CatEcommerceLanding() {
               {/* Badge 3: INSULATION (Right) */}
               <motion.div
                 key={`ins-${activeVariant.id}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="absolute right-[3%] sm:right-[8%] bottom-[12%] sm:bottom-[14%] z-30 pointer-events-auto backdrop-blur-md bg-white/85 border border-white/70 shadow-lg shadow-pink-900/5 rounded-2xl p-2.5 sm:p-3.5 min-w-[140px] sm:min-w-[170px] text-left hover:scale-105 transition-transform"
+                initial={{ opacity: 0, x: 35, y: 15 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ scale: 1.07, y: -4 }}
+                className="absolute right-[3%] sm:right-[8%] bottom-[12%] sm:bottom-[14%] z-30 pointer-events-auto backdrop-blur-md bg-white/85 border border-white/70 shadow-lg shadow-pink-900/5 rounded-2xl p-2.5 sm:p-3.5 min-w-[140px] sm:min-w-[170px] text-left cursor-default transition-shadow hover:shadow-xl"
               >
                 <div className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#ff4071]">
                   INSULATION
@@ -641,8 +775,15 @@ export default function CatEcommerceLanding() {
         </div>
 
         {/* Floating Quick Scroll Prompt to Section 2 */}
-        <div className="w-full flex justify-center pt-2 pb-1 z-20">
-          <button
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.95, duration: 0.6 }}
+          className="w-full flex justify-center pt-2 pb-1 z-20"
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => {
               const el = document.getElementById('velocity-club-section');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -651,24 +792,33 @@ export default function CatEcommerceLanding() {
           >
             <span>Explore Velocity Club</span>
             <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform text-[#ff4071]" />
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
       </section>
 
       {/* =========================================================================
-          SECTION 2: VELOCITY PET CLUB SHOWCASE (Matches User's Reference Layout)
-          - Left Column: "Sports center" badge, bold typography, "Get in touch ↗" CTA
-          - Middle Column: Large card with cat (herosection cat.png), jacket-matching bg, court lines, "Outdoor area", arrow button
-          - Right Column: Secondary card ("Indoor", "Futsal court"), paragraph, prev/next circular arrows
+          SECTION 2: VELOCITY PET CLUB SHOWCASE (Framer Motion Enhanced)
+          - Left Column: Animated "Alpine Winter Edition" badge, masked bottom-to-top headline reveal, interactive CTA
+          - Middle Column: 3D-feel card with rotating court arcs, floating breathing cat cutout, AnimatePresence transitions
+          - Right Column: Secondary preview card with hover float, description fade, slide counter & spring arrow controls
       ========================================================================= */}
       <section
         id="velocity-club-section"
-        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-14 sm:py-20 lg:py-24 relative"
+        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-14 sm:py-20 lg:py-24 relative overflow-hidden"
       >
-        {/* Ambient subtle glow matching active cat's jacket */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full blur-[140px] opacity-15 pointer-events-none transition-colors duration-700"
+        {/* Ambient subtle glow matching active cat's jacket with breathing pulse */}
+        <motion.div
+          animate={{
+            scale: [0.95, 1.08, 0.95],
+            opacity: [0.12, 0.2, 0.12],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full blur-[140px] pointer-events-none transition-colors duration-700"
           style={{ backgroundColor: CLUB_ITEMS[activeClubIndex].jacketColor }}
         />
 
@@ -677,105 +827,221 @@ export default function CatEcommerceLanding() {
           {/* ==================== LEFT COLUMN ==================== */}
           <div className="lg:col-span-4 flex flex-col justify-between py-2 sm:py-4">
             <div>
-              {/* Badge: Alpine Winter Edition */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200/90 bg-white/90 backdrop-blur-sm text-slate-800 text-xs font-semibold tracking-wide shadow-xs">
-                <span
-                  className="w-2 h-2 rounded-full transition-colors duration-500"
-                  style={{ backgroundColor: CLUB_ITEMS[activeClubIndex].jacketColor }}
-                />
-                <span>Alpine Winter Edition</span>
-              </div>
+              {/* Badge: Alpine Winter Edition with live glowing pulse ping */}
+              <motion.div
+                initial={{ opacity: 0, y: -16, scale: 0.92 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ scale: 1.04, x: 2 }}
+                className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-slate-200/90 bg-white/90 backdrop-blur-sm text-slate-800 text-xs font-semibold tracking-wide shadow-xs cursor-default"
+              >
+                <span className="relative flex h-2.5 w-2.5">
+                  <motion.span
+                    animate={{ scale: [1, 2.2, 1], opacity: [0.8, 0, 0.8] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute inline-flex h-full w-full rounded-full opacity-75"
+                    style={{ backgroundColor: CLUB_ITEMS[activeClubIndex].jacketColor }}
+                  />
+                  <span
+                    className="relative inline-flex rounded-full h-2.5 w-2.5 transition-colors duration-500"
+                    style={{ backgroundColor: CLUB_ITEMS[activeClubIndex].jacketColor }}
+                  />
+                </span>
+                <span className="font-bold tracking-tight">Alpine Winter Edition</span>
+              </motion.div>
 
-              {/* Main Headline (Winter Collection Storytelling) */}
-              <h2 className="font-display font-black text-3xl sm:text-4xl xl:text-[2.65rem] text-slate-950 tracking-tight leading-[1.12] mt-8 mb-6">
-                Welcome to Velocity Club, where luxury petwear meets extreme sub-zero winter performance.
-              </h2>
+              {/* Main Headline - Masked Bottom-to-Top Slide-Up Reveal */}
+              <motion.h2
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={{
+                  hidden: {},
+                  visible: {
+                    transition: {
+                      staggerChildren: 0.05,
+                      delayChildren: 0.15,
+                    },
+                  },
+                }}
+                className="font-display font-black text-3xl sm:text-4xl xl:text-[2.65rem] text-slate-950 tracking-tight leading-[1.14] mt-8 mb-6 flex flex-wrap gap-x-2 gap-y-1"
+              >
+                {[
+                  'Welcome', 'to', 'Velocity', 'Club,', 'where', 'luxury', 'petwear', 'meets', 'extreme', 'sub-zero', 'winter', 'performance.'
+                ].map((word, idx) => (
+                  <span key={idx} className="overflow-hidden inline-block py-0.5">
+                    <motion.span
+                      variants={{
+                        hidden: { y: '115%', opacity: 0, rotate: 1.5 },
+                        visible: {
+                          y: '0%',
+                          opacity: 1,
+                          rotate: 0,
+                          transition: {
+                            duration: 0.85,
+                            ease: [0.16, 1, 0.3, 1],
+                          },
+                        },
+                      }}
+                      className={`inline-block ${
+                        word.includes('Velocity') || word.includes('Club')
+                          ? 'text-[#ff4071]'
+                          : word.includes('extreme') || word.includes('performance')
+                          ? 'text-slate-950 font-black'
+                          : 'text-slate-900'
+                      }`}
+                    >
+                      {word}
+                    </motion.span>
+                  </span>
+                ))}
+              </motion.h2>
             </div>
 
             {/* Bottom CTA Button: Explore Collection ↗ */}
-            <div className="pt-6 lg:pt-0">
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.35, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              className="pt-6 lg:pt-0"
+            >
               <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-3.5 px-6 py-3.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white text-sm font-bold tracking-tight shadow-md shadow-slate-950/15 cursor-pointer group transition-all"
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => {
+                  const el = document.getElementById('categories-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-3.5 px-6 py-3.5 rounded-full bg-slate-950 hover:bg-[#ff4071] text-white text-sm font-bold tracking-tight shadow-lg shadow-slate-950/15 cursor-pointer group transition-all duration-300"
               >
                 <span>Explore Collection</span>
-                <span className="w-6 h-6 rounded-full bg-white text-slate-950 flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
+                <span className="w-6 h-6 rounded-full bg-white text-slate-950 flex items-center justify-center group-hover:rotate-45 group-hover:scale-110 transition-all duration-300">
                   <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
                 </span>
               </motion.button>
-            </div>
+            </motion.div>
           </div>
 
           {/* ==================== MIDDLE COLUMN: MAIN CAT CARD ==================== */}
-          <div className="lg:col-span-5">
+          <motion.div
+            initial={{ opacity: 0, y: 45, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5"
+          >
             <motion.div
               layout
-              className="w-full h-[460px] sm:h-[500px] lg:h-[530px] rounded-[2.8rem] sm:rounded-[3.2rem] relative overflow-hidden shadow-2xl shadow-pink-900/10 flex flex-col justify-between p-7 group cursor-pointer transition-all duration-700"
+              className="w-full h-[460px] sm:h-[500px] lg:h-[530px] rounded-[2.8rem] sm:rounded-[3.2rem] relative overflow-hidden shadow-2xl shadow-pink-900/15 flex flex-col justify-between p-7 group cursor-pointer transition-all duration-700"
               style={{ background: CLUB_ITEMS[activeClubIndex].cardBgGradient }}
-              whileHover={{ scale: 1.01 }}
+              whileHover={{ y: -6 }}
               transition={{ duration: 0.3 }}
             >
-              {/* Subtle Sports Court Lines & Ambient Radial Glow in background */}
+              {/* Subtle Sports Court Lines & Ambient Animated Radial Glow */}
               <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                {/* Court line circular arc */}
-                <div className="absolute -top-14 -right-14 w-80 h-80 rounded-full border-[3px] border-white/20 pointer-events-none" />
-                <div className="absolute bottom-12 -left-24 w-96 h-96 rounded-full border-[2px] border-white/15 pointer-events-none" />
-                {/* Diagonal court line */}
+                {/* Rotating Court Line Circular Arc */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 75, repeat: Infinity, ease: 'linear' }}
+                  className="absolute -top-14 -right-14 w-84 h-84 rounded-full border-[3px] border-white/20 pointer-events-none"
+                />
+                <motion.div
+                  animate={{ scale: [1, 1.06, 1], opacity: [0.15, 0.28, 0.15] }}
+                  transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute bottom-12 -left-24 w-96 h-96 rounded-full border-[2px] border-white/20 pointer-events-none"
+                />
+                {/* Diagonal Court Accent Line */}
                 <div className="absolute top-0 right-1/3 w-[2px] h-full bg-white/15 rotate-12 pointer-events-none" />
-                {/* Radial spotlight glow behind cat */}
+                {/* Radial Spotlight Glow Behind Cat */}
                 <div className="absolute inset-0 bg-radial from-white/25 via-transparent to-black/35 pointer-events-none" />
               </div>
 
-              {/* Top Tag: Outdoor area */}
+              {/* Top Tag: Active Tag with Glass Pill */}
               <div className="relative z-20 flex items-center justify-between">
-                <span className="px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/35 text-white text-xs font-medium tracking-wide shadow-xs">
+                <motion.span
+                  key={`tag-${CLUB_ITEMS[activeClubIndex].id}`}
+                  initial={{ opacity: 0, x: -15 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="px-4 py-1.5 rounded-full bg-white/25 backdrop-blur-md border border-white/40 text-white text-xs font-semibold tracking-wide shadow-sm"
+                >
                   {CLUB_ITEMS[activeClubIndex].tag}
+                </motion.span>
+                
+                {/* Subtle Style Pill */}
+                <span className="text-[11px] font-bold text-white/80 uppercase tracking-wider backdrop-blur-sm px-3 py-1 rounded-full bg-black/15">
+                  {CLUB_ITEMS[activeClubIndex].editionName}
                 </span>
               </div>
 
-              {/* Central Cat Cutout (herosection cat.png in ski goggles & puffer jacket) */}
+              {/* Central Cat Cutout with Floating Breathing Micro-Animation & AnimatePresence */}
               <div className="absolute inset-x-0 bottom-0 top-10 flex items-end justify-center pointer-events-none z-10 overflow-hidden">
                 <AnimatePresence mode="wait">
-                  <motion.img
+                  <motion.div
                     key={CLUB_ITEMS[activeClubIndex].id}
-                    src={CLUB_ITEMS[activeClubIndex].image}
-                    alt={CLUB_ITEMS[activeClubIndex].catName}
-                    initial={{ opacity: 0, y: 35, scale: 0.94 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -25, scale: 0.94 }}
-                    transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                    className="w-auto h-[86%] sm:h-[90%] object-contain object-bottom drop-shadow-[0_25px_35px_rgba(0,0,0,0.38)] group-hover:scale-105 transition-transform duration-500"
-                  />
+                    initial={{ opacity: 0, y: 40, scale: 0.92, filter: 'blur(4px)' }}
+                    animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                    exit={{ opacity: 0, y: -25, scale: 0.94, filter: 'blur(4px)' }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-full h-full flex items-end justify-center"
+                  >
+                    {/* Natural Floating Breathing Motion */}
+                    <motion.img
+                      animate={{ y: [0, -7, 0] }}
+                      transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
+                      src={CLUB_ITEMS[activeClubIndex].image}
+                      alt={CLUB_ITEMS[activeClubIndex].catName}
+                      className="w-auto h-[86%] sm:h-[90%] object-contain object-bottom drop-shadow-[0_25px_35px_rgba(0,0,0,0.38)] group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </motion.div>
                 </AnimatePresence>
               </div>
 
-              {/* Bottom Overlay & Text: Versatile space for a wide range of activities */}
+              {/* Bottom Overlay & Animated Title */}
               <div className="relative z-20 flex items-end justify-between gap-4 mt-auto pt-8">
                 <div className="max-w-[76%]">
-                  <p className="text-white font-medium text-base sm:text-lg leading-snug tracking-tight drop-shadow-md">
-                    {CLUB_ITEMS[activeClubIndex].title}
-                  </p>
+                  <AnimatePresence mode="wait">
+                    <motion.p
+                      key={CLUB_ITEMS[activeClubIndex].id}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                      className="text-white font-medium text-base sm:text-lg leading-snug tracking-tight drop-shadow-md"
+                    >
+                      {CLUB_ITEMS[activeClubIndex].title}
+                    </motion.p>
+                  </AnimatePresence>
                 </div>
 
-                {/* Bottom-right Circle Button: ↗ */}
-                <button
+                {/* Bottom-right Circle Action Button: ↗ */}
+                <motion.button
+                  whileHover={{ scale: 1.15, rotate: 45 }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleNextClub();
                   }}
-                  className="w-12 h-12 rounded-full bg-slate-950 hover:bg-slate-800 text-white flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 transition-all cursor-pointer flex-shrink-0"
+                  className="w-12 h-12 rounded-full bg-slate-950 hover:bg-white hover:text-slate-950 text-white flex items-center justify-center shadow-xl transition-colors duration-300 cursor-pointer flex-shrink-0 border-2 border-white/20"
                   title="Next style"
                 >
                   <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
-                </button>
+                </motion.button>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* ==================== RIGHT COLUMN: SECONDARY CARD + CONTROLS ==================== */}
-          <div className="lg:col-span-3 flex flex-col justify-between gap-6 py-2 sm:py-4">
-            {/* Top Card: Indoor / Futsal Court */}
+          <motion.div
+            initial={{ opacity: 0, x: 40, scale: 0.96 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.75, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-3 flex flex-col justify-between gap-6 py-2 sm:py-4"
+          >
+            {/* Top Card: Secondary Cat Preview with Interactive Switch */}
             <motion.div
               layout
               onClick={handleNextClub}
@@ -783,26 +1049,36 @@ export default function CatEcommerceLanding() {
               style={{
                 background: CLUB_ITEMS[(activeClubIndex + 1) % CLUB_ITEMS.length].cardBgGradient,
               }}
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.03, y: -4 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.3 }}
             >
               {/* Court Lines in Background */}
               <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-6 -right-10 w-44 h-44 rounded-full border-[3px] border-white/25 pointer-events-none" />
+                <motion.div
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 65, repeat: Infinity, ease: 'linear' }}
+                  className="absolute top-6 -right-10 w-44 h-44 rounded-full border-[3px] border-white/25 pointer-events-none"
+                />
                 <div className="absolute top-1/2 left-0 w-full h-[2px] bg-white/20 pointer-events-none" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
               </div>
 
-              {/* Top Tag: Indoor */}
-              <div className="relative z-20">
+              {/* Top Tag: Preview Tag */}
+              <div className="relative z-20 flex items-center justify-between">
                 <span className="px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/35 text-white text-[11px] font-medium tracking-wide shadow-xs">
                   {CLUB_ITEMS[(activeClubIndex + 1) % CLUB_ITEMS.length].secondaryTag}
                 </span>
+                <span className="text-[10px] font-bold text-white/90 bg-white/15 px-2.5 py-0.5 rounded-full uppercase tracking-wider backdrop-blur-sm group-hover:bg-white group-hover:text-slate-950 transition-colors">
+                  Tap to preview
+                </span>
               </div>
 
-              {/* Cat preview cutout on right side */}
-              <div className="absolute right-2 bottom-0 top-6 w-1/2 flex items-end justify-center pointer-events-none z-10 opacity-90 group-hover:scale-110 transition-transform duration-500">
-                <img
+              {/* Cat preview cutout on right side with floating motion */}
+              <div className="absolute right-2 bottom-0 top-6 w-1/2 flex items-end justify-center pointer-events-none z-10 opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
+                <motion.img
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
                   src={CLUB_ITEMS[(activeClubIndex + 1) % CLUB_ITEMS.length].image}
                   alt={CLUB_ITEMS[(activeClubIndex + 1) % CLUB_ITEMS.length].editionName}
                   className="h-[88%] w-auto object-contain object-bottom drop-shadow-md"
@@ -811,7 +1087,7 @@ export default function CatEcommerceLanding() {
 
               {/* Bottom Title: Futsal court */}
               <div className="relative z-20">
-                <h3 className="text-white font-bold text-lg tracking-tight drop-shadow-md">
+                <h3 className="text-white font-bold text-lg tracking-tight drop-shadow-md group-hover:translate-x-1 transition-transform">
                   {CLUB_ITEMS[(activeClubIndex + 1) % CLUB_ITEMS.length].previewTitle}
                 </h3>
                 <span className="text-white/80 text-xs font-medium">
@@ -822,29 +1098,56 @@ export default function CatEcommerceLanding() {
 
             {/* Bottom Description & Navigation Arrow Buttons */}
             <div className="flex flex-col gap-5">
-              <p className="text-slate-600 text-xs sm:text-[13px] leading-relaxed font-normal">
-                {CLUB_ITEMS[activeClubIndex].description}
-              </p>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={activeClubIndex}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35 }}
+                  className="text-slate-600 text-xs sm:text-[13px] leading-relaxed font-normal"
+                >
+                  {CLUB_ITEMS[activeClubIndex].description}
+                </motion.p>
+              </AnimatePresence>
 
-              {/* Navigation Arrow Controls: Left (white) & Right (black) */}
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={handlePrevClub}
-                  className="w-12 h-12 rounded-full border border-slate-200 bg-white hover:bg-slate-50 active:scale-95 text-slate-800 flex items-center justify-center transition-all shadow-xs hover:border-slate-300 cursor-pointer"
-                  title="Previous"
-                >
-                  <ArrowLeft className="w-4 h-4 stroke-[2.2]" />
-                </button>
-                <button
-                  onClick={handleNextClub}
-                  className="w-12 h-12 rounded-full bg-slate-950 hover:bg-slate-800 active:scale-95 text-white flex items-center justify-center transition-all shadow-md cursor-pointer"
-                  title="Next"
-                >
-                  <ArrowRight className="w-4 h-4 stroke-[2.2]" />
-                </button>
+              {/* Slide Counter & Arrow Controls */}
+              <div className="flex items-center justify-between pt-1">
+                {/* Chic Moncler-style Slide Counter (01 / 03) */}
+                <div className="flex items-center gap-2 font-mono text-xs tracking-wider">
+                  <span className="text-slate-950 font-black text-sm">
+                    0{activeClubIndex + 1}
+                  </span>
+                  <span className="text-slate-300 font-normal">/</span>
+                  <span className="text-slate-400 font-semibold">
+                    0{CLUB_ITEMS.length}
+                  </span>
+                </div>
+
+                {/* Navigation Arrow Controls: Left (white) & Right (black) with Spring Hover */}
+                <div className="flex items-center gap-3">
+                  <motion.button
+                    whileHover={{ scale: 1.12, x: -3 }}
+                    whileTap={{ scale: 0.92 }}
+                    onClick={handlePrevClub}
+                    className="w-12 h-12 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-slate-800 flex items-center justify-center shadow-xs hover:border-slate-300 cursor-pointer group transition-colors"
+                    title="Previous"
+                  >
+                    <ArrowLeft className="w-4 h-4 stroke-[2.2] group-hover:-translate-x-0.5 transition-transform" />
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.12, x: 3 }}
+                    whileTap={{ scale: 0.92 }}
+                    onClick={handleNextClub}
+                    className="w-12 h-12 rounded-full bg-slate-950 hover:bg-[#ff4071] text-white flex items-center justify-center shadow-md cursor-pointer group transition-colors"
+                    title="Next"
+                  >
+                    <ArrowRight className="w-4 h-4 stroke-[2.2] group-hover:translate-x-0.5 transition-transform" />
+                  </motion.button>
+                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </section>
