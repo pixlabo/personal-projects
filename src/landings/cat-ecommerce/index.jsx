@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { ShoppingBag, Menu, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Plus } from 'lucide-react';
+import { ShoppingBag, Menu, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Plus, Search } from 'lucide-react';
 
 // Import hero cat assets
 import pinkCatImg from '../../assets/cat-ecommerce/herosection cat.png';
@@ -227,6 +227,55 @@ const EXCELLENCE_ITEMS = [
   },
 ];
 
+// Section 4: "Explore Our Facilities" Data (Matching 3rd reference design)
+const FACILITIES_ITEMS = [
+  {
+    id: 'athletes-zone',
+    tag: 'Athletes zone',
+    title: 'State-of-the-Art Courts and Fields for All Athletes',
+    category: 'Outdoor Track',
+    image: pinkCatImg,
+    catName: 'Sakura Sprint Cat',
+    bgGradient: 'linear-gradient(155deg, #ea580c 0%, #c2410c 50%, #7c2d12 100%)',
+    overlayType: 'slats',
+    cardStyle: 'standard',
+  },
+  {
+    id: 'training-ground',
+    tag: 'Training Ground',
+    subTag: 'Play ground',
+    title: 'Top-Tier Sports Facilities for Training',
+    category: 'Training Ground',
+    image: greenCatImg,
+    catName: 'Alpine Turf Cat',
+    bgGradient: 'linear-gradient(180deg, #38bdf8 0%, #7dd3fc 35%, #15803d 40%, #166534 100%)',
+    overlayType: 'turf',
+    cardStyle: 'interactive-pill',
+  },
+  {
+    id: 'versatile-sports',
+    tag: 'Versatile Sports',
+    title: 'Versatile Sports Facilities Designed for Performance',
+    category: 'Stadium Track',
+    image: brownCatImg,
+    catName: 'Amber Speed Cat',
+    bgGradient: 'linear-gradient(155deg, #c2410c 0%, #9a3412 50%, #431407 100%)',
+    overlayType: 'track-lines',
+    cardStyle: 'standard',
+  },
+  {
+    id: 'tennis-court',
+    tag: 'Tennis court',
+    title: 'State-of-the-Art Courts and Field',
+    category: 'Tennis Court',
+    image: greenCatImg,
+    catName: 'Court Pro Cat',
+    bgGradient: 'linear-gradient(180deg, #0284c7 0%, #0369a1 70%, #075985 100%)',
+    overlayType: 'court-line',
+    cardStyle: 'standard',
+  },
+];
+
 export default function CatEcommerceLanding() {
   const [activeVariant, setActiveVariant] = useState(VARIANTS[0]);
   const [direction, setDirection] = useState(1);
@@ -255,6 +304,18 @@ export default function CatEcommerceLanding() {
 
   const handlePrevExcellence = () => {
     setActiveExcellenceIndex((prev) => (prev - 1 + EXCELLENCE_ITEMS.length) % EXCELLENCE_ITEMS.length);
+  };
+
+  // Section 4: Facilities State
+  const [facilitySearch, setFacilitySearch] = useState('');
+  const [facilityIndex, setFacilityIndex] = useState(0);
+
+  const handleNextFacility = () => {
+    setFacilityIndex((prev) => (prev + 1) % FACILITIES_ITEMS.length);
+  };
+
+  const handlePrevFacility = () => {
+    setFacilityIndex((prev) => (prev - 1 + FACILITIES_ITEMS.length) % FACILITIES_ITEMS.length);
   };
 
   // Switch cat helper with directional tracking
@@ -986,6 +1047,184 @@ export default function CatEcommerceLanding() {
               </p>
             </div>
 
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 4: EXPLORE OUR FACILITIES (Matches User's 3rd Reference Image)
+          - Enclosed within a rounded light slate container
+          - Header: "Facilities" pill, "Explore Our Facilities" title, Search input, "View All ↗" button
+          - 4 Cards:
+            1. Athletes zone (orange slatted wall + cat + title)
+            2. Training Ground (green field + flag icon + frosted "Play ground" bottom box with arrow)
+            3. Versatile Sports (rust track with curved lines + cat + title)
+            4. Tennis court (blue court + white court lines + cat + title)
+          - Footer: [←] [→] navigation buttons on left, descriptive paragraph on right
+      ========================================================================= */}
+      <section
+        id="facilities-section"
+        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-16"
+      >
+        <div className="w-full bg-[#f8fafc] rounded-[2.5rem] sm:rounded-[3.2rem] p-6 sm:p-10 lg:p-12 border border-slate-200/80 shadow-xs relative">
+          
+          {/* Top Header Row */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 sm:pb-8 border-b border-slate-200/70">
+            {/* Left: Facilities Pill + Title */}
+            <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+              <span className="px-3.5 py-1 rounded-full border border-slate-300/80 bg-white text-slate-800 text-xs font-semibold tracking-wide shadow-2xs">
+                Facilities
+              </span>
+              <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-[2.2rem] text-slate-950 tracking-tight">
+                Explore Our Facilities
+              </h2>
+            </div>
+
+            {/* Right: Search Input + View All Button */}
+            <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
+              {/* Search Box */}
+              <div className="relative flex items-center w-full sm:w-auto">
+                <input
+                  type="text"
+                  value={facilitySearch}
+                  onChange={(e) => setFacilitySearch(e.target.value)}
+                  placeholder="Search here..."
+                  className="w-full sm:w-60 lg:w-64 pl-4 pr-10 py-2.5 rounded-full bg-white border border-slate-200 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-400 shadow-2xs transition-colors"
+                />
+                <Search className="w-4 h-4 text-slate-400 absolute right-3.5 pointer-events-none" />
+              </div>
+
+              {/* View All Button */}
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-5 py-2.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold tracking-tight shadow-xs flex items-center gap-1.5 cursor-pointer whitespace-nowrap transition-all"
+              >
+                <span>View All</span>
+                <span className="text-xs">↗</span>
+              </motion.button>
+            </div>
+          </div>
+
+          {/* 4 Facilities Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 my-8 sm:my-10">
+            {FACILITIES_ITEMS.map((facility, idx) => (
+              <motion.div
+                key={facility.id}
+                whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                className="h-[390px] sm:h-[430px] rounded-[2.2rem] sm:rounded-[2.6rem] relative overflow-hidden p-6 flex flex-col justify-between group cursor-pointer shadow-lg transition-all"
+                style={{ background: facility.bgGradient }}
+              >
+                {/* Background Overlays according to reference */}
+                {facility.overlayType === 'slats' && (
+                  <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(90deg,rgba(0,0,0,0.18)_2px,transparent_2px)] bg-[size:16px_100%] opacity-40" />
+                )}
+
+                {facility.overlayType === 'turf' && (
+                  <div className="absolute inset-0 pointer-events-none">
+                    {/* Horizon sky / field gradient with sun haze */}
+                    <div className="absolute top-0 inset-x-0 h-1/3 bg-gradient-to-b from-sky-300/40 to-transparent" />
+                    <div className="absolute bottom-0 inset-x-0 h-2/3 bg-emerald-900/15" />
+                  </div>
+                )}
+
+                {facility.overlayType === 'track-lines' && (
+                  <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-25" viewBox="0 0 300 500" fill="none">
+                    <path d="M-50 450 C80 380, 180 280, 260 0" stroke="#ffffff" strokeWidth="3" />
+                    <path d="M-20 480 C110 410, 210 310, 290 30" stroke="#ffffff" strokeWidth="3" />
+                    <path d="M10 510 C140 440, 240 340, 320 60" stroke="#ffffff" strokeWidth="3" />
+                  </svg>
+                )}
+
+                {facility.overlayType === 'court-line' && (
+                  <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute top-1/2 left-0 w-full h-[3px] bg-white/45" />
+                    <div className="absolute top-0 right-1/4 h-full w-[2px] bg-white/30" />
+                  </div>
+                )}
+
+                {/* Dark gradient for crisp bottom typography */}
+                <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/70 via-black/25 to-transparent pointer-events-none z-10" />
+
+                {/* Card Top Row: Tags & Icons */}
+                <div className="relative z-20 flex items-center justify-between">
+                  {/* Card 2 specific: flag icon badge */}
+                  {facility.id === 'training-ground' ? (
+                    <div className="w-8 h-8 rounded-full bg-white/25 backdrop-blur-md border border-white/35 flex items-center justify-center text-white shadow-xs">
+                      <PawIcon className="w-4 h-4" color="#ffffff" />
+                    </div>
+                  ) : (
+                    <div />
+                  )}
+
+                  {/* Top-right Tag Badge */}
+                  <span className="px-3.5 py-1 rounded-full bg-white/25 backdrop-blur-md border border-white/35 text-white text-[11px] font-semibold tracking-wide shadow-xs">
+                    {facility.tag}
+                  </span>
+                </div>
+
+                {/* Center Cat Cutout Image */}
+                <div className="absolute inset-x-0 bottom-12 top-10 flex items-end justify-center pointer-events-none z-15 overflow-hidden">
+                  <img
+                    src={facility.image}
+                    alt={facility.catName}
+                    className="w-auto h-[80%] sm:h-[85%] object-contain object-bottom drop-shadow-[0_20px_25px_rgba(0,0,0,0.35)] group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+
+                {/* Card Bottom Area */}
+                {facility.cardStyle === 'interactive-pill' ? (
+                  /* Card 2 Style: Frosted glass bottom box with "Play ground" + Arrow */
+                  <div className="relative z-20 p-3.5 rounded-2xl bg-black/45 backdrop-blur-md border border-white/20 text-white flex items-center justify-between shadow-xl mt-auto">
+                    <div className="max-w-[78%]">
+                      <span className="text-[10px] font-semibold tracking-wide text-white/90 border border-white/30 px-2 py-0.5 rounded-full inline-block mb-1">
+                        {facility.subTag}
+                      </span>
+                      <h3 className="font-display font-bold text-xs sm:text-[13px] leading-snug text-white">
+                        {facility.title}
+                      </h3>
+                    </div>
+                    <button className="w-9 h-9 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all flex-shrink-0">
+                      <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+                    </button>
+                  </div>
+                ) : (
+                  /* Standard Cards (1, 3, 4): Bold white title with subtle drop shadow */
+                  <div className="relative z-20 mt-auto pt-4">
+                    <h3 className="text-white font-display font-bold text-base sm:text-[1.05rem] leading-snug tracking-tight drop-shadow-md">
+                      {facility.title}
+                    </h3>
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom Controls & Description Row */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-4 border-t border-slate-200/70">
+            {/* Navigation Arrow Buttons: [←] [→] */}
+            <div className="flex items-center gap-2.5">
+              <button
+                onClick={handlePrevFacility}
+                className="w-11 h-11 rounded-full border border-slate-300 bg-white hover:bg-slate-100 text-slate-800 flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-2xs"
+                title="Previous facility"
+              >
+                <ArrowLeft className="w-4 h-4 stroke-[2]" />
+              </button>
+              <button
+                onClick={handleNextFacility}
+                className="w-11 h-11 rounded-full border border-slate-300 bg-white hover:bg-slate-100 text-slate-800 flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-2xs"
+                title="Next facility"
+              >
+                <ArrowRight className="w-4 h-4 stroke-[2]" />
+              </button>
+            </div>
+
+            {/* Right Subtitle Paragraph from reference */}
+            <p className="text-slate-500 text-xs sm:text-[13px] text-center sm:text-right max-w-md font-normal leading-relaxed">
+              Reserve a court for individual practice, team sessions, or personalized coaching to elevate your performance.
+            </p>
           </div>
 
         </div>
