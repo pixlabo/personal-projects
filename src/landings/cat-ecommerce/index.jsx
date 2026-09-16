@@ -1440,12 +1440,19 @@ export default function CatEcommerceLanding() {
               </div>
             </div>
 
-            {/* Prominent Feline Model Cutout on the Right (Solar Amber Cat in Ski Goggles & Puffer Coat) */}
-            <div className="absolute right-2 sm:right-5 lg:right-6 top-20 sm:top-24 bottom-14 z-15 w-44 sm:w-52 lg:w-56 flex items-end justify-center pointer-events-none">
+            {/* Ambient Radial Shadow behind Cat */}
+            <div className="absolute right-0 bottom-0 w-64 sm:w-80 h-56 bg-radial from-black/50 via-transparent to-transparent pointer-events-none z-5 blur-xl" />
+
+            {/* Prominent Feline Model Cutout Grounded at Bottom (No hard edges, smooth fade) */}
+            <div className="absolute right-2 sm:right-6 lg:right-8 bottom-0 z-10 w-48 sm:w-60 lg:w-68 flex items-end justify-center pointer-events-none">
               <img
                 src={brownCatImg}
                 alt="Cat Model in Ski Goggles and Jacket"
-                className="w-full h-auto max-h-[290px] sm:max-h-[330px] object-contain object-bottom drop-shadow-[0_25px_35px_rgba(0,0,0,0.7)]"
+                style={{
+                  maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%)',
+                }}
+                className="w-full h-auto max-h-[320px] sm:max-h-[360px] lg:max-h-[390px] object-contain object-bottom drop-shadow-[0_25px_35px_rgba(0,0,0,0.8)]"
               />
             </div>
 
