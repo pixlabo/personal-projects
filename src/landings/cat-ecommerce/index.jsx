@@ -65,6 +65,280 @@ function Paperclip({ className = "w-8 h-12" }) {
   );
 }
 
+// Feline Paw Cursor matching Header Logo + Ultra-Thin Pink Tail with Twinkling Star Sparkles ✨
+function CatPawCursor() {
+  const canvasRef = useRef(null);
+  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
+  const [isPointer, setIsPointer] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isDown, setIsDown] = useState(false);
+
+  // Tail physics points & Sparkle stars
+  const pointsRef = useRef([]);
+  const sparklesRef = useRef([]);
+  const targetRef = useRef({ x: -100, y: -100 });
+  const isMovingRef = useRef(false);
+  const numPoints = 20;
+
+  useEffect(() => {
+    // Only activate on pointer devices (desktop mouse)
+    if (typeof window === 'undefined' || window.matchMedia('(pointer: coarse)').matches) return;
+
+    // Initialize tail segments
+    pointsRef.current = Array.from({ length: numPoints }, () => ({
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+    }));
+
+    let moveTimeout;
+    const handleMouseMove = (e) => {
+      targetRef.current = { x: e.clientX, y: e.clientY };
+      setCursorPos({ x: e.clientX, y: e.clientY });
+      setIsVisible(true);
+      isMovingRef.current = true;
+
+      // Spawn tiny twinkling star sparkles along movement
+      const starColors = ['#ffffff', '#ffffff', '#ff7e9e', '#ff4071', '#fed7aa'];
+      for (let s = 0; s < 2; s++) {
+        sparklesRef.current.push({
+          x: e.clientX + (Math.random() - 0.5) * 14,
+          y: e.clientY + (Math.random() - 0.5) * 14,
+          vx: (Math.random() - 0.5) * 0.9,
+          vy: (Math.random() - 0.5) * 0.9 - 0.3,
+          size: 2.2 + Math.random() * 2.6, // Tiny micro star: 2.2px to 4.8px
+          alpha: 0.95,
+          decay: 0.025 + Math.random() * 0.02,
+          rotation: Math.random() * Math.PI,
+          rotSpeed: (Math.random() - 0.5) * 0.1,
+          color: starColors[Math.floor(Math.random() * starColors.length)],
+        });
+      }
+
+      // Limit max sparkles for peak performance
+      if (sparklesRef.current.length > 50) {
+        sparklesRef.current.shift();
+      }
+
+      clearTimeout(moveTimeout);
+      moveTimeout = setTimeout(() => {
+        isMovingRef.current = false;
+      }, 140);
+
+      // Check if hovering interactive element
+      const target = e.target;
+      const isInteractive = Boolean(
+        target &&
+        (target.closest('button') ||
+         target.closest('a') ||
+         target.closest('input') ||
+         target.closest('select') ||
+         target.closest('[role="button"]') ||
+         window.getComputedStyle(target).cursor === 'pointer')
+      );
+      setIsPointer(isInteractive);
+    };
+
+    const handleMouseDown = () => setIsDown(true);
+    const handleMouseUp = () => setIsDown(false);
+    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseEnter = () => setIsVisible(true);
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener('mouseenter', handleMouseEnter);
+
+    let animationFrameId;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const updateCanvasSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    updateCanvasSize();
+    window.addEventListener('resize', updateCanvasSize);
+
+    // Helper: Draw 4-Point Twinkling Diamond Star Sparkle
+    const drawSparkle = (x, y, size, alpha, color, rotation) => {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rotation);
+      ctx.beginPath();
+      const s = size;
+      const c = size * 0.18;
+      ctx.moveTo(0, -s);
+      ctx.quadraticCurveTo(c, -c, s, 0);
+      ctx.quadraticCurveTo(c, c, 0, s);
+      ctx.quadraticCurveTo(-c, c, -s, 0);
+      ctx.quadraticCurveTo(-c, -c, 0, -s);
+      ctx.closePath();
+
+      ctx.fillStyle = color;
+      ctx.shadowColor = color === '#ffffff' ? '#ffffff' : '#ff4071';
+      ctx.shadowBlur = 4;
+      ctx.globalAlpha = Math.max(0, alpha);
+      ctx.fill();
+
+      // Micro glowing center
+      ctx.beginPath();
+      ctx.arc(0, 0, s * 0.22, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.globalAlpha = Math.max(0, alpha * 0.9);
+      ctx.fill();
+
+      ctx.restore();
+    };
+
+    // Render loop for thin cat tail + twinkling star particles
+    let time = 0;
+    const render = () => {
+      time += 0.05;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const target = targetRef.current;
+      const points = pointsRef.current;
+
+      if (target.x > -50 && points.length > 0) {
+        // Head segment follows target smoothly
+        points[0].x += (target.x - points[0].x) * 0.45;
+        points[0].y += (target.y - points[0].y) * 0.45;
+
+        // Tail segments follow with natural spring damping
+        for (let i = 1; i < numPoints; i++) {
+          const prev = points[i - 1];
+          const curr = points[i];
+
+          const dx = prev.x - curr.x;
+          const dy = prev.y - curr.y;
+
+          curr.x += dx * 0.38;
+          curr.y += dy * 0.38;
+
+          // Gentle tip sway when stationary
+          if (!isMovingRef.current && i > numPoints - 6) {
+            const sway = (i - (numPoints - 6)) * 0.5;
+            curr.x += Math.sin(time + i * 0.35) * sway * 0.3;
+            curr.y += Math.cos(time + i * 0.35) * sway * 0.25;
+          }
+        }
+
+        // 1. Draw ULTRA-THIN tapered smooth feline ribbon tail (NO bulky circles!)
+        for (let i = 1; i < numPoints - 1; i++) {
+          const progress = 1 - i / numPoints; // 1 at paw base, 0 at tail tip
+          ctx.beginPath();
+          ctx.moveTo(points[i].x, points[i].y);
+          const xc = (points[i].x + points[i + 1].x) / 2;
+          const yc = (points[i].y + points[i + 1].y) / 2;
+          ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+
+          // Patli, elegant tapered width: 2.4px tapering down to 0.7px!
+          ctx.lineWidth = Math.max(0.7, progress * 2.4);
+          ctx.strokeStyle = `rgba(255, 64, 113, ${Math.max(0.12, progress * 0.9)})`;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.shadowColor = '#ff4071';
+          ctx.shadowBlur = 4;
+          ctx.stroke();
+        }
+
+        // Also occasionally spawn a tiny star along the middle of the tail while moving
+        if (isMovingRef.current && Math.random() > 0.45) {
+          const midIdx = Math.floor(2 + Math.random() * (numPoints - 4));
+          const p = points[midIdx];
+          if (p) {
+            sparklesRef.current.push({
+              x: p.x + (Math.random() - 0.5) * 6,
+              y: p.y + (Math.random() - 0.5) * 6,
+              vx: (Math.random() - 0.5) * 0.6,
+              vy: (Math.random() - 0.5) * 0.6 - 0.2,
+              size: 2.0 + Math.random() * 2.2, // Tiny micro sparkle
+              alpha: 0.9,
+              decay: 0.03 + Math.random() * 0.02,
+              rotation: Math.random() * Math.PI,
+              rotSpeed: (Math.random() - 0.5) * 0.1,
+              color: Math.random() > 0.4 ? '#ffffff' : '#ff7e9e',
+            });
+          }
+        }
+      }
+
+      // 2. Render & update tiny twinkling star sparkles ✨
+      const sparkles = sparklesRef.current;
+      for (let i = sparkles.length - 1; i >= 0; i--) {
+        const s = sparkles[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.alpha -= s.decay;
+        s.rotation += s.rotSpeed;
+
+        if (s.alpha <= 0) {
+          sparkles.splice(i, 1);
+        } else {
+          // Twinkle effect
+          const twinkleAlpha = s.alpha * (0.8 + 0.2 * Math.sin(time * 8 + i));
+          drawSparkle(s.x, s.y, s.size, twinkleAlpha, s.color, s.rotation);
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('mouseenter', handleMouseEnter);
+      window.removeEventListener('resize', updateCanvasSize);
+      clearTimeout(moveTimeout);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return (
+    <>
+      {/* Global CSS to override OS cursor inside cat-ecommerce */}
+      <style>{`
+        .cat-ecommerce-root, .cat-ecommerce-root * {
+          cursor: none !important;
+        }
+      `}</style>
+
+      {/* Fullscreen Canvas for Smooth Pink Cat Tail */}
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 pointer-events-none z-[9998]"
+      />
+
+      {/* Floating Cat Paw Cursor matching Header Logo */}
+      {isVisible && (
+        <div
+          className="fixed top-0 left-0 pointer-events-none z-[9999] transition-transform duration-75 ease-out"
+          style={{
+            transform: `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0) translate(-50%, -50%) scale(${isDown ? 0.8 : isPointer ? 1.3 : 1}) rotate(${isPointer ? '18deg' : '-8deg'})`,
+          }}
+        >
+          <div className="relative flex items-center justify-center filter drop-shadow-[0_2px_12px_rgba(255,64,113,0.6)]">
+            <PawIcon
+              className="w-7 h-7 text-[#ff4071]"
+              color="#ff4071"
+            />
+            {/* Subtle white paw pad highlight for crisp contrast against dark backgrounds */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none scale-90">
+              <PawIcon className="w-7 h-7 text-white" color="#ffffff" />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 // 3 Cat Editions for Hero Section
 const VARIANTS = [
   {
@@ -424,7 +698,10 @@ export default function CatEcommerceLanding() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-white text-slate-900 font-sans select-none overflow-x-hidden">
+    <div className="w-full min-h-screen bg-white text-slate-900 font-sans select-none overflow-x-hidden cat-ecommerce-root">
+
+      {/* Feline Paw Mouse Cursor with Swishing Pink Cat Tail */}
+      <CatPawCursor />
 
       {/* =========================================================================
           SECTION 1: HERO SHOWCASE (Full Framer Motion Animations & Text Slide-Up)
