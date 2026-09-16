@@ -1421,17 +1421,53 @@ export default function CatEcommerceLanding() {
             <motion.div
               whileHover={{ y: -6 }}
               transition={{ duration: 0.3 }}
-              className="w-full sm:w-[260px] lg:w-[280px] h-[360px] sm:h-[420px] rounded-[2.5rem] overflow-hidden relative shadow-xl bg-slate-100 flex-shrink-0 group"
+              className="w-full sm:w-[260px] lg:w-[280px] h-[360px] sm:h-[420px] relative shadow-xl rounded-[2.5rem] flex-shrink-0 group"
             >
-              {/* Background gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10 pointer-events-none" />
-              
-              {/* Overlapping (+) Circle Button with Continuous Pulsing Ping Aura */}
+              {/* Inner Card Wrapper with overflow-hidden for the image & gradient */}
+              <div className="w-full h-full rounded-[2.5rem] overflow-hidden relative bg-slate-100">
+                {/* Background gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10 pointer-events-none" />
+
+                {/* Cat Image with AnimatePresence on active category change */}
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
+                    initial={{ opacity: 0, scale: 1.06 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.06 }}
+                    transition={{ duration: 0.4 }}
+                    src={EXCELLENCE_ITEMS[activeExcellenceIndex].rightImage}
+                    alt={EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
+                    className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700"
+                  />
+                </AnimatePresence>
+
+                {/* Bottom Title on Card */}
+                <div className="absolute bottom-5 left-6 right-6 z-20 text-white">
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-pink-400 block mb-1">
+                    Active Edition
+                  </span>
+                  <AnimatePresence mode="wait">
+                    <motion.h4
+                      key={EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="font-display font-black text-lg text-white leading-tight"
+                    >
+                      {EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
+                    </motion.h4>
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              {/* Overlapping (+) Circle Button - Placed outside overflow-hidden so it is never clipped */}
               <motion.button
                 whileHover={{ scale: 1.15 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setShowSpecBadge(!showSpecBadge)}
-                className="absolute -left-5 sm:-left-6 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-950 hover:bg-slate-800 text-white flex items-center justify-center shadow-2xl z-30 cursor-pointer transition-colors"
+                className="absolute -left-5 sm:-left-6 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-950 hover:bg-[#ff4071] text-white flex items-center justify-center shadow-2xl z-30 cursor-pointer transition-colors border-2 border-white"
                 title="Toggle Tech Specs"
               >
                 {/* Subtle pulse aura */}
@@ -1442,39 +1478,6 @@ export default function CatEcommerceLanding() {
                 />
                 <Plus className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 relative z-10 ${showSpecBadge ? 'rotate-45 text-[#ff4071]' : ''}`} />
               </motion.button>
-
-              {/* Cat Image with AnimatePresence on active category change */}
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
-                  initial={{ opacity: 0, scale: 1.06 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.06 }}
-                  transition={{ duration: 0.4 }}
-                  src={EXCELLENCE_ITEMS[activeExcellenceIndex].rightImage}
-                  alt={EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
-                  className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700"
-                />
-              </AnimatePresence>
-
-              {/* Bottom Title on Card */}
-              <div className="absolute bottom-5 left-6 right-6 z-20 text-white">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-pink-400 block mb-1">
-                  Active Edition
-                </span>
-                <AnimatePresence mode="wait">
-                  <motion.h4
-                    key={EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="font-display font-black text-lg text-white leading-tight"
-                  >
-                    {EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
-                  </motion.h4>
-                </AnimatePresence>
-              </div>
 
               {/* Floating Tech Spec Popover with Spring Entrance */}
               <AnimatePresence>
