@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { ShoppingBag, Menu, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Plus, Search, DollarSign, ChevronsRight, ChevronDown } from 'lucide-react';
+import { ShoppingBag, Menu, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Plus, Search, DollarSign, ChevronsRight, ChevronDown, Play, Pause } from 'lucide-react';
 
 // Import hero cat assets
 import pinkCatImg from '../../assets/cat-ecommerce/herosection cat.png';
 import greenCatImg from '../../assets/cat-ecommerce/orange_cat.png';
 import brownCatImg from '../../assets/cat-ecommerce/brown-cat.png';
+
+// Import 360 Video Asset
+import catAnglesVideo from '../../assets/cat-ecommerce/ye_cat_ha_okay_sare_angle_se_h.mp4';
 
 // Import 3D Category Assets for Section 2
 import puffer3D from '../../assets/cat-ecommerce/cat_puffer_3d.jpg';
@@ -332,7 +335,7 @@ export default function CatEcommerceLanding() {
       particleCount: 50,
       spread: 60,
       origin: { y: 0.88 },
-      colors: ['#1f4333', '#ff4071', '#059669', '#ffffff'],
+      colors: ['#ff4071', '#fb7185', '#f43f5e', '#ffffff', '#ec4899'],
     });
     setTimeout(() => {
       setFooterSubmitted(false);
@@ -340,6 +343,22 @@ export default function CatEcommerceLanding() {
       setFooterName('');
       setFooterType('');
     }, 3500);
+  };
+
+  // 360 Full-Width Video Showcase Play/Pause State
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const videoRef = useRef(null);
+
+  const toggleVideoPlay = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+        setIsVideoPlaying(true);
+      } else {
+        videoRef.current.pause();
+        setIsVideoPlaying(false);
+      }
+    }
   };
 
   // Switch cat helper with directional tracking
@@ -2004,21 +2023,21 @@ export default function CatEcommerceLanding() {
 
           </motion.div>
 
-          {/* ==================== CARD 2: 12 SEASON PACKAGE (Dark Forest Green + Pink Accents + Cutout Cat Model) ==================== */}
+          {/* ==================== CARD 2: 12 SEASON PACKAGE (Deep Velvet Royal Pink + Cutout Cat Model) ==================== */}
           <motion.div
             initial={{ opacity: 0, x: 80, scale: 0.95 }}
             whileInView={{ opacity: 1, x: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.85, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             whileHover={{ y: -8, scale: 1.015, transition: { duration: 0.3 } }}
-            className="w-full min-h-[460px] sm:min-h-[500px] rounded-[2.8rem] sm:rounded-[3.2rem] p-8 sm:p-10 lg:p-12 relative overflow-hidden flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-black/30 transition-shadow duration-500 group"
+            className="w-full min-h-[460px] sm:min-h-[500px] rounded-[2.8rem] sm:rounded-[3.2rem] p-8 sm:p-10 lg:p-12 relative overflow-hidden flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-pink-950/40 transition-shadow duration-500 group"
             style={{
-              background: 'linear-gradient(155deg, #1f4333 0%, #132f23 50%, #0c2017 100%)',
+              background: 'linear-gradient(155deg, #be185d 0%, #9d174d 45%, #500724 100%)',
             }}
           >
-            {/* Top Row: Best Seller Pill (Pink) + Cat Avatars with Recommendation Text */}
+            {/* Top Row: Best Seller Pill + Cat Avatars with Recommendation Text */}
             <div className="relative z-20 flex items-start justify-between gap-4">
-              <span className="px-4 py-1.5 rounded-full bg-[#ff4071] text-white text-[11px] font-bold shadow-md shadow-pink-500/30">
+              <span className="px-4 py-1.5 rounded-full bg-slate-950 text-white text-[11px] font-bold shadow-md">
                 Best Seller
               </span>
 
@@ -2029,24 +2048,24 @@ export default function CatEcommerceLanding() {
                     whileHover={{ scale: 1.15, zIndex: 10 }}
                     src={greenCatImg}
                     alt="Cat Stylist 2"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-emerald-100 cursor-pointer"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-pink-100 cursor-pointer"
                   />
                   <motion.img
                     whileHover={{ scale: 1.15, zIndex: 10 }}
                     src={brownCatImg}
                     alt="Cat Stylist 3"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-amber-100 cursor-pointer"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-rose-100 cursor-pointer"
                   />
                 </div>
-                <span className="text-white/90 text-[10.5px] leading-tight font-medium">
+                <span className="text-white/95 text-[10.5px] leading-tight font-medium drop-shadow-2xs">
                   Approved by <br />
-                  <span className="font-bold text-pink-300">Feline Stylists</span>
+                  <span className="font-bold text-pink-200">Feline Stylists</span>
                 </span>
               </div>
             </div>
 
-            {/* Ambient Vibrant Pink & Emerald Glow behind Cat */}
-            <div className="absolute right-0 bottom-0 w-72 sm:w-88 h-64 bg-radial from-[#ff4071]/25 via-emerald-500/10 to-transparent pointer-events-none z-5 blur-2xl" />
+            {/* Ambient Vibrant Pink Aura behind Cat */}
+            <div className="absolute right-0 bottom-0 w-72 sm:w-88 h-64 bg-radial from-[#ff4071]/35 via-rose-500/20 to-transparent pointer-events-none z-5 blur-2xl" />
 
             {/* Prominent Feline Model Cutout Grounded with Natural Floating Breathing Micro-Motion */}
             <div className="absolute right-2 sm:right-6 lg:right-8 bottom-0 z-10 w-48 sm:w-60 lg:w-68 flex items-end justify-center pointer-events-none">
@@ -2065,11 +2084,11 @@ export default function CatEcommerceLanding() {
 
             {/* Center: Package Title + Subheading + Animated Price Pill */}
             <div className="relative z-20 my-auto py-6 flex flex-col items-center text-center">
-              <h3 className="font-display font-black text-3xl sm:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-[1.05] mb-2 drop-shadow-sm group-hover:-translate-y-1 transition-transform duration-300">
+              <h3 className="font-display font-black text-3xl sm:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-[1.05] mb-2 drop-shadow-md group-hover:-translate-y-1 transition-transform duration-300">
                 Summit Pro <br />
                 Package
               </h3>
-              <p className="text-white/90 text-sm sm:text-base font-medium mb-7 drop-shadow-2xs">
+              <p className="text-white/95 text-sm sm:text-base font-medium mb-7 drop-shadow-2xs">
                 Bespoke Weatherproof Snow Wardrobe
               </p>
 
@@ -2077,16 +2096,16 @@ export default function CatEcommerceLanding() {
               <motion.div
                 whileHover={{ scale: 1.08, y: -3 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-baseline gap-2 px-9 py-3.5 rounded-full bg-slate-950 text-white shadow-2xl shadow-black/35 cursor-pointer border border-pink-500/30"
+                className="inline-flex items-baseline gap-2 px-9 py-3.5 rounded-full bg-slate-950 text-white shadow-2xl shadow-black/35 cursor-pointer border border-pink-400/40"
               >
                 <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">$98</span>
-                <span className="text-pink-300 text-xs sm:text-sm font-medium">/Edition</span>
+                <span className="text-pink-200 text-xs sm:text-sm font-medium">/Edition</span>
               </motion.div>
             </div>
 
             {/* Bottom Row: Expiry Pill + Total Cost + Circle Action Button */}
             <div className="relative z-20 flex items-center justify-between pt-4 border-t border-white/20">
-              <span className="px-4 py-1.5 rounded-full border border-pink-400/50 text-white text-xs font-medium tracking-wide backdrop-blur-xs">
+              <span className="px-4 py-1.5 rounded-full border border-pink-300/50 text-white text-xs font-medium tracking-wide backdrop-blur-xs">
                 Sub-Zero Rated
               </span>
 
@@ -2097,9 +2116,9 @@ export default function CatEcommerceLanding() {
                 </span>
               </div>
 
-              {/* Action Circle ↗ with Spring Pop & Pink Fill Switch */}
+              {/* Action Circle ↗ with Spring Pop & Invert Switch */}
               <motion.button
-                whileHover={{ scale: 1.15, rotate: 45, backgroundColor: '#ff4071', color: '#ffffff' }}
+                whileHover={{ scale: 1.15, rotate: 45, backgroundColor: '#0f172a', color: '#ffffff' }}
                 whileTap={{ scale: 0.9 }}
                 className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-white text-slate-950 flex items-center justify-center shadow-xl transition-colors duration-300 cursor-pointer flex-shrink-0"
               >
@@ -2110,6 +2129,81 @@ export default function CatEcommerceLanding() {
           </motion.div>
 
         </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 5.5: 360° ALL-ANGLE VIDEO SHOWCASE (Full-Width Clean Video + White Box)
+          - No black overlay on video: crystal-clear original video playback
+          - Compact White Box placed on the BOTTOM-RIGHT side
+          - Minimal, punchy content with brand styling and Framer Motion
+      ========================================================================= */}
+      <section className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-8 sm:py-14">
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          className="w-full min-h-[560px] sm:min-h-[620px] lg:min-h-[700px] rounded-[2.5rem] sm:rounded-[3.2rem] lg:rounded-[3.6rem] relative overflow-hidden bg-slate-950 shadow-2xl flex items-end justify-end group"
+        >
+          {/* Background Full-Width Video (100% Clean - No Black Overlay) */}
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            src={catAnglesVideo}
+            className="w-full h-full object-cover absolute inset-0"
+          />
+
+          {/* Top-Right Play/Pause Floating Glass Button */}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={toggleVideoPlay}
+            className="absolute top-6 sm:top-8 right-6 sm:right-8 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/85 hover:bg-[#ff4071] hover:text-white text-slate-950 backdrop-blur-md flex items-center justify-center transition-colors cursor-pointer shadow-lg border border-white/60"
+            title={isVideoPlaying ? 'Pause Video' : 'Play Video'}
+          >
+            {isVideoPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+          </motion.button>
+
+          {/* Bottom-Right White Box with Minimal Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="relative z-20 m-6 sm:m-8 lg:m-10 p-6 sm:p-7 rounded-[2rem] sm:rounded-[2.4rem] bg-white/95 backdrop-blur-md shadow-2xl border border-white/80 max-w-[340px] sm:max-w-[380px] text-slate-950 flex flex-col gap-3.5"
+          >
+            {/* Heading */}
+            <h3 className="font-display font-black text-xl sm:text-2xl text-slate-950 tracking-tight leading-tight">
+              Crafted for Every <br />
+              <span className="text-[#ff4071]">Angle of Movement</span>
+            </h3>
+
+            {/* Concise 1-Line Description */}
+            <p className="text-slate-600 text-xs sm:text-[13px] font-medium leading-relaxed">
+              Zero-friction articulated seams engineered for natural flexibility and sub-zero warmth.
+            </p>
+
+            {/* CTA Button */}
+            <motion.button
+              whileHover={{ scale: 1.03, y: -1 }}
+              whileTap={{ scale: 0.96 }}
+              onClick={() => {
+                const el = document.getElementById('categories-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="w-full mt-1 py-3 px-5 rounded-full bg-slate-950 hover:bg-[#ff4071] text-white text-xs sm:text-sm font-bold tracking-wider uppercase flex items-center justify-between shadow-md transition-colors cursor-pointer group"
+            >
+              <span>Shop 360° Collection</span>
+              <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                <ChevronsRight className="w-3.5 h-3.5 stroke-[2.5]" />
+              </span>
+            </motion.button>
+          </motion.div>
+
+        </motion.div>
       </section>
 
       {/* =========================================================================
@@ -2159,7 +2253,7 @@ export default function CatEcommerceLanding() {
                 <h3 className="font-sans font-bold text-2xl sm:text-3xl lg:text-[2.1rem] text-slate-950 tracking-tight leading-[1.2]">
                   <motion.span
                     whileHover={{ scale: 1.08, y: -2 }}
-                    className="inline-block bg-[#1f4333] hover:bg-[#ff4071] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-xs cursor-default transition-colors duration-300"
+                    className="inline-block bg-[#ff4071] hover:bg-[#e11d48] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-sm shadow-pink-500/25 cursor-default transition-colors duration-300"
                   >
                     Warm Play,
                   </motion.span>
@@ -2168,7 +2262,7 @@ export default function CatEcommerceLanding() {
                   Luxury{' '}
                   <motion.span
                     whileHover={{ scale: 1.08, y: -2 }}
-                    className="inline-block bg-[#1f4333] hover:bg-[#ff4071] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-xs cursor-default transition-colors duration-300"
+                    className="inline-block bg-[#ff4071] hover:bg-[#e11d48] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-sm shadow-pink-500/25 cursor-default transition-colors duration-300"
                   >
                     Winter Petwear
                   </motion.span>
@@ -2243,7 +2337,7 @@ export default function CatEcommerceLanding() {
                   <motion.a
                     key={social}
                     href={`#${social.toLowerCase()}`}
-                    whileHover={{ scale: 1.08, y: -2, backgroundColor: '#0f172a', color: '#ffffff', borderColor: '#0f172a' }}
+                    whileHover={{ scale: 1.08, y: -2, backgroundColor: '#ff4071', color: '#ffffff', borderColor: '#ff4071' }}
                     whileTap={{ scale: 0.94 }}
                     className="px-4 py-1.5 rounded-full border border-slate-950 text-slate-950 text-xs font-medium tracking-wide transition-colors shadow-2xs cursor-pointer"
                   >
