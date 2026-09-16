@@ -135,141 +135,141 @@ const CATEGORIES = [
   },
 ];
 
-// Section: Velocity Pet Performance Club (Matching user's reference design)
+// Section 2: Velocity Pet Winter Collection Showcase Data
 const CLUB_ITEMS = [
   {
     id: 'pink',
-    tag: 'Outdoor area',
-    secondaryTag: 'Indoor',
-    title: 'Versatile space for a wide range of activities',
-    previewTitle: 'Futsal court',
+    tag: 'Sub-Zero Alpine',
+    secondaryTag: 'Thermal Fleece',
+    title: 'Multi-zone down insulation engineered for extreme frost protection',
+    previewTitle: 'Blush Sakura Parka',
     editionName: 'Blush Sakura Edition',
     catName: 'Sakura Ski Cat',
     image: pinkCatImg,
     jacketColor: '#ff4071',
     // Background gradient precisely matching herosection cat.png's pink puffer jacket:
     cardBgGradient: 'linear-gradient(155deg, #ffaec6 0%, #ff4071 46%, #b91c47 100%)',
-    description: 'Explore the ideal space to play, train, and reach new heights. Where passion meets feline winter endurance.',
+    description: 'Each piece features ultra-lightweight aerospace down chambers, flexible fleece stretch, and ski goggle compatibility for sub-zero mountain trails.',
   },
   {
     id: 'green',
-    tag: 'Alpine Slope',
-    secondaryTag: 'Indoor arena',
-    title: 'Versatile space for high-altitude snow agility',
-    previewTitle: 'Alpine track',
+    tag: 'Ripstop Weatherproof',
+    secondaryTag: 'Thermal Flex Lining',
+    title: 'Reinforced ripstop exterior built for mountain snow agility and play',
+    previewTitle: 'Alpine Forest Parka',
     editionName: 'Alpine Forest Edition',
     catName: 'Alpine Forest Cat',
     image: greenCatImg,
     jacketColor: '#059669',
     // Background gradient matching green cat jacket:
     cardBgGradient: 'linear-gradient(155deg, #86efac 0%, #059669 46%, #064e3b 100%)',
-    description: 'Engineered with ripstop insulation and thermal flex lining. Built for sub-zero agility and high-fashion winter expeditions.',
+    description: 'Engineered with DWR-coated technical nylon and breathable thermal fleece lining. Unmatched warmth crafted for cold winter strolls and alpine frost.',
   },
   {
     id: 'brown',
-    tag: 'Lodge Terrace',
-    secondaryTag: 'Chalet lounge',
-    title: 'Versatile space for mountain trail & chalet living',
-    previewTitle: 'Terrace court',
+    tag: 'Heritage Quilted',
+    secondaryTag: 'Fleece Satin Warmth',
+    title: 'Iconic retro chevron baffles with plush thermal goose down fill',
+    previewTitle: 'Solar Amber Bomber',
     editionName: 'Solar Amber Edition',
     catName: 'Solar Amber Cat',
     image: brownCatImg,
     jacketColor: '#92400e',
     // Background gradient matching brown cat jacket:
     cardBgGradient: 'linear-gradient(155deg, #fcd34d 0%, #b45309 46%, #78350f 100%)',
-    description: 'Iconic retro chevron bomber with thermal down fill. Unmatched warmth crafted for cold mornings and alpine summits.',
+    description: 'A tribute to alpine vintage outerwear. Hand-stitched quilted baffles retain core body heat while ensuring unrestricted feline sprint flexibility.',
   },
 ];
 
 // Section 3: "Discover Excellence in Warmth, Agility, and Beyond" Data
 const EXCELLENCE_ITEMS = [
   {
-    id: 'competition',
-    category: 'Competition',
-    heading: 'We engineer high-performance apparel for extreme sub-zero agility',
-    subtext: 'Our alpine-rated fabrics and aerodynamic down chambers guarantee peak flexibility and insulation at high altitudes.',
-    ctaText: 'Explore Summit',
+    id: 'alpine',
+    category: 'Alpine Summit',
+    heading: 'Engineered for high-altitude frost protection and extreme winter agility',
+    subtext: 'Our alpine-rated fabrics and aerodynamic down chambers guarantee peak flexibility and core insulation at sub-zero temperatures.',
+    ctaText: 'Shop Summit Fit',
     image: pinkCatImg,
     catName: 'Sakura Alpine Edition',
     bgCard: '#a03b57',
     badgeText: 'Sub-Zero Peak Spec',
     rightImage: greenCatImg,
     rightCatName: 'Alpine Speedsuit',
-    rightDesc: 'Our top-tier feline performance wear features multi-zone down chambers, ripstop outer shells, and flexible fleece stretch, perfect for both casual winter strolls and alpine expeditions.',
+    rightDesc: 'Features multi-zone down chambers, ripstop outer shells, and flexible fleece stretch, perfect for both casual winter strolls and high-altitude alpine expeditions.',
   },
   {
-    id: 'training',
-    category: 'Training',
-    heading: 'We provide premium courts for both individual and group training',
-    subtext: 'Our advanced sports facilities boast diverse courts and fields for every athlete.',
-    ctaText: 'Book a Court',
+    id: 'daily',
+    category: 'Daily Stroll',
+    heading: 'We craft comfortable silhouettes for relaxed play and chilly winter walks',
+    subtext: 'Plush satin linings and flexible fleece collars keep cold winds out while ensuring all-day warmth and unrestricted movement.',
+    ctaText: 'Explore Collection',
     image: greenCatImg,
-    catName: 'Alpine Forest Training',
-    bgCard: '#5d826c', // Elegant sage/forest green exactly as in reference image!
-    badgeText: 'Pro Agility Edition',
+    catName: 'Alpine Forest Parka',
+    bgCard: '#5d826c', // Elegant sage/forest green
+    badgeText: 'Thermal Flex Spec',
     rightImage: brownCatImg,
     rightCatName: 'Solar Retro Runner',
-    rightDesc: 'Our top-tier sports facilities feature a range of courts and fields, including tennis, basketball, and football, perfect for both casual players and competitive athletes.',
+    rightDesc: 'Engineered with DWR-coated ripstop fabric, micro-fleece belly guards, and reflective safety trims. Keeps fur dry and core body temperature optimal in sleet or snow.',
   },
   {
-    id: 'friendly',
-    category: 'Friendly match',
-    heading: 'We craft comfortable silhouettes for relaxed play and weekend walks',
-    subtext: 'Plush satin linings and flexible fleece collars keep cold winds out while ensuring all-day leisure comfort.',
-    ctaText: 'Shop Friendly Fits',
+    id: 'expedition',
+    category: 'Snow Expedition',
+    heading: 'Heavy-duty quilted puffers built for deep snowdrifts and sub-zero trails',
+    subtext: 'Double-sealed storm zippers and water-resistant down clusters withstand blizzard conditions without restricting natural feline stalking agility.',
+    ctaText: 'Shop Expedition Fits',
     image: brownCatImg,
     catName: 'Solar Amber Heritage',
     bgCard: '#876953',
-    badgeText: 'Weekend Casual Spec',
+    badgeText: 'Blizzard-Proof Spec',
     rightImage: pinkCatImg,
     rightCatName: 'Blush Sakura Casual',
-    rightDesc: 'Engineered for seamless movement across winter parks and urban strolls. Ultra-breathable insulation prevents overheating during playful running.',
+    rightDesc: 'Crafted for extreme winter resilience. Ultra-breathable membrane ventilation prevents overheating while retaining essential body warmth during playful outdoor sprints.',
   },
 ];
 
-// Section 4: "Explore Our Facilities" Data (Matching 3rd reference design)
+// Section 4: "Explore Our Winter Lineup" Data
 const FACILITIES_ITEMS = [
   {
-    id: 'athletes-zone',
-    tag: 'Athletes zone',
-    title: 'State-of-the-Art Courts and Fields for All Athletes',
-    category: 'Outdoor Track',
+    id: 'alpine-parkas',
+    tag: 'Alpine Parkas',
+    title: 'Weatherproof Down Parkas Built for Deep Snow',
+    category: 'Winter Parkas',
     image: pinkCatImg,
-    catName: 'Sakura Sprint Cat',
+    catName: 'Sakura Ski Cat',
     bgGradient: 'linear-gradient(155deg, #ea580c 0%, #c2410c 50%, #7c2d12 100%)',
     overlayType: 'slats',
     cardStyle: 'standard',
   },
   {
-    id: 'training-ground',
-    tag: 'Training Ground',
-    subTag: 'Play ground',
-    title: 'Top-Tier Sports Facilities for Training',
-    category: 'Training Ground',
+    id: 'snowsuit-edition',
+    tag: 'Snowsuits',
+    subTag: 'All-In-One Suit',
+    title: 'Thermal Windproof Full-Body Snowsuits for Deep Snow Play',
+    category: 'Snowsuits',
     image: greenCatImg,
-    catName: 'Alpine Turf Cat',
+    catName: 'Alpine Forest Cat',
     bgGradient: 'linear-gradient(180deg, #38bdf8 0%, #7dd3fc 35%, #15803d 40%, #166534 100%)',
     overlayType: 'turf',
     cardStyle: 'interactive-pill',
   },
   {
-    id: 'versatile-sports',
-    tag: 'Versatile Sports',
-    title: 'Versatile Sports Facilities Designed for Performance',
-    category: 'Stadium Track',
+    id: 'thermal-knitwear',
+    tag: 'Thermal Knits',
+    title: 'Merino Wool Knits & Fleeces for Chilly Morning Walks',
+    category: 'Knit Sweaters',
     image: brownCatImg,
-    catName: 'Amber Speed Cat',
+    catName: 'Solar Amber Cat',
     bgGradient: 'linear-gradient(155deg, #c2410c 0%, #9a3412 50%, #431407 100%)',
     overlayType: 'track-lines',
     cardStyle: 'standard',
   },
   {
-    id: 'tennis-court',
-    tag: 'Tennis court',
-    title: 'State-of-the-Art Courts and Field',
-    category: 'Tennis Court',
+    id: 'storm-shells',
+    tag: 'Storm Shells',
+    title: 'Ultralight Hydrophobic Ski Jackets & Protective Vests',
+    category: 'Storm Jackets',
     image: greenCatImg,
-    catName: 'Court Pro Cat',
+    catName: 'Alpine Trail Cat',
     bgGradient: 'linear-gradient(180deg, #0284c7 0%, #0369a1 70%, #075985 100%)',
     overlayType: 'court-line',
     cardStyle: 'standard',
@@ -677,29 +677,29 @@ export default function CatEcommerceLanding() {
           {/* ==================== LEFT COLUMN ==================== */}
           <div className="lg:col-span-4 flex flex-col justify-between py-2 sm:py-4">
             <div>
-              {/* Badge: Sports center */}
+              {/* Badge: Alpine Winter Edition */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200/90 bg-white/90 backdrop-blur-sm text-slate-800 text-xs font-semibold tracking-wide shadow-xs">
                 <span
                   className="w-2 h-2 rounded-full transition-colors duration-500"
                   style={{ backgroundColor: CLUB_ITEMS[activeClubIndex].jacketColor }}
                 />
-                <span>Sports center</span>
+                <span>Alpine Winter Edition</span>
               </div>
 
-              {/* Main Headline (Exact typography and spirit of reference) */}
+              {/* Main Headline (Winter Collection Storytelling) */}
               <h2 className="font-display font-black text-3xl sm:text-4xl xl:text-[2.65rem] text-slate-950 tracking-tight leading-[1.12] mt-8 mb-6">
-                Welcome to Velocity Club, where we inspire athletes and fitness enthusiasts to reach new heights.
+                Welcome to Velocity Club, where luxury petwear meets extreme sub-zero winter performance.
               </h2>
             </div>
 
-            {/* Bottom CTA Button: Get in touch ↗ */}
+            {/* Bottom CTA Button: Explore Collection ↗ */}
             <div className="pt-6 lg:pt-0">
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-3.5 px-6 py-3.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white text-sm font-bold tracking-tight shadow-md shadow-slate-950/15 cursor-pointer group transition-all"
               >
-                <span>Get in touch</span>
+                <span>Explore Collection</span>
                 <span className="w-6 h-6 rounded-full bg-white text-slate-950 flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
                   <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
                 </span>
@@ -897,7 +897,7 @@ export default function CatEcommerceLanding() {
           <div className="lg:col-span-7">
             <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl text-slate-950 tracking-tight leading-[1.06]">
               Discover Excellence <br className="hidden sm:block" />
-              in Courts, Fields, <br className="hidden sm:block" />
+              in Warmth, Agility, <br className="hidden sm:block" />
               and Beyond
             </h2>
           </div>
@@ -1095,13 +1095,13 @@ export default function CatEcommerceLanding() {
           
           {/* Top Header Row */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 sm:pb-8 border-b border-slate-200/70">
-            {/* Left: Facilities Pill + Title */}
+            {/* Left: Winter Lineup Pill + Title */}
             <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
               <span className="px-3.5 py-1 rounded-full border border-slate-300/80 bg-white text-slate-800 text-xs font-semibold tracking-wide shadow-2xs">
-                Facilities
+                Winter Lineup
               </span>
               <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-[2.2rem] text-slate-950 tracking-tight">
-                Explore Our Facilities
+                Explore Our Winter Lineup
               </h2>
             </div>
 
@@ -1113,7 +1113,7 @@ export default function CatEcommerceLanding() {
                   type="text"
                   value={facilitySearch}
                   onChange={(e) => setFacilitySearch(e.target.value)}
-                  placeholder="Search here..."
+                  placeholder="Search coats, puffers, knits..."
                   className="w-full sm:w-60 lg:w-64 pl-4 pr-10 py-2.5 rounded-full bg-white border border-slate-200 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-400 shadow-2xs transition-colors"
                 />
                 <Search className="w-4 h-4 text-slate-400 absolute right-3.5 pointer-events-none" />
@@ -1245,9 +1245,9 @@ export default function CatEcommerceLanding() {
               </button>
             </div>
 
-            {/* Right Subtitle Paragraph from reference */}
+            {/* Right Subtitle Paragraph */}
             <p className="text-slate-500 text-xs sm:text-[13px] text-center sm:text-right max-w-md font-normal leading-relaxed">
-              Reserve a court for individual practice, team sessions, or personalized coaching to elevate your performance.
+              Equip your feline companion with luxury alpine apparel, thermal insulation, and custom weatherproof fits to conquer this winter season.
             </p>
           </div>
 
@@ -1284,28 +1284,28 @@ export default function CatEcommerceLanding() {
               <DollarSign className="w-5 h-5 stroke-[2.5]" />
             </div>
             <span className="px-3.5 py-1 rounded-full border border-slate-200/90 bg-white text-slate-800 text-xs font-semibold tracking-wide shadow-2xs">
-              Pricing
+              Winter Bundles
             </span>
           </div>
 
-          {/* Center: Bold Headline + Paw Badge + Sub-link (Matches Reference Mockup) */}
+          {/* Center: Bold Headline + Paw Badge + Sub-link */}
           <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
             <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-[3.6rem] text-slate-950 tracking-tight leading-[1.06]">
-              Find the Perfect Plan for Your <br />
-              Athletic{' '}
+              Find the Perfect Fit for Your <br />
+              Winter{' '}
               <span className="inline-flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-full border-2 border-slate-950 mx-1.5 align-middle bg-white shadow-2xs">
                 <PawIcon className="w-5 h-5 sm:w-6 sm:h-6" color="#0f172a" />
               </span>{' '}
               Journey
             </h2>
 
-            {/* See More Options >> Link */}
+            {/* Explore All Winter Sets >> Link */}
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               className="inline-flex items-center gap-2.5 mt-5 text-xs sm:text-sm font-semibold text-slate-800 hover:text-slate-950 transition-colors group cursor-pointer"
             >
-              <span>See More Options</span>
+              <span>Explore All Winter Sets</span>
               <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs">
                 <ChevronsRight className="w-3.5 h-3.5 stroke-[2.5]" />
               </span>
@@ -1351,18 +1351,18 @@ export default function CatEcommerceLanding() {
                 <div className="flex items-center -space-x-2 mb-1.5">
                   <img
                     src={pinkCatImg}
-                    alt="Cat Coach 1"
+                    alt="Cat Stylist 1"
                     className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-pink-100"
                   />
                   <img
                     src={greenCatImg}
-                    alt="Cat Coach 2"
+                    alt="Cat Stylist 2"
                     className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-emerald-100"
                   />
                 </div>
                 <span className="text-white/90 text-[10.5px] leading-tight font-medium">
                   Recommended by <br />
-                  <span className="font-bold">US Coaches</span>
+                  <span className="font-bold">Alpine Vets</span>
                 </span>
               </div>
             </div>
@@ -1370,30 +1370,30 @@ export default function CatEcommerceLanding() {
             {/* Center: Package Title + Subheading + Price Pill */}
             <div className="relative z-20 my-auto py-6 flex flex-col items-center text-center">
               <h3 className="font-display font-black text-3xl sm:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-[1.05] mb-2 drop-shadow-sm">
-                6 Season <br />
+                Winter Trio <br />
                 Package
               </h3>
               <p className="text-white/90 text-sm sm:text-base font-medium mb-7 drop-shadow-2xs">
-                Individualized Training
+                Parka, Thermal Fleece &amp; Booties
               </p>
 
-              {/* Price Pill: $50 /Session */}
+              {/* Price Pill: $50 /Piece */}
               <div className="inline-flex items-baseline gap-2 px-9 py-3.5 rounded-full bg-slate-950 text-white shadow-2xl shadow-black/25">
                 <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">$50</span>
-                <span className="text-white/70 text-xs sm:text-sm font-medium">/Session</span>
+                <span className="text-white/70 text-xs sm:text-sm font-medium">/Piece</span>
               </div>
             </div>
 
             {/* Bottom Row: Expiry Pill + Total Cost + Circle Action Button */}
             <div className="relative z-20 flex items-center justify-between pt-4 border-t border-white/20">
               <span className="px-4 py-1.5 rounded-full border border-white/50 text-white text-xs font-medium tracking-wide">
-                1 Year Expiry
+                Lifetime Fit Guarantee
               </span>
 
               <div className="flex-1 mx-4 sm:mx-8 flex flex-col items-center">
                 <div className="w-full max-w-[220px] h-[1px] bg-white/25 mb-1.5" />
                 <span className="text-white text-xs sm:text-[13px] font-bold tracking-tight">
-                  $600 / Total Cost
+                  $150 / Complete Kit
                 </span>
               </div>
 
@@ -1424,18 +1424,18 @@ export default function CatEcommerceLanding() {
                 <div className="flex items-center -space-x-2 mb-1.5">
                   <img
                     src={greenCatImg}
-                    alt="Cat Coach 2"
+                    alt="Cat Stylist 2"
                     className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-emerald-100"
                   />
                   <img
                     src={brownCatImg}
-                    alt="Cat Coach 3"
+                    alt="Cat Stylist 3"
                     className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-amber-100"
                   />
                 </div>
                 <span className="text-white/90 text-[10.5px] leading-tight font-medium">
-                  Recommended by <br />
-                  <span className="font-bold">US Coaches</span>
+                  Approved by <br />
+                  <span className="font-bold">Feline Stylists</span>
                 </span>
               </div>
             </div>
@@ -1452,30 +1452,30 @@ export default function CatEcommerceLanding() {
             {/* Center: Package Title + Subheading + Price Pill */}
             <div className="relative z-20 my-auto py-6 flex flex-col items-center text-center">
               <h3 className="font-display font-black text-3xl sm:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-[1.05] mb-2 drop-shadow-sm">
-                12 Season <br />
+                Summit Pro <br />
                 Package
               </h3>
               <p className="text-white/90 text-sm sm:text-base font-medium mb-7 drop-shadow-2xs">
-                Individualized Training
+                Bespoke Weatherproof Snow Wardrobe
               </p>
 
-              {/* Price Pill: $98 /Session */}
+              {/* Price Pill: $98 /Edition */}
               <div className="inline-flex items-baseline gap-2 px-9 py-3.5 rounded-full bg-slate-950 text-white shadow-2xl shadow-black/35">
                 <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">$98</span>
-                <span className="text-white/70 text-xs sm:text-sm font-medium">/Session</span>
+                <span className="text-white/70 text-xs sm:text-sm font-medium">/Edition</span>
               </div>
             </div>
 
             {/* Bottom Row: Expiry Pill + Total Cost + Circle Action Button */}
             <div className="relative z-20 flex items-center justify-between pt-4 border-t border-white/20">
               <span className="px-4 py-1.5 rounded-full border border-white/50 text-white text-xs font-medium tracking-wide">
-                1 Year Expiry
+                Sub-Zero Rated
               </span>
 
               <div className="flex-1 mx-4 sm:mx-8 flex flex-col items-center">
                 <div className="w-full max-w-[220px] h-[1px] bg-white/30 mb-1.5" />
                 <span className="text-white text-xs sm:text-[13px] font-bold tracking-tight drop-shadow-sm">
-                  $1176 / Total Cost
+                  $294 / Full Snow Kit
                 </span>
               </div>
 
@@ -1532,92 +1532,92 @@ export default function CatEcommerceLanding() {
                 </span>
               </div>
 
-              {/* Slogan with Dark Green Pill Badges (Matches Reference Image) */}
+              {/* Slogan with Dark Green Pill Badges (Winter Petwear Storytelling) */}
               <div className="mt-12 sm:mt-16 lg:mt-24 max-w-sm">
                 <h3 className="font-sans font-bold text-2xl sm:text-3xl lg:text-[2.1rem] text-slate-950 tracking-tight leading-[1.2]">
                   <span className="inline-block bg-[#1f4333] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-xs">
-                    Your Play,
+                    Warm Play,
                   </span>
-                  Your Way-
+                  Their Way-
                   <br />
-                  Modern{' '}
+                  Luxury{' '}
                   <span className="inline-block bg-[#1f4333] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-xs">
-                    Sports Facilities
+                    Winter Petwear
                   </span>
                   <br />
-                  for Every Passion
+                  for Every Season
                 </h3>
               </div>
             </div>
 
-            {/* Column 2: Facilites (Spans 2 columns on lg) */}
+            {/* Column 2: Collection Categories (Spans 2 columns on lg) */}
             <div className="lg:col-span-2">
               <h4 className="font-sans font-bold text-slate-950 text-base sm:text-lg mb-5">
-                Facilites
+                Collection
               </h4>
               <ul className="space-y-3 sm:space-y-3.5 text-xs sm:text-[13px] text-slate-700 font-medium">
                 <li>
                   <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Tennis Courts
+                    Alpine Down Parkas
                   </a>
                 </li>
                 <li>
                   <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Basketball Courts
+                    Quilted Puffer Jackets
                   </a>
                 </li>
                 <li>
                   <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Football Field
+                    Weatherproof Snowsuits
                   </a>
                 </li>
                 <li>
                   <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Swimming Pool
+                    Thermal Knit Sweaters
                   </a>
                 </li>
                 <li>
                   <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Gym & Fitness Center
+                    Windproof Ski Vests
                   </a>
                 </li>
                 <li>
                   <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Multi-purpose Hall
+                    Micro-Fleece Collars
                   </a>
                 </li>
                 <li>
                   <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Sauna & Relaxation Zone
+                    Feline Ski Goggles
                   </a>
                 </li>
                 <li>
                   <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Locker Rooms
+                    Insulated Paw Booties
                   </a>
                 </li>
               </ul>
             </div>
 
-            {/* Column 3: About (Spans 2 columns on lg) */}
+            {/* Column 3: About Studio (Spans 2 columns on lg) */}
             <div className="lg:col-span-2">
               <h4 className="font-sans font-bold text-slate-950 text-base sm:text-lg mb-5">
-                About
+                About Studio
               </h4>
               <ul className="space-y-3 sm:space-y-3.5 text-xs sm:text-[13px] text-slate-700 font-medium">
                 <li>
                   <a href="#velocity-club-section" className="hover:text-slate-950 transition-colors">
-                    Our Mission
+                    Our Alpine Craft
                   </a>
                 </li>
                 <li>
                   <a href="#excellence-section" className="hover:text-slate-950 transition-colors">
-                    Vision
+                    Thermal Tech Spec
                   </a>
                 </li>
                 <li>
                   <a href="#pricing-section" className="hover:text-slate-950 transition-colors">
-                    Community
+                    Safety &amp; Fit Guide
                   </a>
                 </li>
               </ul>
@@ -1656,10 +1656,10 @@ export default function CatEcommerceLanding() {
               </div>
             </div>
 
-            {/* Column 5: Join us (Spans 3 columns on lg) */}
+            {/* Column 5: VIP Winter Club (Spans 3 columns on lg) */}
             <div className="lg:col-span-3">
               <h4 className="font-sans font-bold text-slate-950 text-base sm:text-lg mb-5">
-                Join us
+                VIP Winter Club
               </h4>
               <form onSubmit={handleFooterJoin} className="flex flex-col gap-3">
                 {/* Email Input */}
@@ -1671,27 +1671,27 @@ export default function CatEcommerceLanding() {
                   className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-800 placeholder:text-slate-400 border border-slate-200/90 shadow-2xs focus:outline-none focus:border-slate-950 transition-colors"
                 />
 
-                {/* Name Input */}
+                {/* Cat Name Input */}
                 <input
                   type="text"
-                  placeholder="Type your name here..."
+                  placeholder="Your cat's name..."
                   value={footerName}
                   onChange={(e) => setFooterName(e.target.value)}
                   className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-800 placeholder:text-slate-400 border border-slate-200/90 shadow-2xs focus:outline-none focus:border-slate-950 transition-colors"
                 />
 
-                {/* Training Type Select */}
+                {/* Style / Size Select */}
                 <div className="relative">
                   <select
                     value={footerType}
                     onChange={(e) => setFooterType(e.target.value)}
                     className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-500 appearance-none border border-slate-200/90 shadow-2xs focus:outline-none focus:border-slate-950 transition-colors cursor-pointer pr-10"
                   >
-                    <option value="">Training Type</option>
-                    <option value="individual">Individual Practice</option>
-                    <option value="team">Team Session</option>
-                    <option value="personal">Personal Coaching</option>
-                    <option value="feline">Feline Agility</option>
+                    <option value="">Select Fit / Category</option>
+                    <option value="parka">Alpine Down Parkas (XS - L)</option>
+                    <option value="snowsuit">Full Snowsuits (XS - L)</option>
+                    <option value="knitwear">Thermal Knitwear (XS - L)</option>
+                    <option value="accessories">Ski Accessories &amp; Goggles</option>
                   </select>
                   <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 </div>
@@ -1701,7 +1701,7 @@ export default function CatEcommerceLanding() {
                   type="submit"
                   className="w-full bg-white hover:bg-slate-50 border border-slate-950 rounded-full py-1 pl-5 pr-1 flex items-center justify-between text-xs sm:text-[12.5px] font-bold tracking-wider uppercase text-slate-950 cursor-pointer transition-all shadow-xs group mt-1"
                 >
-                  <span>{footerSubmitted ? 'STARTING...' : 'START MOVING'}</span>
+                  <span>{footerSubmitted ? 'WELCOME ABOARD!' : 'JOIN VIP CLUB'}</span>
                   <span className="w-8 h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:scale-105 transition-transform flex-shrink-0">
                     <ChevronsRight className="w-3.5 h-3.5 stroke-[2.5]" />
                   </span>
@@ -1722,7 +1722,7 @@ export default function CatEcommerceLanding() {
               </a>
             </div>
             <div>
-              All rights reserved©2024
+              All rights reserved©2026 &bull; Velocity Petwear Studio
             </div>
           </div>
 
