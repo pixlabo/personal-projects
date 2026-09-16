@@ -543,7 +543,7 @@ export default function CatEcommerceLanding() {
         <div className="relative w-full flex-1 flex flex-col items-center justify-end pb-2 pt-1 min-h-0">
 
           {/* Giant Headline (Behind the cat) - Bottom-to-Top Staggered Slide-Up Reveal */}
-          <div className="w-full text-center relative z-10 pointer-events-none mb-[-3vw] sm:mb-[-4vw] lg:mb-[-5vw] flex-shrink-0 overflow-hidden py-2">
+          <div className="w-full text-center relative z-10 pointer-events-none mt-7 sm:mt-11 lg:mt-14 mb-[-1.5vw] sm:mb-[-2.5vw] lg:mb-[-3vw] flex-shrink-0 overflow-hidden py-2">
             <motion.h1
               initial="hidden"
               animate="visible"
