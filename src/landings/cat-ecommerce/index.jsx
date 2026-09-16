@@ -78,7 +78,7 @@ function CatPawCursor() {
   const sparklesRef = useRef([]);
   const targetRef = useRef({ x: -100, y: -100 });
   const isMovingRef = useRef(false);
-  const numPoints = 20;
+  const numPoints = 22;
 
   useEffect(() => {
     // Only activate on pointer devices (desktop mouse)
@@ -91,38 +91,46 @@ function CatPawCursor() {
     }));
 
     let moveTimeout;
+    const starColors = ['#ffffff', '#ffffff', '#ffffff', '#fef08a', '#ff9ec4', '#ff4071'];
+
     const handleMouseMove = (e) => {
       targetRef.current = { x: e.clientX, y: e.clientY };
       setCursorPos({ x: e.clientX, y: e.clientY });
       setIsVisible(true);
       isMovingRef.current = true;
 
-      // Spawn tiny twinkling star sparkles along movement
-      const starColors = ['#ffffff', '#ffffff', '#ff7e9e', '#ff4071', '#fed7aa'];
-      for (let s = 0; s < 2; s++) {
-        sparklesRef.current.push({
-          x: e.clientX + (Math.random() - 0.5) * 14,
-          y: e.clientY + (Math.random() - 0.5) * 14,
-          vx: (Math.random() - 0.5) * 0.9,
-          vy: (Math.random() - 0.5) * 0.9 - 0.3,
-          size: 2.2 + Math.random() * 2.6, // Tiny micro star: 2.2px to 4.8px
-          alpha: 0.95,
-          decay: 0.025 + Math.random() * 0.02,
-          rotation: Math.random() * Math.PI,
-          rotSpeed: (Math.random() - 0.5) * 0.1,
-          color: starColors[Math.floor(Math.random() * starColors.length)],
-        });
+      // Spawn tiny twinkling diamond star sparkles directly along the tail path
+      const pts = pointsRef.current;
+      if (pts.length > 2) {
+        // Pick random spots along the tail curve so stars shimmer "tail ke pass"
+        for (let s = 0; s < 2; s++) {
+          const randIdx = Math.floor(Math.random() * (pts.length - 2));
+          const p = pts[randIdx] || { x: e.clientX, y: e.clientY };
+          sparklesRef.current.push({
+            x: p.x + (Math.random() - 0.5) * 10,
+            y: p.y + (Math.random() - 0.5) * 10,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5 - 0.2,
+            size: 1.1 + Math.random() * 1.8, // Ultra-tiny micro star (1.1px - 2.9px)
+            alpha: 1,
+            decay: 0.022 + Math.random() * 0.02,
+            rotation: Math.random() * Math.PI,
+            rotSpeed: (Math.random() - 0.5) * 0.12,
+            seed: Math.random() * 20,
+            color: starColors[Math.floor(Math.random() * starColors.length)],
+          });
+        }
       }
 
-      // Limit max sparkles for peak performance
-      if (sparklesRef.current.length > 50) {
-        sparklesRef.current.shift();
+      // Keep sparkles array performant
+      if (sparklesRef.current.length > 55) {
+        sparklesRef.current.splice(0, sparklesRef.current.length - 55);
       }
 
       clearTimeout(moveTimeout);
       moveTimeout = setTimeout(() => {
         isMovingRef.current = false;
-      }, 140);
+      }, 120);
 
       // Check if hovering interactive element
       const target = e.target;
@@ -154,21 +162,27 @@ function CatPawCursor() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
+    // High-DPI crisp canvas scaling so the thin line is razor-sharp on all screens
     const updateCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
     };
     updateCanvasSize();
     window.addEventListener('resize', updateCanvasSize);
 
-    // Helper: Draw 4-Point Twinkling Diamond Star Sparkle
+    // Helper: Draw Delicate 4-Point Diamond Micro Star Sparkle ✨
     const drawSparkle = (x, y, size, alpha, color, rotation) => {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(rotation);
       ctx.beginPath();
       const s = size;
-      const c = size * 0.18;
+      const c = size * 0.14; // Sharp, delicate star tips
       ctx.moveTo(0, -s);
       ctx.quadraticCurveTo(c, -c, s, 0);
       ctx.quadraticCurveTo(c, c, 0, s);
@@ -177,36 +191,36 @@ function CatPawCursor() {
       ctx.closePath();
 
       ctx.fillStyle = color;
-      ctx.shadowColor = color === '#ffffff' ? '#ffffff' : '#ff4071';
-      ctx.shadowBlur = 4;
-      ctx.globalAlpha = Math.max(0, alpha);
+      ctx.shadowColor = color === '#ffffff' ? 'rgba(255,255,255,0.8)' : 'rgba(255,64,113,0.8)';
+      ctx.shadowBlur = 3;
+      ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
       ctx.fill();
 
-      // Micro glowing center
+      // Pinprick glowing center core
       ctx.beginPath();
       ctx.arc(0, 0, s * 0.22, 0, Math.PI * 2);
       ctx.fillStyle = '#ffffff';
-      ctx.globalAlpha = Math.max(0, alpha * 0.9);
+      ctx.globalAlpha = Math.max(0, Math.min(1, alpha * 0.95));
       ctx.fill();
 
       ctx.restore();
     };
 
-    // Render loop for thin cat tail + twinkling star particles
+    // Render loop for ultra-thin cat tail + twinkling star particles
     let time = 0;
     const render = () => {
       time += 0.05;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
       const target = targetRef.current;
       const points = pointsRef.current;
 
       if (target.x > -50 && points.length > 0) {
-        // Head segment follows target smoothly
-        points[0].x += (target.x - points[0].x) * 0.45;
-        points[0].y += (target.y - points[0].y) * 0.45;
+        // Head segment follows mouse pointer closely
+        points[0].x += (target.x - points[0].x) * 0.65;
+        points[0].y += (target.y - points[0].y) * 0.65;
 
-        // Tail segments follow with natural spring damping
+        // Tail segments follow with natural spring damping for realistic feline tail flex
         for (let i = 1; i < numPoints; i++) {
           const prev = points[i - 1];
           const curr = points[i];
@@ -217,55 +231,82 @@ function CatPawCursor() {
           curr.x += dx * 0.38;
           curr.y += dy * 0.38;
 
-          // Gentle tip sway when stationary
-          if (!isMovingRef.current && i > numPoints - 6) {
-            const sway = (i - (numPoints - 6)) * 0.5;
-            curr.x += Math.sin(time + i * 0.35) * sway * 0.3;
-            curr.y += Math.cos(time + i * 0.35) * sway * 0.25;
+          // Gentle tip sway when mouse is stationary
+          if (!isMovingRef.current && i > numPoints - 7) {
+            const sway = (i - (numPoints - 7)) * 0.45;
+            curr.x += Math.sin(time * 1.2 + i * 0.3) * sway * 0.35;
+            curr.y += Math.cos(time * 1.2 + i * 0.3) * sway * 0.3;
           }
         }
 
-        // 1. Draw ULTRA-THIN tapered smooth feline ribbon tail (NO bulky circles!)
-        for (let i = 1; i < numPoints - 1; i++) {
-          const progress = 1 - i / numPoints; // 1 at paw base, 0 at tail tip
-          ctx.beginPath();
-          ctx.moveTo(points[i].x, points[i].y);
-          const xc = (points[i].x + points[i + 1].x) / 2;
-          const yc = (points[i].y + points[i + 1].y) / 2;
-          ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+        // 1. Draw ULTRA-THIN smooth feline ribbon tail (pure spline, zero beads/dots!)
+        for (let i = 0; i < numPoints - 1; i++) {
+          const progress = 1 - i / (numPoints - 1); // 1.0 at paw base, 0.0 at tip
+          const p0 = points[i];
+          const p1 = points[i + 1];
 
-          // Patli, elegant tapered width: 2.4px tapering down to 0.7px!
-          ctx.lineWidth = Math.max(0.7, progress * 2.4);
+          // Compute smooth curve midpoint
+          const midX = (p0.x + p1.x) / 2;
+          const midY = (p0.y + p1.y) / 2;
+
+          ctx.beginPath();
+          if (i === 0) {
+            ctx.moveTo(p0.x, p0.y);
+            ctx.lineTo(midX, midY);
+          } else {
+            const prevMidX = (points[i - 1].x + p0.x) / 2;
+            const prevMidY = (points[i - 1].y + p0.y) / 2;
+            ctx.moveTo(prevMidX, prevMidY);
+            ctx.quadraticCurveTo(p0.x, p0.y, midX, midY);
+          }
+
+          // Ultra-thin sleek width: 1.6px tapering down to 0.4px!
+          ctx.lineWidth = Math.max(0.4, progress * 1.6);
           ctx.strokeStyle = `rgba(255, 64, 113, ${Math.max(0.12, progress * 0.9)})`;
           ctx.lineCap = 'round';
           ctx.lineJoin = 'round';
           ctx.shadowColor = '#ff4071';
-          ctx.shadowBlur = 4;
+          ctx.shadowBlur = 2.5;
           ctx.stroke();
         }
 
-        // Also occasionally spawn a tiny star along the middle of the tail while moving
-        if (isMovingRef.current && Math.random() > 0.45) {
-          const midIdx = Math.floor(2 + Math.random() * (numPoints - 4));
-          const p = points[midIdx];
-          if (p) {
+        // Draw the very last tip segment
+        if (numPoints > 2) {
+          const pPenult = points[numPoints - 2];
+          const pLast = points[numPoints - 1];
+          const prevMidX = (points[numPoints - 3].x + pPenult.x) / 2;
+          const prevMidY = (points[numPoints - 3].y + pPenult.y) / 2;
+          ctx.beginPath();
+          ctx.moveTo(prevMidX, prevMidY);
+          ctx.quadraticCurveTo(pPenult.x, pPenult.y, pLast.x, pLast.y);
+          ctx.lineWidth = 0.4;
+          ctx.strokeStyle = 'rgba(255, 64, 113, 0.2)';
+          ctx.lineCap = 'round';
+          ctx.stroke();
+        }
+
+        // Occasionally spawn an ambient micro-star at the tail tip while moving
+        if (isMovingRef.current && Math.random() > 0.55) {
+          const tip = points[numPoints - 2];
+          if (tip) {
             sparklesRef.current.push({
-              x: p.x + (Math.random() - 0.5) * 6,
-              y: p.y + (Math.random() - 0.5) * 6,
-              vx: (Math.random() - 0.5) * 0.6,
-              vy: (Math.random() - 0.5) * 0.6 - 0.2,
-              size: 2.0 + Math.random() * 2.2, // Tiny micro sparkle
+              x: tip.x + (Math.random() - 0.5) * 6,
+              y: tip.y + (Math.random() - 0.5) * 6,
+              vx: (Math.random() - 0.5) * 0.4,
+              vy: -0.2 - Math.random() * 0.3,
+              size: 1.0 + Math.random() * 1.5,
               alpha: 0.9,
-              decay: 0.03 + Math.random() * 0.02,
+              decay: 0.03,
               rotation: Math.random() * Math.PI,
               rotSpeed: (Math.random() - 0.5) * 0.1,
-              color: Math.random() > 0.4 ? '#ffffff' : '#ff7e9e',
+              seed: Math.random() * 10,
+              color: Math.random() > 0.4 ? '#ffffff' : '#fef08a',
             });
           }
         }
       }
 
-      // 2. Render & update tiny twinkling star sparkles ✨
+      // 2. Render & update tiny twinkling diamond star sparkles ✨
       const sparkles = sparklesRef.current;
       for (let i = sparkles.length - 1; i >= 0; i--) {
         const s = sparkles[i];
@@ -277,8 +318,9 @@ function CatPawCursor() {
         if (s.alpha <= 0) {
           sparkles.splice(i, 1);
         } else {
-          // Twinkle effect
-          const twinkleAlpha = s.alpha * (0.8 + 0.2 * Math.sin(time * 8 + i));
+          // Rapid magical twinkle shimmer ("chamakne wale sitare")
+          const twinkleFactor = 0.5 + 0.5 * Math.sin(time * 14 + s.seed);
+          const twinkleAlpha = s.alpha * twinkleFactor;
           drawSparkle(s.x, s.y, s.size, twinkleAlpha, s.color, s.rotation);
         }
       }
