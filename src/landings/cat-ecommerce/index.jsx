@@ -1529,72 +1529,148 @@ export default function CatEcommerceLanding() {
       </section>
 
       {/* =========================================================================
-          SECTION 4: EXPLORE OUR FACILITIES (Matches User's 3rd Reference Image)
-          - Enclosed within a rounded light slate container
-          - Header: "Facilities" pill, "Explore Our Facilities" title, Search input, "View All ↗" button
-          - 4 Cards:
-            1. Athletes zone (orange slatted wall + cat + title)
-            2. Training Ground (green field + flag icon + frosted "Play ground" bottom box with arrow)
-            3. Versatile Sports (rust track with curved lines + cat + title)
-            4. Tennis court (blue court + white court lines + cat + title)
-          - Footer: [←] [→] navigation buttons on left, descriptive paragraph on right
+          SECTION 4: EXPLORE OUR FACILITIES (Framer Motion Enhanced)
+          - Enclosed within a rounded light slate container with smooth viewport entrance
+          - Header: "Winter Lineup" pill, masked bottom-to-top headline reveal, interactive search, "View All ↗" button
+          - 4 Cards with staggered entrances, floating breathing cats, and spring hover lifts
+          - Footer: Spring-animated [←] [→] navigation buttons and animated subtitle
       ========================================================================= */}
       <section
         id="facilities-section"
         className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-16"
       >
-        <div className="w-full bg-[#f8fafc] rounded-[2.5rem] sm:rounded-[3.2rem] p-6 sm:p-10 lg:p-12 border border-slate-200/80 shadow-xs relative">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.12 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="w-full bg-[#f8fafc] rounded-[2.5rem] sm:rounded-[3.2rem] p-6 sm:p-10 lg:p-12 border border-slate-200/80 shadow-xs relative overflow-hidden"
+        >
           
           {/* Top Header Row */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 sm:pb-8 border-b border-slate-200/70">
-            {/* Left: Winter Lineup Pill + Title */}
+            {/* Left: Winter Lineup Pill + Masked Headline */}
             <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
-              <span className="px-3.5 py-1 rounded-full border border-slate-300/80 bg-white text-slate-800 text-xs font-semibold tracking-wide shadow-2xs">
+              <motion.span
+                initial={{ opacity: 0, scale: 0.8, x: -15 }}
+                whileInView={{ opacity: 1, scale: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ scale: 1.05, x: 2 }}
+                className="px-3.5 py-1 rounded-full border border-slate-300/80 bg-white text-slate-800 text-xs font-semibold tracking-wide shadow-2xs cursor-default"
+              >
                 Winter Lineup
-              </span>
-              <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-[2.2rem] text-slate-950 tracking-tight">
-                Explore Our Winter Lineup
+              </motion.span>
+
+              {/* Masked Headline - Bottom-to-Top Reveal */}
+              <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-[2.2rem] text-slate-950 tracking-tight flex flex-wrap gap-x-2">
+                {['Explore', 'Our', 'Winter', 'Lineup'].map((word, wIdx) => (
+                  <span key={wIdx} className="overflow-hidden inline-block py-0.5">
+                    <motion.span
+                      initial={{ y: '115%', opacity: 0, rotate: 1.5 }}
+                      whileInView={{ y: '0%', opacity: 1, rotate: 0 }}
+                      viewport={{ once: true, amount: 0.3 }}
+                      transition={{
+                        duration: 0.8,
+                        delay: 0.1 + wIdx * 0.08,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      className={`inline-block ${
+                        word === 'Winter' || word === 'Lineup' ? 'text-[#ff4071]' : 'text-slate-950'
+                      }`}
+                    >
+                      {word}
+                    </motion.span>
+                  </span>
+                ))}
               </h2>
             </div>
 
             {/* Right: Search Input + View All Button */}
             <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
-              {/* Search Box */}
-              <div className="relative flex items-center w-full sm:w-auto">
+              {/* Search Box with Interactive Focus Animation */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative flex items-center w-full sm:w-auto"
+              >
                 <input
                   type="text"
                   value={facilitySearch}
                   onChange={(e) => setFacilitySearch(e.target.value)}
                   placeholder="Search coats, puffers, knits..."
-                  className="w-full sm:w-60 lg:w-64 pl-4 pr-10 py-2.5 rounded-full bg-white border border-slate-200 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-400 shadow-2xs transition-colors"
+                  className="w-full sm:w-60 lg:w-64 pl-4 pr-10 py-2.5 rounded-full bg-white border border-slate-200 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-pink-300 focus:ring-2 focus:ring-pink-100 shadow-2xs transition-all"
                 />
                 <Search className="w-4 h-4 text-slate-400 absolute right-3.5 pointer-events-none" />
-              </div>
+              </motion.div>
 
               {/* View All Button */}
               <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="px-5 py-2.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold tracking-tight shadow-xs flex items-center gap-1.5 cursor-pointer whitespace-nowrap transition-all"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.25 }}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  const el = document.getElementById('categories-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-5 py-2.5 rounded-full bg-slate-950 hover:bg-[#ff4071] text-white text-xs sm:text-sm font-bold tracking-tight shadow-md flex items-center gap-1.5 cursor-pointer whitespace-nowrap group transition-colors duration-300"
               >
                 <span>View All</span>
-                <span className="text-xs">↗</span>
+                <span className="text-xs group-hover:rotate-45 group-hover:translate-x-0.5 transition-transform">↗</span>
               </motion.button>
             </div>
           </div>
 
-          {/* 4 Facilities Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 my-8 sm:my-10">
-            {FACILITIES_ITEMS.map((facility, idx) => (
+          {/* 4 Facilities Cards Grid with Staggered Viewport Entrance & Layout Transition */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.12,
+                  delayChildren: 0.15,
+                },
+              },
+            }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 my-8 sm:my-10"
+          >
+            {FACILITIES_ITEMS.filter((item) => {
+              if (!facilitySearch.trim()) return true;
+              const query = facilitySearch.toLowerCase();
+              return (
+                item.title.toLowerCase().includes(query) ||
+                item.tag.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query) ||
+                item.catName.toLowerCase().includes(query)
+              );
+            }).map((facility, idx) => (
               <motion.div
                 key={facility.id}
-                whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                className="h-[390px] sm:h-[430px] rounded-[2.2rem] sm:rounded-[2.6rem] relative overflow-hidden p-6 flex flex-col justify-between group cursor-pointer shadow-lg transition-all"
+                layout
+                variants={{
+                  hidden: { opacity: 0, y: 45, scale: 0.94 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+                  },
+                }}
+                whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.28 } }}
+                className="h-[390px] sm:h-[430px] rounded-[2.2rem] sm:rounded-[2.6rem] relative overflow-hidden p-6 flex flex-col justify-between group cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-slate-900/15 transition-shadow duration-500"
                 style={{ background: facility.bgGradient }}
               >
                 {/* Background Overlays according to reference */}
                 {facility.overlayType === 'slats' && (
-                  <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(90deg,rgba(0,0,0,0.18)_2px,transparent_2px)] bg-[size:16px_100%] opacity-40" />
+                  <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(90deg,rgba(0,0,0,0.18)_2px,transparent_2px)] bg-[size:16px_100%] opacity-40 group-hover:opacity-60 transition-opacity" />
                 )}
 
                 {facility.overlayType === 'turf' && (
@@ -1606,7 +1682,7 @@ export default function CatEcommerceLanding() {
                 )}
 
                 {facility.overlayType === 'track-lines' && (
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-25" viewBox="0 0 300 500" fill="none">
+                  <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-25 group-hover:opacity-40 transition-opacity" viewBox="0 0 300 500" fill="none">
                     <path d="M-50 450 C80 380, 180 280, 260 0" stroke="#ffffff" strokeWidth="3" />
                     <path d="M-20 480 C110 410, 210 310, 290 30" stroke="#ffffff" strokeWidth="3" />
                     <path d="M10 510 C140 440, 240 340, 320 60" stroke="#ffffff" strokeWidth="3" />
@@ -1626,33 +1702,46 @@ export default function CatEcommerceLanding() {
                 {/* Card Top Row: Tags & Icons */}
                 <div className="relative z-20 flex items-center justify-between">
                   {/* Card 2 specific: flag icon badge */}
-                  {facility.id === 'training-ground' ? (
-                    <div className="w-8 h-8 rounded-full bg-white/25 backdrop-blur-md border border-white/35 flex items-center justify-center text-white shadow-xs">
+                  {facility.id === 'snowsuit-edition' ? (
+                    <motion.div
+                      whileHover={{ scale: 1.15, rotate: 12 }}
+                      className="w-8 h-8 rounded-full bg-white/25 backdrop-blur-md border border-white/35 flex items-center justify-center text-white shadow-xs"
+                    >
                       <PawIcon className="w-4 h-4" color="#ffffff" />
-                    </div>
+                    </motion.div>
                   ) : (
                     <div />
                   )}
 
-                  {/* Top-right Tag Badge */}
-                  <span className="px-3.5 py-1 rounded-full bg-white/25 backdrop-blur-md border border-white/35 text-white text-[11px] font-semibold tracking-wide shadow-xs">
+                  {/* Top-right Tag Badge with Glassmorphism */}
+                  <span className="px-3.5 py-1 rounded-full bg-white/25 backdrop-blur-md border border-white/35 text-white text-[11px] font-semibold tracking-wide shadow-xs group-hover:bg-white group-hover:text-slate-950 transition-colors duration-300">
                     {facility.tag}
                   </span>
                 </div>
 
-                {/* Center Cat Cutout Image */}
+                {/* Center Cat Cutout Image with Floating Breathing Micro-Motion */}
                 <div className="absolute inset-x-0 bottom-12 top-10 flex items-end justify-center pointer-events-none z-15 overflow-hidden">
-                  <img
+                  <motion.img
+                    animate={{ y: [0, idx % 2 === 0 ? -6 : -8, 0] }}
+                    transition={{
+                      duration: 3.2 + idx * 0.3,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      delay: idx * 0.25,
+                    }}
                     src={facility.image}
                     alt={facility.catName}
-                    className="w-auto h-[80%] sm:h-[85%] object-contain object-bottom drop-shadow-[0_20px_25px_rgba(0,0,0,0.35)] group-hover:scale-105 transition-transform duration-500"
+                    className="w-auto h-[80%] sm:h-[85%] object-contain object-bottom drop-shadow-[0_20px_25px_rgba(0,0,0,0.35)] group-hover:scale-108 transition-transform duration-500"
                   />
                 </div>
 
                 {/* Card Bottom Area */}
                 {facility.cardStyle === 'interactive-pill' ? (
                   /* Card 2 Style: Frosted glass bottom box with "Play ground" + Arrow */
-                  <div className="relative z-20 p-3.5 rounded-2xl bg-black/45 backdrop-blur-md border border-white/20 text-white flex items-center justify-between shadow-xl mt-auto">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="relative z-20 p-3.5 rounded-2xl bg-black/45 backdrop-blur-md border border-white/20 text-white flex items-center justify-between shadow-xl mt-auto"
+                  >
                     <div className="max-w-[78%]">
                       <span className="text-[10px] font-semibold tracking-wide text-white/90 border border-white/30 px-2 py-0.5 rounded-full inline-block mb-1">
                         {facility.subTag}
@@ -1661,13 +1750,17 @@ export default function CatEcommerceLanding() {
                         {facility.title}
                       </h3>
                     </div>
-                    <button className="w-9 h-9 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all flex-shrink-0">
+                    <motion.button
+                      whileHover={{ scale: 1.15, rotate: 45 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="w-9 h-9 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-md cursor-pointer flex-shrink-0 border border-white/20"
+                    >
                       <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-                    </button>
-                  </div>
+                    </motion.button>
+                  </motion.div>
                 ) : (
                   /* Standard Cards (1, 3, 4): Bold white title with subtle drop shadow */
-                  <div className="relative z-20 mt-auto pt-4">
+                  <div className="relative z-20 mt-auto pt-4 group-hover:-translate-y-1 transition-transform duration-300">
                     <h3 className="text-white font-display font-bold text-base sm:text-[1.05rem] leading-snug tracking-tight drop-shadow-md">
                       {facility.title}
                     </h3>
@@ -1675,91 +1768,123 @@ export default function CatEcommerceLanding() {
                 )}
               </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Bottom Controls & Description Row */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-4 border-t border-slate-200/70">
-            {/* Navigation Arrow Buttons: [←] [→] */}
+            {/* Navigation Arrow Buttons: [←] [→] with Spring Feedback */}
             <div className="flex items-center gap-2.5">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.12, backgroundColor: '#0f172a', color: '#ffffff', borderColor: '#0f172a' }}
+                whileTap={{ scale: 0.92 }}
                 onClick={handlePrevFacility}
-                className="w-11 h-11 rounded-full border border-slate-300 bg-white hover:bg-slate-100 text-slate-800 flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-2xs"
+                className="w-11 h-11 rounded-full border border-slate-300 bg-white text-slate-800 flex items-center justify-center transition-colors cursor-pointer shadow-2xs group"
                 title="Previous facility"
               >
-                <ArrowLeft className="w-4 h-4 stroke-[2]" />
-              </button>
-              <button
+                <ArrowLeft className="w-4 h-4 stroke-[2] group-hover:-translate-x-0.5 transition-transform" />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.12, backgroundColor: '#0f172a', color: '#ffffff', borderColor: '#0f172a' }}
+                whileTap={{ scale: 0.92 }}
                 onClick={handleNextFacility}
-                className="w-11 h-11 rounded-full border border-slate-300 bg-white hover:bg-slate-100 text-slate-800 flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-2xs"
+                className="w-11 h-11 rounded-full border border-slate-300 bg-white text-slate-800 flex items-center justify-center transition-colors cursor-pointer shadow-2xs group"
                 title="Next facility"
               >
-                <ArrowRight className="w-4 h-4 stroke-[2]" />
-              </button>
+                <ArrowRight className="w-4 h-4 stroke-[2] group-hover:translate-x-0.5 transition-transform" />
+              </motion.button>
             </div>
 
-            {/* Right Subtitle Paragraph */}
-            <p className="text-slate-500 text-xs sm:text-[13px] text-center sm:text-right max-w-md font-normal leading-relaxed">
+            {/* Right Subtitle Paragraph with Animated Entrance */}
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-slate-500 text-xs sm:text-[13px] text-center sm:text-right max-w-md font-normal leading-relaxed"
+            >
               Equip your feline companion with luxury alpine apparel, thermal insulation, and custom weatherproof fits to conquer this winter season.
-            </p>
+            </motion.p>
           </div>
 
-        </div>
+        </motion.div>
       </section>
 
       {/* =========================================================================
-          SECTION 5: FIND THE PERFECT PLAN (Refined to match Reference Image)
+          SECTION 5: FIND THE PERFECT PLAN (Framer Motion Enhanced)
           - Header:
-            - Left: Circular ($) badge + "Pricing" pill badge
-            - Center: "Find the Perfect Plan for Your Athletic (🐾) Journey"
-              (Clean modern geometric font, uncompressed)
-            - Sub-link: "See More Options >>"
+            - Left: Spring-popped ($) badge + "Winter Bundles" pill
+            - Center: Masked bottom-to-top headline reveal with interactive 360° spinning Paw badge
+            - Sub-link: Interactive "Explore All Winter Sets >>" with spring bounce
           - Cards:
-            - Left Card: Solid sage green with graceful white ribbon line loop,
-              "Best Seller" pill, 2 coach avatars + "Recommended by US Coaches",
-              "6 Season Package", "Individualized Training", "$50 /Session" pill,
-              "1 Year Expiry", "$600 / Total Cost", white circular ↗ button
-            - Right Card: Scenic outdoor turf / fairway photo with warm sunlight,
-              "Best Seller", coach avatars, "12 Season Package",
-              "Individualized Training", "$98 /Session", "1 Year Expiry",
-              "$1176 / Total Cost", white circular ↗ button
+            - Left Card: Sage green with undulating wavy ribbon path, hover lift, interactive price pill & inversion circle button
+            - Right Card: Dark forest green with floating breathing cat model, ambient radial glow, price pill & spring circle button
       ========================================================================= */}
       <section
         id="pricing-section"
-        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-16 sm:py-24 relative"
+        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-16 sm:py-24 relative overflow-hidden"
       >
         {/* Top Header Row */}
         <div className="relative mb-12 sm:mb-16">
           
           {/* Top Left: Circular Dollar Icon + Pricing Pill Badge */}
-          <div className="sm:absolute sm:left-0 sm:top-0 flex flex-col items-start gap-2 mb-6 sm:mb-0">
-            <div className="w-10 h-10 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-xs">
+          <motion.div
+            initial={{ opacity: 0, x: -25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="sm:absolute sm:left-0 sm:top-0 flex flex-col items-start gap-2 mb-6 sm:mb-0"
+          >
+            <motion.div
+              whileHover={{ scale: 1.15, rotate: 15 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-10 h-10 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-md cursor-pointer"
+            >
               <DollarSign className="w-5 h-5 stroke-[2.5]" />
-            </div>
+            </motion.div>
             <span className="px-3.5 py-1 rounded-full border border-slate-200/90 bg-white text-slate-800 text-xs font-semibold tracking-wide shadow-2xs">
               Winter Bundles
             </span>
-          </div>
+          </motion.div>
 
           {/* Center: Bold Headline + Paw Badge + Sub-link */}
           <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
-            <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-[3.6rem] text-slate-950 tracking-tight leading-[1.06]">
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              className="font-display font-black text-3xl sm:text-5xl lg:text-[3.6rem] text-slate-950 tracking-tight leading-[1.06]"
+            >
               Find the Perfect Fit for Your <br />
               Winter{' '}
-              <span className="inline-flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-full border-2 border-slate-950 mx-1.5 align-middle bg-white shadow-2xs">
+              <motion.span
+                whileHover={{ rotate: 180, scale: 1.25 }}
+                whileTap={{ scale: 0.9 }}
+                className="inline-flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-full border-2 border-slate-950 mx-1.5 align-middle bg-white shadow-2xs cursor-pointer"
+                title="Feline Paw"
+              >
                 <PawIcon className="w-5 h-5 sm:w-6 sm:h-6" color="#0f172a" />
-              </span>{' '}
+              </motion.span>{' '}
               Journey
-            </h2>
+            </motion.h2>
 
-            {/* Explore All Winter Sets >> Link */}
+            {/* Explore All Winter Sets >> Link with Spring Hover */}
             <motion.button
-              whileHover={{ scale: 1.04 }}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.96 }}
-              className="inline-flex items-center gap-2.5 mt-5 text-xs sm:text-sm font-semibold text-slate-800 hover:text-slate-950 transition-colors group cursor-pointer"
+              onClick={() => {
+                const el = document.getElementById('categories-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="inline-flex items-center gap-2.5 mt-6 text-xs sm:text-sm font-semibold text-slate-800 hover:text-[#ff4071] transition-colors group cursor-pointer"
             >
               <span>Explore All Winter Sets</span>
-              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs">
-                <ChevronsRight className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-950 group-hover:bg-[#ff4071] text-white flex items-center justify-center transition-colors duration-300 shadow-xs">
+                <ChevronsRight className="w-3.5 h-3.5 stroke-[2.5] group-hover:translate-x-0.5 transition-transform" />
               </span>
             </motion.button>
           </div>
@@ -1769,25 +1894,37 @@ export default function CatEcommerceLanding() {
         {/* 2 Big Pricing Cards Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-stretch">
           
-          {/* ==================== CARD 1: 6 SEASON PACKAGE (Sage Green + Wavy Ribbon) ==================== */}
+          {/* ==================== CARD 1: 6 SEASON PACKAGE (Blush Sakura Pink + Undulating Wavy Ribbon) ==================== */}
           <motion.div
-            whileHover={{ y: -6, transition: { duration: 0.25 } }}
-            className="w-full min-h-[460px] sm:min-h-[500px] rounded-[2.8rem] sm:rounded-[3.2rem] p-8 sm:p-10 lg:p-12 relative overflow-hidden flex flex-col justify-between shadow-xl transition-all"
+            initial={{ opacity: 0, x: -80, scale: 0.95 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -8, scale: 1.015, transition: { duration: 0.3 } }}
+            className="w-full min-h-[460px] sm:min-h-[500px] rounded-[2.8rem] sm:rounded-[3.2rem] p-8 sm:p-10 lg:p-12 relative overflow-hidden flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-pink-900/30 transition-shadow duration-500 group"
             style={{
-              backgroundColor: '#587e6b',
+              background: 'linear-gradient(155deg, #ff7e9e 0%, #ff4071 45%, #b91c47 100%)',
             }}
           >
-            {/* Graceful Abstract White Ribbon Line Loop (Matching User's Reference) */}
+            {/* Undulating Wavy Ribbon Path with Animated Breathing Stroke */}
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none"
               viewBox="0 0 700 500"
               fill="none"
               preserveAspectRatio="none"
             >
-              <path
+              <motion.path
+                animate={{
+                  opacity: [0.22, 0.38, 0.22],
+                  strokeWidth: [52, 60, 52],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
                 d="M-20 300 C150 300, 170 200, 320 230 C470 260, 520 330, 720 270"
-                stroke="rgba(255, 255, 255, 0.22)"
-                strokeWidth="56"
+                stroke="rgba(255, 255, 255, 0.35)"
                 strokeLinecap="round"
               />
             </svg>
@@ -1798,119 +1935,137 @@ export default function CatEcommerceLanding() {
                 Best Seller
               </span>
 
-              {/* Cat Coach Avatars & recommendation badge */}
+              {/* Cat Stylist Avatars with hover bounce */}
               <div className="flex flex-col items-end text-right">
                 <div className="flex items-center -space-x-2 mb-1.5">
-                  <img
+                  <motion.img
+                    whileHover={{ scale: 1.15, zIndex: 10 }}
                     src={pinkCatImg}
                     alt="Cat Stylist 1"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-pink-100"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-pink-100 cursor-pointer"
                   />
-                  <img
+                  <motion.img
+                    whileHover={{ scale: 1.15, zIndex: 10 }}
                     src={greenCatImg}
                     alt="Cat Stylist 2"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-emerald-100"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-emerald-100 cursor-pointer"
                   />
                 </div>
-                <span className="text-white/90 text-[10.5px] leading-tight font-medium">
+                <span className="text-white/95 text-[10.5px] leading-tight font-medium drop-shadow-2xs">
                   Recommended by <br />
                   <span className="font-bold">Alpine Vets</span>
                 </span>
               </div>
             </div>
 
-            {/* Center: Package Title + Subheading + Price Pill */}
+            {/* Center: Package Title + Subheading + Animated Price Pill */}
             <div className="relative z-20 my-auto py-6 flex flex-col items-center text-center">
-              <h3 className="font-display font-black text-3xl sm:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-[1.05] mb-2 drop-shadow-sm">
+              <h3 className="font-display font-black text-3xl sm:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-[1.05] mb-2 drop-shadow-md group-hover:-translate-y-1 transition-transform duration-300">
                 Winter Trio <br />
                 Package
               </h3>
-              <p className="text-white/90 text-sm sm:text-base font-medium mb-7 drop-shadow-2xs">
+              <p className="text-white/95 text-sm sm:text-base font-medium mb-7 drop-shadow-2xs">
                 Parka, Thermal Fleece &amp; Booties
               </p>
 
-              {/* Price Pill: $50 /Piece */}
-              <div className="inline-flex items-baseline gap-2 px-9 py-3.5 rounded-full bg-slate-950 text-white shadow-2xl shadow-black/25">
+              {/* Interactive Price Pill: $50 /Piece with Spring Lift */}
+              <motion.div
+                whileHover={{ scale: 1.08, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-baseline gap-2 px-9 py-3.5 rounded-full bg-slate-950 text-white shadow-2xl shadow-black/25 cursor-pointer border border-white/20"
+              >
                 <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">$50</span>
                 <span className="text-white/70 text-xs sm:text-sm font-medium">/Piece</span>
-              </div>
+              </motion.div>
             </div>
 
             {/* Bottom Row: Expiry Pill + Total Cost + Circle Action Button */}
-            <div className="relative z-20 flex items-center justify-between pt-4 border-t border-white/20">
-              <span className="px-4 py-1.5 rounded-full border border-white/50 text-white text-xs font-medium tracking-wide">
+            <div className="relative z-20 flex items-center justify-between pt-4 border-t border-white/25">
+              <span className="px-4 py-1.5 rounded-full border border-white/60 text-white text-xs font-medium tracking-wide backdrop-blur-xs">
                 Lifetime Fit Guarantee
               </span>
 
               <div className="flex-1 mx-4 sm:mx-8 flex flex-col items-center">
-                <div className="w-full max-w-[220px] h-[1px] bg-white/25 mb-1.5" />
-                <span className="text-white text-xs sm:text-[13px] font-bold tracking-tight">
+                <div className="w-full max-w-[220px] h-[1px] bg-white/30 mb-1.5" />
+                <span className="text-white text-xs sm:text-[13px] font-bold tracking-tight drop-shadow-xs">
                   $150 / Complete Kit
                 </span>
               </div>
 
-              {/* White Action Circle ↗ */}
-              <button className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-white text-slate-950 flex items-center justify-center shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer flex-shrink-0">
+              {/* White Action Circle ↗ with Spring Pop & Color Inversion */}
+              <motion.button
+                whileHover={{ scale: 1.15, rotate: 45, backgroundColor: '#0f172a', color: '#ffffff' }}
+                whileTap={{ scale: 0.9 }}
+                className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-white text-slate-950 flex items-center justify-center shadow-xl transition-colors duration-300 cursor-pointer flex-shrink-0"
+              >
                 <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
-              </button>
+              </motion.button>
             </div>
 
           </motion.div>
 
-          {/* ==================== CARD 2: 12 SEASON PACKAGE (Dark Forest Green + Cutout Cat Model) ==================== */}
+          {/* ==================== CARD 2: 12 SEASON PACKAGE (Dark Forest Green + Pink Accents + Cutout Cat Model) ==================== */}
           <motion.div
-            whileHover={{ y: -6, transition: { duration: 0.25 } }}
-            className="w-full min-h-[460px] sm:min-h-[500px] rounded-[2.8rem] sm:rounded-[3.2rem] p-8 sm:p-10 lg:p-12 relative overflow-hidden flex flex-col justify-between shadow-xl transition-all group"
+            initial={{ opacity: 0, x: 80, scale: 0.95 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.85, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -8, scale: 1.015, transition: { duration: 0.3 } }}
+            className="w-full min-h-[460px] sm:min-h-[500px] rounded-[2.8rem] sm:rounded-[3.2rem] p-8 sm:p-10 lg:p-12 relative overflow-hidden flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-black/30 transition-shadow duration-500 group"
             style={{
               background: 'linear-gradient(155deg, #1f4333 0%, #132f23 50%, #0c2017 100%)',
             }}
           >
-            {/* Top Row: Best Seller Pill + Cat Avatars with Recommendation Text */}
+            {/* Top Row: Best Seller Pill (Pink) + Cat Avatars with Recommendation Text */}
             <div className="relative z-20 flex items-start justify-between gap-4">
-              <span className="px-4 py-1.5 rounded-full bg-slate-950 text-white text-[11px] font-bold shadow-xs">
+              <span className="px-4 py-1.5 rounded-full bg-[#ff4071] text-white text-[11px] font-bold shadow-md shadow-pink-500/30">
                 Best Seller
               </span>
 
-              {/* Cat Coach Avatars & recommendation badge */}
+              {/* Cat Stylist Avatars with hover bounce */}
               <div className="flex flex-col items-end text-right">
                 <div className="flex items-center -space-x-2 mb-1.5">
-                  <img
+                  <motion.img
+                    whileHover={{ scale: 1.15, zIndex: 10 }}
                     src={greenCatImg}
                     alt="Cat Stylist 2"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-emerald-100"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-emerald-100 cursor-pointer"
                   />
-                  <img
+                  <motion.img
+                    whileHover={{ scale: 1.15, zIndex: 10 }}
                     src={brownCatImg}
                     alt="Cat Stylist 3"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-amber-100"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white object-cover shadow-sm bg-amber-100 cursor-pointer"
                   />
                 </div>
                 <span className="text-white/90 text-[10.5px] leading-tight font-medium">
                   Approved by <br />
-                  <span className="font-bold">Feline Stylists</span>
+                  <span className="font-bold text-pink-300">Feline Stylists</span>
                 </span>
               </div>
             </div>
 
-            {/* Ambient Radial Shadow behind Cat */}
-            <div className="absolute right-0 bottom-0 w-64 sm:w-80 h-56 bg-radial from-black/50 via-transparent to-transparent pointer-events-none z-5 blur-xl" />
+            {/* Ambient Vibrant Pink & Emerald Glow behind Cat */}
+            <div className="absolute right-0 bottom-0 w-72 sm:w-88 h-64 bg-radial from-[#ff4071]/25 via-emerald-500/10 to-transparent pointer-events-none z-5 blur-2xl" />
 
-            {/* Prominent Feline Model Cutout Grounded at Bottom (No hard edges, smooth fade) */}
+            {/* Prominent Feline Model Cutout Grounded with Natural Floating Breathing Micro-Motion */}
             <div className="absolute right-2 sm:right-6 lg:right-8 bottom-0 z-10 w-48 sm:w-60 lg:w-68 flex items-end justify-center pointer-events-none">
-              <img
+              <motion.img
+                animate={{ y: [0, -7, 0] }}
+                transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
                 src={brownCatImg}
                 alt="Cat Model in Ski Goggles and Jacket"
                 style={{
-                  maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%)',
-                  WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%)',
+                  maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 82%, rgba(0,0,0,0) 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 82%, rgba(0,0,0,0) 100%)',
                 }}
-                className="w-full h-auto max-h-[320px] sm:max-h-[360px] lg:max-h-[390px] object-contain object-bottom drop-shadow-[0_25px_35px_rgba(0,0,0,0.8)]"
+                className="w-full h-auto max-h-[320px] sm:max-h-[360px] lg:max-h-[390px] object-contain object-bottom drop-shadow-[0_25px_35px_rgba(0,0,0,0.8)] group-hover:scale-106 transition-transform duration-500"
               />
             </div>
 
-            {/* Center: Package Title + Subheading + Price Pill */}
+            {/* Center: Package Title + Subheading + Animated Price Pill */}
             <div className="relative z-20 my-auto py-6 flex flex-col items-center text-center">
-              <h3 className="font-display font-black text-3xl sm:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-[1.05] mb-2 drop-shadow-sm">
+              <h3 className="font-display font-black text-3xl sm:text-4xl lg:text-[2.85rem] text-white tracking-tight leading-[1.05] mb-2 drop-shadow-sm group-hover:-translate-y-1 transition-transform duration-300">
                 Summit Pro <br />
                 Package
               </h3>
@@ -1918,16 +2073,20 @@ export default function CatEcommerceLanding() {
                 Bespoke Weatherproof Snow Wardrobe
               </p>
 
-              {/* Price Pill: $98 /Edition */}
-              <div className="inline-flex items-baseline gap-2 px-9 py-3.5 rounded-full bg-slate-950 text-white shadow-2xl shadow-black/35">
+              {/* Price Pill: $98 /Edition with Spring Lift */}
+              <motion.div
+                whileHover={{ scale: 1.08, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-baseline gap-2 px-9 py-3.5 rounded-full bg-slate-950 text-white shadow-2xl shadow-black/35 cursor-pointer border border-pink-500/30"
+              >
                 <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">$98</span>
-                <span className="text-white/70 text-xs sm:text-sm font-medium">/Edition</span>
-              </div>
+                <span className="text-pink-300 text-xs sm:text-sm font-medium">/Edition</span>
+              </motion.div>
             </div>
 
             {/* Bottom Row: Expiry Pill + Total Cost + Circle Action Button */}
             <div className="relative z-20 flex items-center justify-between pt-4 border-t border-white/20">
-              <span className="px-4 py-1.5 rounded-full border border-white/50 text-white text-xs font-medium tracking-wide">
+              <span className="px-4 py-1.5 rounded-full border border-pink-400/50 text-white text-xs font-medium tracking-wide backdrop-blur-xs">
                 Sub-Zero Rated
               </span>
 
@@ -1938,10 +2097,14 @@ export default function CatEcommerceLanding() {
                 </span>
               </div>
 
-              {/* White Action Circle ↗ */}
-              <button className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-white text-slate-950 flex items-center justify-center shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer flex-shrink-0">
+              {/* Action Circle ↗ with Spring Pop & Pink Fill Switch */}
+              <motion.button
+                whileHover={{ scale: 1.15, rotate: 45, backgroundColor: '#ff4071', color: '#ffffff' }}
+                whileTap={{ scale: 0.9 }}
+                className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-white text-slate-950 flex items-center justify-center shadow-xl transition-colors duration-300 cursor-pointer flex-shrink-0"
+              >
                 <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
-              </button>
+              </motion.button>
             </div>
 
           </motion.div>
@@ -1950,111 +2113,98 @@ export default function CatEcommerceLanding() {
       </section>
 
       {/* =========================================================================
-          SECTION 6: VELOCITY CLUB FOOTER (Matches User's Reference Layout)
-          - Large soft gray rounded card: bg-[#f4f4f4], rounded-[2.8rem] sm:rounded-[3.2rem]
-          - 5 Columns:
-            1. Brand & Slogan:
-               - Top: Velocity Club logo monogram + bold title
-               - Bottom: "Your Play, Your Way- / Modern Sports Facilities / for Every Passion"
-                 with dark green "#1f4333" pill badges for "Your Play," and "Sports Facilities"
-            2. Facilites:
-               - Tennis Courts, Basketball Courts, Football Field, Swimming Pool,
-                 Gym & Fitness Center, Multi-purpose Hall, Sauna & Relaxation Zone, Locker Rooms
-            3. About:
-               - Our Mission, Vision, Community
-            4. Social:
-               - Outline pill buttons: ( Instagram ), ( Facebook ), ( Linkedin ), ( Youtube )
-            5. Join us:
-               - Type your email... input pill
-               - Type your name here... input pill
-               - Training Type dropdown pill with chevron
-               - "START MOVING >>" pill button with right-aligned black circle
-          - Bottom Row:
-            - Left: Privacy Policy Terms
-            - Right: All rights reserved©2024
+          SECTION 6: VELOCITY CLUB FOOTER (Full Framer Motion Animations)
+          - Large soft gray rounded card: bg-[#f4f4f4] with smooth viewport entrance
+          - Column 1: Brand logo hover spin + animated slogan with interactive pill badges
+          - Column 2 & 3: Staggered collection & studio links with hover horizontal nudge & pink color
+          - Column 4: Spring-animated social pill buttons with dark invert transition
+          - Column 5: VIP Club newsletter form with focus micro-interactions & animated submit button
+          - Bottom Bar: Smooth fade-in privacy & copyright footer
       ========================================================================= */}
-      <footer className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 pb-12 sm:pb-16 pt-4">
-        <div className="w-full bg-[#f4f4f4] rounded-[2.5rem] sm:rounded-[3.2rem] lg:rounded-[3.6rem] p-8 sm:p-12 lg:p-16 relative overflow-hidden text-slate-900 shadow-sm border border-slate-200/50">
+      <footer
+        id="footer-section"
+        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-16"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 45, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.12 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="w-full bg-[#f4f4f4] rounded-[2.5rem] sm:rounded-[3.2rem] lg:rounded-[3.6rem] p-8 sm:p-12 lg:p-16 relative overflow-hidden text-slate-900 shadow-sm border border-slate-200/50"
+        >
           
           {/* Main 5-Column Content Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
             
             {/* Column 1: Brand & Slogan (Spans 4 columns on lg) */}
             <div className="lg:col-span-4 flex flex-col justify-between h-full">
-              {/* Logo & Brand */}
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-slate-950 flex items-center justify-center bg-white shadow-2xs">
-                  <PawIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5" color="#0f172a" />
-                </div>
-                <span className="font-sans font-bold text-xl sm:text-2xl text-slate-950 tracking-tight">
+              {/* Logo & Brand with Spring Hover */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="flex items-center gap-3 cursor-pointer group w-fit"
+              >
+                <motion.div
+                  whileHover={{ rotate: 15 }}
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-slate-950 flex items-center justify-center bg-white shadow-2xs group-hover:border-[#ff4071] transition-colors"
+                >
+                  <PawIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 group-hover:text-[#ff4071] transition-colors" color="#0f172a" />
+                </motion.div>
+                <span className="font-sans font-bold text-xl sm:text-2xl text-slate-950 tracking-tight group-hover:text-[#ff4071] transition-colors">
                   Velocity Club
                 </span>
-              </div>
+              </motion.div>
 
-              {/* Slogan with Dark Green Pill Badges (Winter Petwear Storytelling) */}
+              {/* Slogan with Interactive Pill Badges */}
               <div className="mt-12 sm:mt-16 lg:mt-24 max-w-sm">
                 <h3 className="font-sans font-bold text-2xl sm:text-3xl lg:text-[2.1rem] text-slate-950 tracking-tight leading-[1.2]">
-                  <span className="inline-block bg-[#1f4333] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-xs">
+                  <motion.span
+                    whileHover={{ scale: 1.08, y: -2 }}
+                    className="inline-block bg-[#1f4333] hover:bg-[#ff4071] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-xs cursor-default transition-colors duration-300"
+                  >
                     Warm Play,
-                  </span>
+                  </motion.span>
                   Their Way-
                   <br />
                   Luxury{' '}
-                  <span className="inline-block bg-[#1f4333] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-xs">
+                  <motion.span
+                    whileHover={{ scale: 1.08, y: -2 }}
+                    className="inline-block bg-[#1f4333] hover:bg-[#ff4071] text-white px-3.5 py-0.5 rounded-full text-[0.85em] font-semibold mr-1.5 align-middle shadow-xs cursor-default transition-colors duration-300"
+                  >
                     Winter Petwear
-                  </span>
+                  </motion.span>
                   <br />
                   for Every Season
                 </h3>
               </div>
             </div>
 
-            {/* Column 2: Collection Categories (Spans 2 columns on lg) */}
+            {/* Column 2: Collection Categories with Hover Micro-Nudges (Spans 2 columns on lg) */}
             <div className="lg:col-span-2">
               <h4 className="font-sans font-bold text-slate-950 text-base sm:text-lg mb-5">
                 Collection
               </h4>
               <ul className="space-y-3 sm:space-y-3.5 text-xs sm:text-[13px] text-slate-700 font-medium">
-                <li>
-                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Alpine Down Parkas
-                  </a>
-                </li>
-                <li>
-                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Quilted Puffer Jackets
-                  </a>
-                </li>
-                <li>
-                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Weatherproof Snowsuits
-                  </a>
-                </li>
-                <li>
-                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Thermal Knit Sweaters
-                  </a>
-                </li>
-                <li>
-                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Windproof Ski Vests
-                  </a>
-                </li>
-                <li>
-                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Micro-Fleece Collars
-                  </a>
-                </li>
-                <li>
-                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Feline Ski Goggles
-                  </a>
-                </li>
-                <li>
-                  <a href="#facilities-section" className="hover:text-slate-950 transition-colors">
-                    Insulated Paw Booties
-                  </a>
-                </li>
+                {[
+                  'Alpine Down Parkas',
+                  'Quilted Puffer Jackets',
+                  'Weatherproof Snowsuits',
+                  'Thermal Knit Sweaters',
+                  'Windproof Ski Vests',
+                  'Micro-Fleece Collars',
+                  'Feline Ski Goggles',
+                  'Insulated Paw Booties',
+                ].map((item) => (
+                  <motion.li
+                    key={item}
+                    whileHover={{ x: 4 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <a href="#facilities-section" className="hover:text-[#ff4071] transition-colors flex items-center gap-1.5 group">
+                      <span className="opacity-0 group-hover:opacity-100 text-[#ff4071] transition-opacity font-bold">›</span>
+                      <span>{item}</span>
+                    </a>
+                  </motion.li>
+                ))}
               </ul>
             </div>
 
@@ -2064,58 +2214,46 @@ export default function CatEcommerceLanding() {
                 About Studio
               </h4>
               <ul className="space-y-3 sm:space-y-3.5 text-xs sm:text-[13px] text-slate-700 font-medium">
-                <li>
-                  <a href="#velocity-club-section" className="hover:text-slate-950 transition-colors">
-                    Our Alpine Craft
-                  </a>
-                </li>
-                <li>
-                  <a href="#excellence-section" className="hover:text-slate-950 transition-colors">
-                    Thermal Tech Spec
-                  </a>
-                </li>
-                <li>
-                  <a href="#pricing-section" className="hover:text-slate-950 transition-colors">
-                    Safety &amp; Fit Guide
-                  </a>
-                </li>
+                {[
+                  { name: 'Our Alpine Craft', link: '#velocity-club-section' },
+                  { name: 'Thermal Tech Spec', link: '#excellence-section' },
+                  { name: 'Safety & Fit Guide', link: '#pricing-section' },
+                ].map((item) => (
+                  <motion.li
+                    key={item.name}
+                    whileHover={{ x: 4 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <a href={item.link} className="hover:text-[#ff4071] transition-colors flex items-center gap-1.5 group">
+                      <span className="opacity-0 group-hover:opacity-100 text-[#ff4071] transition-opacity font-bold">›</span>
+                      <span>{item.name}</span>
+                    </a>
+                  </motion.li>
+                ))}
               </ul>
             </div>
 
-            {/* Column 4: Social (Spans 1 column on lg) */}
+            {/* Column 4: Social Outlined Pill Buttons with Spring Hover (Spans 1 column on lg) */}
             <div className="lg:col-span-1 xl:col-span-1">
               <h4 className="font-sans font-bold text-slate-950 text-base sm:text-lg mb-5">
                 Social
               </h4>
               <div className="flex flex-col gap-2.5 items-start">
-                <a
-                  href="#instagram"
-                  className="px-4 py-1.5 rounded-full border border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white text-xs font-medium tracking-wide transition-all shadow-2xs"
-                >
-                  Instagram
-                </a>
-                <a
-                  href="#facebook"
-                  className="px-4 py-1.5 rounded-full border border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white text-xs font-medium tracking-wide transition-all shadow-2xs"
-                >
-                  Facebook
-                </a>
-                <a
-                  href="#linkedin"
-                  className="px-4 py-1.5 rounded-full border border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white text-xs font-medium tracking-wide transition-all shadow-2xs"
-                >
-                  Linkedin
-                </a>
-                <a
-                  href="#youtube"
-                  className="px-4 py-1.5 rounded-full border border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white text-xs font-medium tracking-wide transition-all shadow-2xs"
-                >
-                  Youtube
-                </a>
+                {['Instagram', 'Facebook', 'Linkedin', 'Youtube'].map((social) => (
+                  <motion.a
+                    key={social}
+                    href={`#${social.toLowerCase()}`}
+                    whileHover={{ scale: 1.08, y: -2, backgroundColor: '#0f172a', color: '#ffffff', borderColor: '#0f172a' }}
+                    whileTap={{ scale: 0.94 }}
+                    className="px-4 py-1.5 rounded-full border border-slate-950 text-slate-950 text-xs font-medium tracking-wide transition-colors shadow-2xs cursor-pointer"
+                  >
+                    {social}
+                  </motion.a>
+                ))}
               </div>
             </div>
 
-            {/* Column 5: VIP Winter Club (Spans 3 columns on lg) */}
+            {/* Column 5: VIP Winter Club Form (Spans 3 columns on lg) */}
             <div className="lg:col-span-3">
               <h4 className="font-sans font-bold text-slate-950 text-base sm:text-lg mb-5">
                 VIP Winter Club
@@ -2127,7 +2265,7 @@ export default function CatEcommerceLanding() {
                   placeholder="Type your email..."
                   value={footerEmail}
                   onChange={(e) => setFooterEmail(e.target.value)}
-                  className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-800 placeholder:text-slate-400 border border-slate-200/90 shadow-2xs focus:outline-none focus:border-slate-950 transition-colors"
+                  className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-800 placeholder:text-slate-400 border border-slate-200/90 shadow-2xs focus:outline-none focus:border-[#ff4071] focus:ring-2 focus:ring-pink-100 transition-all"
                 />
 
                 {/* Cat Name Input */}
@@ -2136,7 +2274,7 @@ export default function CatEcommerceLanding() {
                   placeholder="Your cat's name..."
                   value={footerName}
                   onChange={(e) => setFooterName(e.target.value)}
-                  className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-800 placeholder:text-slate-400 border border-slate-200/90 shadow-2xs focus:outline-none focus:border-slate-950 transition-colors"
+                  className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-800 placeholder:text-slate-400 border border-slate-200/90 shadow-2xs focus:outline-none focus:border-[#ff4071] focus:ring-2 focus:ring-pink-100 transition-all"
                 />
 
                 {/* Style / Size Select */}
@@ -2144,7 +2282,7 @@ export default function CatEcommerceLanding() {
                   <select
                     value={footerType}
                     onChange={(e) => setFooterType(e.target.value)}
-                    className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-500 appearance-none border border-slate-200/90 shadow-2xs focus:outline-none focus:border-slate-950 transition-colors cursor-pointer pr-10"
+                    className="w-full bg-white rounded-full px-5 py-3 text-xs sm:text-[13px] text-slate-600 appearance-none border border-slate-200/90 shadow-2xs focus:outline-none focus:border-[#ff4071] focus:ring-2 focus:ring-pink-100 transition-all cursor-pointer pr-10"
                   >
                     <option value="">Select Fit / Category</option>
                     <option value="parka">Alpine Down Parkas (XS - L)</option>
@@ -2155,37 +2293,48 @@ export default function CatEcommerceLanding() {
                   <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 </div>
 
-                {/* Submit Button */}
-                <button
+                {/* Submit Button with Spring Interaction */}
+                <motion.button
+                  whileHover={{ scale: 1.02, borderColor: '#ff4071' }}
+                  whileTap={{ scale: 0.96 }}
                   type="submit"
-                  className="w-full bg-white hover:bg-slate-50 border border-slate-950 rounded-full py-1 pl-5 pr-1 flex items-center justify-between text-xs sm:text-[12.5px] font-bold tracking-wider uppercase text-slate-950 cursor-pointer transition-all shadow-xs group mt-1"
+                  className="w-full bg-white hover:bg-pink-50/50 border border-slate-950 rounded-full py-1 pl-5 pr-1 flex items-center justify-between text-xs sm:text-[12.5px] font-bold tracking-wider uppercase text-slate-950 cursor-pointer transition-all shadow-xs group mt-1"
                 >
-                  <span>{footerSubmitted ? 'WELCOME ABOARD!' : 'JOIN VIP CLUB'}</span>
-                  <span className="w-8 h-8 rounded-full bg-slate-950 text-white flex items-center justify-center group-hover:scale-105 transition-transform flex-shrink-0">
-                    <ChevronsRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <span className="group-hover:text-[#ff4071] transition-colors">
+                    {footerSubmitted ? 'WELCOME ABOARD!' : 'JOIN VIP CLUB'}
                   </span>
-                </button>
+                  <span className="w-8 h-8 rounded-full bg-slate-950 group-hover:bg-[#ff4071] text-white flex items-center justify-center transition-colors flex-shrink-0">
+                    <ChevronsRight className="w-3.5 h-3.5 stroke-[2.5] group-hover:translate-x-0.5 transition-transform" />
+                  </span>
+                </motion.button>
               </form>
             </div>
 
           </div>
 
           {/* Bottom Bar: Privacy Policy Terms & Copyright */}
-          <div className="mt-14 sm:mt-20 lg:mt-24 pt-6 border-t border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-[13px] text-slate-600 font-medium">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-14 sm:mt-20 lg:mt-24 pt-6 border-t border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-[13px] text-slate-600 font-medium"
+          >
             <div className="flex items-center gap-3">
-              <a href="#privacy" className="hover:text-slate-950 transition-colors">
+              <a href="#privacy" className="hover:text-[#ff4071] transition-colors">
                 Privacy Policy
               </a>
-              <a href="#terms" className="hover:text-slate-950 transition-colors">
-                Terms
+              <span className="text-slate-300">•</span>
+              <a href="#terms" className="hover:text-[#ff4071] transition-colors">
+                Terms &amp; Conditions
               </a>
             </div>
             <div>
               All rights reserved©2026 &bull; Velocity Petwear Studio
             </div>
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
       </footer>
 
     </div>
