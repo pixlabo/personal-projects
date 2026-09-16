@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { ShoppingBag, Menu, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Menu, ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, Plus } from 'lucide-react';
 
 // Import hero cat assets
 import pinkCatImg from '../../assets/cat-ecommerce/herosection cat.png';
@@ -181,6 +181,52 @@ const CLUB_ITEMS = [
   },
 ];
 
+// Section 3: "Discover Excellence in Warmth, Agility, and Beyond" Data
+const EXCELLENCE_ITEMS = [
+  {
+    id: 'competition',
+    category: 'Competition',
+    heading: 'We engineer high-performance apparel for extreme sub-zero agility',
+    subtext: 'Our alpine-rated fabrics and aerodynamic down chambers guarantee peak flexibility and insulation at high altitudes.',
+    ctaText: 'Explore Summit',
+    image: pinkCatImg,
+    catName: 'Sakura Alpine Edition',
+    bgCard: '#a03b57',
+    badgeText: 'Sub-Zero Peak Spec',
+    rightImage: greenCatImg,
+    rightCatName: 'Alpine Speedsuit',
+    rightDesc: 'Our top-tier feline performance wear features multi-zone down chambers, ripstop outer shells, and flexible fleece stretch, perfect for both casual winter strolls and alpine expeditions.',
+  },
+  {
+    id: 'training',
+    category: 'Training',
+    heading: 'We provide premium courts for both individual and group training',
+    subtext: 'Our advanced sports facilities boast diverse courts and fields for every athlete.',
+    ctaText: 'Book a Court',
+    image: greenCatImg,
+    catName: 'Alpine Forest Training',
+    bgCard: '#5d826c', // Elegant sage/forest green exactly as in reference image!
+    badgeText: 'Pro Agility Edition',
+    rightImage: brownCatImg,
+    rightCatName: 'Solar Retro Runner',
+    rightDesc: 'Our top-tier sports facilities feature a range of courts and fields, including tennis, basketball, and football, perfect for both casual players and competitive athletes.',
+  },
+  {
+    id: 'friendly',
+    category: 'Friendly match',
+    heading: 'We craft comfortable silhouettes for relaxed play and weekend walks',
+    subtext: 'Plush satin linings and flexible fleece collars keep cold winds out while ensuring all-day leisure comfort.',
+    ctaText: 'Shop Friendly Fits',
+    image: brownCatImg,
+    catName: 'Solar Amber Heritage',
+    bgCard: '#876953',
+    badgeText: 'Weekend Casual Spec',
+    rightImage: pinkCatImg,
+    rightCatName: 'Blush Sakura Casual',
+    rightDesc: 'Engineered for seamless movement across winter parks and urban strolls. Ultra-breathable insulation prevents overheating during playful running.',
+  },
+];
+
 export default function CatEcommerceLanding() {
   const [activeVariant, setActiveVariant] = useState(VARIANTS[0]);
   const [direction, setDirection] = useState(1);
@@ -197,6 +243,18 @@ export default function CatEcommerceLanding() {
 
   const handlePrevClub = () => {
     setActiveClubIndex((prev) => (prev - 1 + CLUB_ITEMS.length) % CLUB_ITEMS.length);
+  };
+
+  // Section 3: Excellence Showcase State (Default to index 1 'Training' as in reference image)
+  const [activeExcellenceIndex, setActiveExcellenceIndex] = useState(1);
+  const [showSpecBadge, setShowSpecBadge] = useState(false);
+
+  const handleNextExcellence = () => {
+    setActiveExcellenceIndex((prev) => (prev + 1) % EXCELLENCE_ITEMS.length);
+  };
+
+  const handlePrevExcellence = () => {
+    setActiveExcellenceIndex((prev) => (prev - 1 + EXCELLENCE_ITEMS.length) % EXCELLENCE_ITEMS.length);
   };
 
   // Switch cat helper with directional tracking
@@ -701,6 +759,233 @@ export default function CatEcommerceLanding() {
                 </button>
               </div>
             </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 3: DISCOVER EXCELLENCE SHOWCASE (Matches User's New Reference Image)
+          - Top row: Circular monogram logo + filter tabs (Competition, Training, Friendly match)
+                     + Huge bold headline ("Discover Excellence in Courts, Fields, and Beyond")
+          - Bottom row:
+            - Left: Sage green container card with inner cat image card, tennis net foreground,
+                    headline, subtext, "Book a Court ↗" CTA, slide counter, and [←] [→] navigation
+            - Right: Action card with overlapping (+) button, asterisk (*), and descriptive text
+      ========================================================================= */}
+      <section
+        id="excellence-section"
+        className="w-full max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 py-14 sm:py-20 lg:py-24 relative"
+      >
+        {/* Top Header Row: Logo & Tabs on Left, Headline on Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-10 sm:mb-16">
+          
+          {/* Top Left: Circular Logo + Pill Filter Tabs */}
+          <div className="lg:col-span-5 flex items-center gap-4 flex-wrap">
+            {/* Circular Black Monogram Logo */}
+            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-slate-950 text-white flex items-center justify-center shadow-lg shadow-slate-900/10 flex-shrink-0 group hover:scale-105 transition-transform cursor-pointer">
+              <PawIcon className="w-6 h-6 sm:w-7 sm:h-7 group-hover:rotate-12 transition-transform" color="#ffffff" />
+            </div>
+
+            {/* Pill Tabs: Competition, Training (active black), Friendly match */}
+            <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+              {EXCELLENCE_ITEMS.map((item, idx) => {
+                const isActive = activeExcellenceIndex === idx;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveExcellenceIndex(idx)}
+                    className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-tight transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-slate-950 text-white shadow-md shadow-slate-900/15'
+                        : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-400 hover:text-slate-950'
+                    }`}
+                  >
+                    {item.category}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Top Right: Huge Display Headline */}
+          <div className="lg:col-span-7">
+            <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl text-slate-950 tracking-tight leading-[1.06]">
+              Discover Excellence <br className="hidden sm:block" />
+              in Courts, Fields, <br className="hidden sm:block" />
+              and Beyond
+            </h2>
+          </div>
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+          
+          {/* ==================== LEFT GREEN CONTAINER CARD (lg:col-span-7) ==================== */}
+          <div className="lg:col-span-7">
+            <motion.div
+              layout
+              className="w-full h-full min-h-[440px] sm:min-h-[480px] rounded-[2.5rem] sm:rounded-[3rem] p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden flex flex-col justify-between transition-colors duration-700"
+              style={{ backgroundColor: EXCELLENCE_ITEMS[activeExcellenceIndex].bgCard }}
+            >
+              {/* Inner 2-column layout: Inner Image Card + Right Text Content */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 sm:gap-8 items-center flex-1">
+                
+                {/* Inner Left: Vertical Image Card with Cat & Tennis Net Foreground */}
+                <div className="sm:col-span-5 h-[270px] sm:h-[330px] rounded-2xl sm:rounded-3xl overflow-hidden relative shadow-lg group bg-black/15 flex items-end justify-center">
+                  {/* Dark gradient base */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent z-20 pointer-events-none" />
+                  
+                  {/* Stylized Tennis Court Net Mesh Foreground from reference */}
+                  <div className="absolute bottom-0 inset-x-0 h-16 bg-[linear-gradient(to_right,#ffffff20_1px,transparent_1px),linear-gradient(to_bottom,#ffffff20_1px,transparent_1px)] bg-[size:10px_10px] border-t-2 border-white/40 z-20 pointer-events-none" />
+
+                  {/* Cat Cutout Image */}
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={EXCELLENCE_ITEMS[activeExcellenceIndex].id}
+                      src={EXCELLENCE_ITEMS[activeExcellenceIndex].image}
+                      alt={EXCELLENCE_ITEMS[activeExcellenceIndex].catName}
+                      initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: -15 }}
+                      transition={{ duration: 0.35 }}
+                      className="w-auto h-[90%] object-contain object-bottom drop-shadow-xl z-10 group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </AnimatePresence>
+
+                  {/* Badge in top left of inner card */}
+                  <div className="absolute top-3 left-3 z-20 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] font-bold uppercase tracking-wider">
+                    {EXCELLENCE_ITEMS[activeExcellenceIndex].badgeText}
+                  </div>
+                </div>
+
+                {/* Inner Right: Headline + Subtext */}
+                <div className="sm:col-span-7 flex flex-col justify-center text-white py-2">
+                  <h3 className="font-display font-black text-xl sm:text-2xl lg:text-[1.72rem] leading-tight tracking-tight mb-4 text-white">
+                    {EXCELLENCE_ITEMS[activeExcellenceIndex].heading}
+                  </h3>
+                  <p className="text-white/85 text-xs sm:text-sm leading-relaxed font-normal">
+                    {EXCELLENCE_ITEMS[activeExcellenceIndex].subtext}
+                  </p>
+                </div>
+
+              </div>
+
+              {/* Bottom Controls Row: Book a Court ↗ + Slide Counter + Prev/Next Arrows */}
+              <div className="flex items-center justify-between pt-6 sm:pt-8 mt-4 border-t border-white/15 flex-wrap gap-4">
+                
+                {/* Pill CTA Button: Book a Court ↗ */}
+                <motion.button
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                  className="inline-flex items-center gap-3 px-5 sm:px-6 py-3 rounded-full bg-slate-950 hover:bg-slate-900 text-white text-xs sm:text-sm font-bold tracking-tight shadow-lg shadow-black/20 cursor-pointer group transition-all"
+                >
+                  <span>{EXCELLENCE_ITEMS[activeExcellenceIndex].ctaText}</span>
+                  <span className="w-6 h-6 rounded-full bg-white text-slate-950 flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
+                    <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                  </span>
+                </motion.button>
+
+                {/* Counter & Arrows */}
+                <div className="flex items-center gap-4">
+                  {/* Slide Counter: e.g. 1 / 3 */}
+                  <span className="text-white font-mono font-bold text-sm tracking-wider opacity-90">
+                    {activeExcellenceIndex + 1} / {EXCELLENCE_ITEMS.length}
+                  </span>
+
+                  {/* Arrow Buttons [←] [→] (Outlined circles from reference) */}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handlePrevExcellence}
+                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/40 hover:border-white hover:bg-white/15 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                      title="Previous"
+                    >
+                      <ArrowLeft className="w-4 h-4 stroke-[2]" />
+                    </button>
+                    <button
+                      onClick={handleNextExcellence}
+                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/40 hover:border-white hover:bg-white/15 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                      title="Next"
+                    >
+                      <ArrowRight className="w-4 h-4 stroke-[2]" />
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+            </motion.div>
+          </div>
+
+          {/* ==================== RIGHT COLUMN: ACTION CARD WITH (+) & DESCRIPTION ==================== */}
+          <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-row items-center sm:items-start gap-6 lg:gap-8 justify-center">
+            
+            {/* Vertical Rounded Card with Overlapping (+) Button */}
+            <div className="w-full sm:w-[260px] lg:w-[280px] h-[360px] sm:h-[420px] rounded-[2.5rem] overflow-hidden relative shadow-xl bg-slate-100 flex-shrink-0 group">
+              {/* Background gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10 pointer-events-none" />
+              
+              {/* Overlapping (+) Circle Button on Left Edge (Exact as in reference) */}
+              <button
+                onClick={() => setShowSpecBadge(!showSpecBadge)}
+                className="absolute -left-5 sm:-left-6 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-950 hover:bg-slate-800 text-white flex items-center justify-center shadow-2xl z-30 cursor-pointer hover:scale-110 active:scale-95 transition-all"
+                title="Toggle Tech Specs"
+              >
+                <Plus className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 ${showSpecBadge ? 'rotate-45 text-[#ff4071]' : ''}`} />
+              </button>
+
+              {/* Cat Image */}
+              <img
+                src={EXCELLENCE_ITEMS[activeExcellenceIndex].rightImage}
+                alt={EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+              />
+
+              {/* Bottom Title on Card */}
+              <div className="absolute bottom-5 left-6 right-6 z-20 text-white">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-pink-400 block mb-1">
+                  Active Edition
+                </span>
+                <h4 className="font-display font-black text-lg text-white leading-tight">
+                  {EXCELLENCE_ITEMS[activeExcellenceIndex].rightCatName}
+                </h4>
+              </div>
+
+              {/* Floating Tech Spec Popover when (+) is clicked */}
+              <AnimatePresence>
+                {showSpecBadge && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                    className="absolute inset-x-4 top-4 z-40 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-2xl border border-slate-200 text-left"
+                  >
+                    <div className="text-[10px] font-black uppercase text-[#ff4071] tracking-wider mb-1">
+                      Material Specification
+                    </div>
+                    <div className="text-xs font-bold text-slate-900 mb-2">
+                      Thermal Ripstop &amp; Multi-Zone Down
+                    </div>
+                    <div className="text-[11px] text-slate-600 space-y-1 font-mono">
+                      <div>• Insulation: 800-Fill Power</div>
+                      <div>• Shell: DWR Waterproof Nylon</div>
+                      <div>• Temp Rating: Sub-Zero -25°C</div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Asterisk (*) and Explanatory Paragraph */}
+            <div className="flex-1 flex flex-col justify-center pt-2 sm:pt-8 text-left">
+              <div className="text-4xl font-serif font-black text-slate-900 mb-3 leading-none select-none">
+                *
+              </div>
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-normal">
+                {EXCELLENCE_ITEMS[activeExcellenceIndex].rightDesc}
+              </p>
+            </div>
+
           </div>
 
         </div>
